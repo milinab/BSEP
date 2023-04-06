@@ -69,7 +69,7 @@ public class CertificateExample {
 
     public com.example.demo.model.Certificate getCertificate() {
 
-        try {
+      /*  try {
             Issuer issuer = generateIssuer();
             Subject subject = generateSubject();
 
@@ -79,14 +79,14 @@ public class CertificateExample {
             Date startDate = sdf.parse("2023-03-25");
             Date endDate = sdf.parse("2028-03-25");
 
-            X509Certificate certificate = CertificateGenerator.generateCertificate(subject,
-                    issuer, startDate, endDate, "1");
+            X509Certificate certificate = CertificateGenerator.generateCertificate(subject.toString(),
+                    issuer.toString(), startDate, endDate, "1");
 
-            return new Certificate(subject, issuer,
+            return new Certificate(subject.toString(), issuer.toString(),
                     "1",isExpired, startDate, endDate, certificate);
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return null;
     }

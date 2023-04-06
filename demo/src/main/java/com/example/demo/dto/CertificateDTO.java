@@ -13,8 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 
 public class CertificateDTO {
-    private Subject subject;
-    private Issuer issuer;
+    private String subject;
+    private String issuer;
     private String serialNumber;
     private Date startDate;
     private Date endDate;
@@ -22,7 +22,7 @@ public class CertificateDTO {
     private X509Certificate x509Certificate;
 
     public CertificateDTO(Certificate certificate) {
-        this(certificate.getSubject(), certificate.getIssuer(), certificate.getSerialNumber(), certificate.getStartDate(), certificate.getEndDate(), certificate.getIsExpired(), certificate.getX509Certificate());
+        this(certificate.getSubject().toString(), certificate.getIssuer().toString(), certificate.getSerialNumber(), certificate.getStartDate(), certificate.getEndDate(), certificate.getIsExpired(), certificate.getX509Certificate());
     }
 
 
