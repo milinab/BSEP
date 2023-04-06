@@ -1,7 +1,7 @@
 package com.example.demo.certificates;
 
-import com.example.demo.data.Issuer;
-import com.example.demo.data.Subject;
+import com.example.demo.model.Issuer;
+import com.example.demo.model.Subject;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.example.demo.data.Certificate;
+import com.example.demo.model.Certificate;
 
 @Component
 public class CertificateExample {
@@ -67,7 +67,7 @@ public class CertificateExample {
         return null;
     }
 
-    public com.example.demo.data.Certificate getCertificate() {
+    public com.example.demo.model.Certificate getCertificate() {
 
         try {
             Issuer issuer = generateIssuer();
@@ -75,6 +75,7 @@ public class CertificateExample {
 
             //Datumi od kad do kad vazi sertifikat
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Boolean isExpired = false;
             Date startDate = sdf.parse("2023-03-25");
             Date endDate = sdf.parse("2028-03-25");
 
@@ -82,7 +83,7 @@ public class CertificateExample {
                     issuer, startDate, endDate, "1");
 
             return new Certificate(subject, issuer,
-                    "1", startDate, endDate, certificate);
+                    "1",isExpired, startDate, endDate, certificate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

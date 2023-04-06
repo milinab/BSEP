@@ -1,7 +1,7 @@
 package com.example.demo.certificates;
 
-import com.example.demo.data.Issuer;
-import com.example.demo.data.Subject;
+import com.example.demo.model.Issuer;
+import com.example.demo.model.Subject;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;

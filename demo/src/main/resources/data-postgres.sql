@@ -1,0 +1,1 @@
+insert into certificate(subject, issuer, serialNumber, isExpired, startDate, endDate) values (null, null, "adsfsd12", true, 12-12-2222, 12-12-2223);

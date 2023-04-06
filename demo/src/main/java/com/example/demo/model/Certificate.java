@@ -1,4 +1,4 @@
-package com.example.demo.data;
+package com.example.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +16,7 @@ public class Certificate {
     private Subject subject;
     private Issuer issuer;
     private String serialNumber;
+    private Boolean isExpired;
     private Date startDate;
     private Date endDate;
 

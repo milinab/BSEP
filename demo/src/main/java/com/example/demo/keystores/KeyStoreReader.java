@@ -1,6 +1,6 @@
 package com.example.demo.keystores;
 
-import com.example.demo.data.Issuer;
+import com.example.demo.model.Issuer;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.springframework.stereotype.Component;
