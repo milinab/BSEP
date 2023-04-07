@@ -19,10 +19,10 @@ public class CertificateDTO {
     private Date startDate;
     private Date endDate;
     private boolean isExpired;
-    private X509Certificate x509Certificate;
+   // private X509Certificate x509Certificate;
 
     public CertificateDTO(Certificate certificate) {
-        this(certificate.getSubject().toString(), certificate.getIssuer().toString(), certificate.getSerialNumber(), certificate.getStartDate(), certificate.getEndDate(), certificate.getIsExpired(), certificate.getX509Certificate());
+        this(certificate.getSubject().toString(), certificate.getIssuer().toString(), certificate.getSerialNumber(), certificate.getStartDate(), certificate.getEndDate(), certificate.getIsExpired()/*, certificate.getX509Certificate()*/);
     }
 
 
