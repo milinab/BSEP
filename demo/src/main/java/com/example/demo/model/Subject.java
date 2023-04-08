@@ -12,7 +12,7 @@ import java.security.PublicKey;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject {
+public class Subject extends User {
     private PublicKey publicKey;
     private X500Name x500Name;
 }
