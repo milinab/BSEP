@@ -1,12 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class IntermediateCertificate {
@@ -19,4 +17,6 @@ public class IntermediateCertificate {
     private boolean isValid;
     private String category;
     private Location location;
+    private String keyStoreName;
+    private String keyStorePassword;
 }
