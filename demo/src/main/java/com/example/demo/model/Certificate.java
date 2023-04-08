@@ -28,7 +28,7 @@ public class Certificate {
   //  private String alias;
 
     // svi prethodni podaci mogu da se izvuku i iz X509Certificate, osim privatnog kljuca issuera
-   // private X509Certificate x509Certificate;
+   //private X509Certificate x509Certificate;
 
     public Certificate() {
 
