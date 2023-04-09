@@ -3,6 +3,8 @@ package com.example.demo.model;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,4 +21,7 @@ public class IntermediateCertificate {
     private Location location;
     private String keyStoreName;
     private String keyStorePassword;
+    private Date startDate;
+    private Date endDate;
+
 }

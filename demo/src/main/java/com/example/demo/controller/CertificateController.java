@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.certificates.CertificateGenerator;
 import com.example.demo.dto.CertificateDTO;
+import com.example.demo.keystores.KeyStoreWriter;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.IntermediateCertificate;
 import com.example.demo.model.Issuer;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,76 +72,79 @@ public class CertificateController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
-    public ResponseEntity<Certificate> create(@RequestBody Certificate certificate) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
-        IntermediateCertificate intermediateCertificate = new IntermediateCertificate();
-        intermediateCertificate.setKeyStoreName("my_keystore_name");
-        intermediateCertificate.setAlias("my_alias_name");
-        intermediateCertificate.setKeyStorePassword("my_keystore_password");
-        Subject subject = generateSubject(intermediateCertificate);
-        KeyPair keyPair = generateKeyPair();
-        Issuer issuer = generateIssuer(keyPair.getPrivate(), intermediateCertificate);
-        CertificateGenerator cg = new CertificateGenerator();
-        Date startDate = certificate.getStartDate();
-        Date endDate = certificate.getEndDate();
-        String serialNumber = certificate.getSerialNumber();
-        X509Certificate generatedCertificate = cg.generateCertificate(subject, issuer, startDate, endDate, serialNumber);
-        KeyStore keyStore = KeyStore.getInstance("JKS", "SUN");
+    public ResponseEntity<Certificate> create(@RequestBody IntermediateCertificate intermediateCertificate) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
+        try {
+            Subject subject = generateSubject(intermediateCertificate);
+            KeyPair keyPair = generateKeyPair();
+            Issuer issuer = generateIssuer(keyPair.getPrivate(), intermediateCertificate);
 
 
-        String password = intermediateCertificate.getKeyStorePassword();
-        String fileName = intermediateCertificate.getKeyStoreName() != null ? intermediateCertificate.getKeyStoreName().trim() : "defaultFileName";        String alias = intermediateCertificate.getAlias();
-
-        writingCertificateInFile(keyPair, intermediateCertificate, keyStore, generatedCertificate);
-
-        Certificate newCertificate = new Certificate();
-      //  newCertificate.setAlias(intermediateCertificate.getAlias());
-        newCertificate.setSerialNumber(generatedCertificate.getSerialNumber().toString());
-        newCertificate.setIssuer(generatedCertificate.getIssuerDN().toString());
-        newCertificate.setSubject(generatedCertificate.getSubjectDN().toString());
-        newCertificate.setEndDate(endDate);
-        newCertificate.setIsExpired(false);
-
-        return new ResponseEntity<>(certificate, HttpStatus.CREATED);
+            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, intermediateCertificate.getStartDate(), intermediateCertificate.getEndDate(), intermediateCertificate.getSerialNumber());
+            writingCertificateInFile(keyPair, intermediateCertificate, KeyStore.getInstance("JKS", "SUN"), certificate);
+            return new ResponseEntity<>(new Certificate(), HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    private void writingCertificateInFile(KeyPair keyPair,IntermediateCertificate intermediateCertificate, KeyStore keyStore, java.security.cert.Certificate certificate) throws FileNotFoundException {
+    private void writingCertificateInFile(KeyPair keyPair,IntermediateCertificate intermediateCertificate, KeyStore keyStore, X509Certificate certificate) throws FileNotFoundException {
         String password = intermediateCertificate.getKeyStorePassword();
-        String fileName = "minana";
+        String fileName = intermediateCertificate.getKeyStoreName() != null ? intermediateCertificate.getKeyStoreName().trim() : "defaultFileName";
         String alias = intermediateCertificate.getAlias();
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(fileName+".jks"));
+        BufferedInputStream in = null;
+
+        try {
+            in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName + ".jks"));
+        }
+        catch(Exception e){
+            System.out.println("aaaaaaaaaaaaa");
+        }
+        if (in ==null) {
+            KeyStoreWriter ksw = new KeyStoreWriter();
+            char[] pass = password.toCharArray();
+            ksw.saveKeyStore(fileName, pass);
+            try {
+                in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName + ".jks"));
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return;
+            }
+        }
+        try{
+            keyStore.load(in, password.toCharArray());
+            keyStore.setCertificateEntry(alias, certificate);
+            keyStore.setKeyEntry(alias, keyPair.getPrivate(), password.toCharArray(),
+                    new X509Certificate[] { certificate });
+            keyStore.store(new FileOutputStream("src/main/resources/static/" +fileName + ".jks"), password.toCharArray());
+        } catch (Exception e) {
+            System.out.println("bbbbbbbbbbbb");
+        }
     }
 
 
 
-    private Issuer generateIssuer(PrivateKey issuerKey, IntermediateCertificate intermediateCA) {
+    private Issuer generateIssuer(PrivateKey issuerKey, IntermediateCertificate intermediateCertificate) {
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, "1");
-        builder.addRDN(BCStyle.O, "2");
-        builder.addRDN(BCStyle.OU, "3");
-        builder.addRDN(BCStyle.C, "4");
+        builder.addRDN(BCStyle.CN, intermediateCertificate.getCommonName());
+        builder.addRDN(BCStyle.O, intermediateCertificate.getOrganization());
+        builder.addRDN(BCStyle.OU, intermediateCertificate.getLocation().getCountry());
         return new Issuer(issuerKey, builder.build());
     }
 
-    private Subject generateSubject(IntermediateCertificate intermediateCA) {
-
+    private Subject generateSubject(IntermediateCertificate intermediateCertificate) {
         KeyPair keyPairSubject = generateKeyPair();
-
-
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = startDate;
-
-        if(intermediateCA.isValid())
+        if(intermediateCertificate.isValid())
         {
             endDate.plusYears(1);
         }
-
-
-
         //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, "bla");
-        builder.addRDN(BCStyle.O, "bla2");
-        builder.addRDN(BCStyle.C, "bla3");
+        builder.addRDN(BCStyle.CN, intermediateCertificate.getCommonName());
+        builder.addRDN(BCStyle.O, intermediateCertificate.getOrganization());
+        builder.addRDN(BCStyle.C, intermediateCertificate.getLocation().getCountry());
         return new Subject(keyPairSubject.getPublic(), builder.build());
     }
 
