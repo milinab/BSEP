@@ -4,15 +4,12 @@ package com.example.demo.controller;
 import com.example.demo.certificates.CertificateGenerator;
 import com.example.demo.dto.CertificateDTO;
 import com.example.demo.keystores.KeyStoreWriter;
+import com.example.demo.model.*;
 import com.example.demo.model.Certificate;
-import com.example.demo.model.IntermediateCertificate;
-import com.example.demo.model.Issuer;
-import com.example.demo.model.Subject;
 import com.example.demo.service.CertificateService;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -72,39 +67,56 @@ public class CertificateController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
-    public ResponseEntity<Certificate> create(@RequestBody IntermediateCertificate intermediateCertificate) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
+    public ResponseEntity<Certificate> create(@RequestBody CertificateData certificateData) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
         try {
-            Subject subject = generateSubject(intermediateCertificate);
+            Subject subject = generateSubject(certificateData);
             KeyPair keyPair = generateKeyPair();
-            Issuer issuer = generateIssuer(keyPair.getPrivate(), intermediateCertificate);
-
-
-            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, intermediateCertificate.getStartDate(), intermediateCertificate.getEndDate(), intermediateCertificate.getSerialNumber());
-            writingCertificateInFile(keyPair, intermediateCertificate, KeyStore.getInstance("JKS", "SUN"), certificate);
+            Issuer issuer = generateIssuer(keyPair.getPrivate(), certificateData);
+            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.getStartDate(), certificateData.getEndDate(), certificateData.getSerialNumber());
+            writingCertificateInFile(keyPair, certificateData, KeyStore.getInstance("JKS", "SUN"), certificate);
             return new ResponseEntity<>(new Certificate(), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    private void writingCertificateInFile(KeyPair keyPair,IntermediateCertificate intermediateCertificate, KeyStore keyStore, X509Certificate certificate) throws FileNotFoundException {
-        String password = intermediateCertificate.getKeyStorePassword();
-        String fileName = intermediateCertificate.getKeyStoreName() != null ? intermediateCertificate.getKeyStoreName().trim() : "defaultFileName";
-        String alias = intermediateCertificate.getAlias();
+    private void writingCertificateInFile(KeyPair keyPair,CertificateData certificateData, KeyStore keyStore, X509Certificate certificate) throws FileNotFoundException {
+        String password = certificateData.getKeyStorePassword();
+        String fileName = certificateData.getKeyStoreName();
+        String alias = certificateData.getAlias();
         BufferedInputStream in = null;
 
         try {
-            in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName + ".jks"));
+            if(certificateData.getType().equals(CertificateType.ROOT)) {
+                fileName = "root";
+                in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+            } else if(certificateData.getType().equals(CertificateType.INTERMEDIARY)) {
+                fileName = "intermediary";
+                in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+            } else if(certificateData.getType().equals(CertificateType.END_ENTITY)) {
+                fileName = "endEntity";
+                in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+            }
         }
         catch(Exception e){
-            System.out.println("aaaaaaaaaaaaa");
+            System.out.println("prvi");
         }
         if (in ==null) {
             KeyStoreWriter ksw = new KeyStoreWriter();
             char[] pass = password.toCharArray();
             ksw.saveKeyStore(fileName, pass);
             try {
-                in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName + ".jks"));
+                if(certificateData.getType().equals(CertificateType.ROOT)) {
+                    fileName = "root";
+                    in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+                } else if(certificateData.getType().equals(CertificateType.INTERMEDIARY)) {
+                    fileName = "intermediary";
+                    in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+                } else if(certificateData.getType().equals(CertificateType.END_ENTITY)) {
+                    fileName = "endEntity";
+                    in = new BufferedInputStream(new FileInputStream("src/main/resources/static/" +fileName+".jks"));
+                }
+
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -116,7 +128,16 @@ public class CertificateController {
             keyStore.setCertificateEntry(alias, certificate);
             keyStore.setKeyEntry(alias, keyPair.getPrivate(), password.toCharArray(),
                     new X509Certificate[] { certificate });
-            keyStore.store(new FileOutputStream("src/main/resources/static/" +fileName + ".jks"), password.toCharArray());
+            if(certificateData.getType().equals(CertificateType.ROOT)) {
+                fileName = "root";
+                keyStore.store(new FileOutputStream("src/main/resources/static/" +fileName+".jks"), password.toCharArray());
+            } else if(certificateData.getType().equals(CertificateType.INTERMEDIARY)) {
+                fileName = "intermediary";
+                keyStore.store(new FileOutputStream("src/main/resources/static/" +fileName+".jks"), password.toCharArray());
+            } else if(certificateData.getType().equals(CertificateType.END_ENTITY)) {
+                fileName = "endEntity";
+                keyStore.store(new FileOutputStream("src/main/resources/static/" +fileName+".jks"), password.toCharArray());
+            }
         } catch (Exception e) {
             System.out.println("bbbbbbbbbbbb");
         }
@@ -124,7 +145,7 @@ public class CertificateController {
 
 
 
-    private Issuer generateIssuer(PrivateKey issuerKey, IntermediateCertificate intermediateCertificate) {
+    private Issuer generateIssuer(PrivateKey issuerKey, CertificateData intermediateCertificate) {
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
         builder.addRDN(BCStyle.CN, intermediateCertificate.getCommonName());
         builder.addRDN(BCStyle.O, intermediateCertificate.getOrganization());
@@ -132,7 +153,7 @@ public class CertificateController {
         return new Issuer(issuerKey, builder.build());
     }
 
-    private Subject generateSubject(IntermediateCertificate intermediateCertificate) {
+    private Subject generateSubject(CertificateData intermediateCertificate) {
         KeyPair keyPairSubject = generateKeyPair();
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = startDate;

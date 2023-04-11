@@ -1,5 +1,5 @@
 package com.example.demo.model;
 
 public enum CertificateType {
-    ROOT, INTERMEDIATE, END_ENTITY
+    ROOT, INTERMEDIARY, END_ENTITY
 }

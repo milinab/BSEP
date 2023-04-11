@@ -9,7 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class IntermediateCertificate {
+public class CertificateData {
     @Id
     private String  id;
     private String organization;
@@ -23,5 +23,7 @@ public class IntermediateCertificate {
     private String keyStorePassword;
     private Date startDate;
     private Date endDate;
+    private CertificateType type;
+    private CertificateStatus status;
 
 }
