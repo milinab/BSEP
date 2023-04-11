@@ -25,9 +25,14 @@ public class Certificate {
     private Boolean isExpired;
     private Date startDate;
     private Date endDate;
- //   private String keyStoreFileName;
-  //  private String alias;
-
+    private CertificateStatus certificateStatus;
+    private CertificateType certificateType;
+    private String alias;
+    private String organization;
+    private String commonName;
+    private String category;
+    private String keyStoreName;
+    private String keyStorePassword;
     // svi prethodni podaci mogu da se izvuku i iz X509Certificate, osim privatnog kljuca issuera
    //private X509Certificate x509Certificate;
 
