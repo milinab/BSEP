@@ -21,9 +21,7 @@ public class CertificateDTO {
     private CertificateType certificateType;
    // private X509Certificate x509Certificate;
 
-    public CertificateDTO(Certificate certificate) {
-        this(certificate.getSubject().toString(), certificate.getIssuer().toString(), certificate.getSerialNumber(), certificate.getStartDate(), certificate.getEndDate(), certificate.getIsExpired(), certificate.getCertificateStatus(), certificate.getCertificateType()/*, certificate.getX509Certificate()*/);
-    }
+
 
 
 }

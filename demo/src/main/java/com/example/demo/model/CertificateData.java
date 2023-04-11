@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.dto.IssuerDTO;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -25,5 +26,4 @@ public class CertificateData {
     private Date endDate;
     private CertificateType type;
     private CertificateStatus status;
-
 }

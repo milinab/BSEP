@@ -8,6 +8,7 @@ import com.example.demo.model.Issuer;
 import com.example.demo.model.Subject;
 import com.example.demo.service.CertificateService;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import java.security.cert.X509Certificate;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "api/certificate")
 public class CertificateController {
+    @Autowired
     private final CertificateService certificateService;
 
 

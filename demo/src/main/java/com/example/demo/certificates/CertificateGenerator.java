@@ -22,7 +22,7 @@ import java.util.Date;
 @Component
 public class CertificateGenerator {
 
-    public X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber) {
+    public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber) {
         try {
             Security.addProvider(new BouncyCastleProvider());
 
