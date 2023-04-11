@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.certificates.CertificateGenerator;
+import com.example.demo.keystores.KeyStoreReader;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.CertificateData;
 import com.example.demo.model.Issuer;
@@ -13,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.security.KeyPair;
@@ -24,6 +22,7 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchProviderException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
@@ -31,29 +30,19 @@ import java.security.cert.X509Certificate;
 public class CertificateController {
     @Autowired
     private final CertificateService certificateService;
+    private KeyStoreReader keyStoreReader;
 
 
-    public CertificateController(CertificateService certificateService) {
+    public CertificateController(CertificateService certificateService, KeyStoreReader keyStoreReader) {
         this.certificateService = certificateService;
-    }/*
-    @GetMapping(value = "allCert")
-    public ResponseEntity<List<CertificateData>> getAllCertificates(String keyStore, String fileName, char[] password) {
-        List<CertificateData> certificates = new ArrayList<>();
-        try {
-            keyStore.load(new FileInputStream(fileName), password);
-            Enumeration<String> aliases = keyStore.aliases();
-            while (aliases.hasMoreElements()) {
-                String alias = aliases.nextElement();
-                CertificateData certificate = keyStore.getCertificate(alias);
-                if (certificate != null) {
-                    certificates.add(certificate);
-                }
-            }
-        } catch (IOException | CertificateException | NoSuchAlgorithmException | KeyStoreException e) {
-            e.printStackTrace();
-        }
+        this.keyStoreReader = keyStoreReader;
+    }
+
+    @GetMapping(value = "certs")
+    public ResponseEntity<List<String>> getAllCertificates(@RequestParam String keyStoreFile, @RequestParam String keyStorePass){
+        List<String> certificates = keyStoreReader.readAllCertificates(keyStoreFile, keyStorePass);
         return new ResponseEntity<>(certificates, HttpStatus.OK);
-    }*/
+    }
 /*
     @GetMapping(value = "/all")
     public ResponseEntity<List<CertificateDTO>> getAllCertificates(){
