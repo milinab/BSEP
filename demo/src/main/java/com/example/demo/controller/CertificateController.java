@@ -87,5 +87,13 @@ public class CertificateController {
         }
     }
 
+    @PutMapping(consumes = "application/json", value = "/invalidate/{alias}")
+    public ResponseEntity<Certificate> invalidateCertificate(@PathVariable("alias") String alias, @RequestParam String keyStoreFile, @RequestParam String keyStorePass) {
+        Boolean certificate = certificateService.invalidateCertificate(alias, keyStoreFile, keyStorePass);
+        if (certificate== false){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

@@ -26,4 +26,6 @@ public interface CertificateService {
 
     KeyPair generateKeyPair();
 
+    Boolean invalidateCertificate(String keyStoreFile, String keyStorePass, String alias);
+
 }

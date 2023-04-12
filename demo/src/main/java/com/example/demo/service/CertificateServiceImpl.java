@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.keystores.KeyStoreReader;
 import com.example.demo.keystores.KeyStoreWriter;
 import com.example.demo.model.*;
 import com.example.demo.model.Certificate;
@@ -15,17 +16,23 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
     private CertificateRepository certificateRepository;
+    private KeyStoreReader keyStoreReader;
 
     @Autowired
-    public CertificateServiceImpl(CertificateRepository certificateRepository){
+    public CertificateServiceImpl(CertificateRepository certificateRepository, KeyStoreReader keyStoreReader){
         this.certificateRepository = certificateRepository;
+        this.keyStoreReader = keyStoreReader;
     }
 
     @Override
@@ -143,4 +150,22 @@ public class CertificateServiceImpl implements CertificateService {
         }
         return null;
     }
+
+    @Override
+    public Boolean invalidateCertificate(String keyStoreFile, String keyStorePass, String alias) {
+        //Optional<Certificate> certificate = keyStoreReader.readCertificate(keyStoreFile , keyStorePass, alias);
+        Optional<Certificate> certificate = certificateRepository.findById(alias);
+        Date endDate = certificate.get().getEndDate();
+        LocalDate localEndDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if(localEndDate.isBefore(LocalDate.now()) || certificate.get().getCertificateStatus().equals(CertificateStatus.EXPIRED) ||
+                certificate.get().getCertificateStatus().equals(CertificateStatus.REVOKED))
+        {
+            return false;
+        }
+        certificate.get().setCertificateStatus(CertificateStatus.REVOKED);
+        certificateRepository.save(certificate.get());
+        return true;
+    }
+
+
 }
