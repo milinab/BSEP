@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   public issuerList: CertificateIssuerDTOModel[] = [];
   public selectedItem: string='';
   public alias: string | undefined;
+  public nesto: boolean | undefined;
   @Output() onSelectedIssuer: EventEmitter<string> = new EventEmitter()
 
   constructor(private certificateService: CertificateService) { }
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
     //console.log(this.selectedItem);
     this.certificateService.getIssueByAlias(alias).subscribe((issuer: any) => {
       console.log(issuer.alias);
+      this.nesto = issuer.type;
       this.certificate[1].organization = issuer.organization;
       this.certificate[1].commonName = issuer.commonName;
       this.certificate[1].location.country = "aaa";

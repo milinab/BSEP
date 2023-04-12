@@ -15,37 +15,25 @@
     <label>Country</label>
     <input type="text" name = "state" [(ngModel)]="certificate[0].location.state">
 
-    <label>Organization2:</label>
-    <input type="text"  name = "aa" [(ngModel)]="certificate[1].organization">
+    <input type="text"  name = "aa" [(ngModel)]="certificate[1].organization" [hidden]="true">
 
-    <label>Common name2:</label>
-    <input type="text"  name = "bb" [(ngModel)]="certificate[1].commonName">
 
-    <label>State2</label>
-    <input type="text"  name = "cc" [(ngModel)]="certificate[1].location.country">
+    <input type="text"  name = "bb" [(ngModel)]="certificate[1].commonName" [hidden]="true">
 
-    <label>City2:</label>
-    <input type="text"  name = "dd" [(ngModel)]="certificate[1].location.city">
 
-    <label>Country2</label>
-    <input type="text" name = "ee" [(ngModel)]="certificate[1].location.state">
+    <input type="text"  name = "cc" [(ngModel)]="certificate[1].location.country" [hidden]="true">
+
+    <input type="text"  name = "dd" [(ngModel)]="certificate[1].location.city" [hidden]="true">
+
+    <input type="text" name = "ee" [(ngModel)]="certificate[1].location.state" [hidden]="true">
 
     <label>Type:</label>
-    <select [(ngModel)]="certificate[0].type" name="erer">
-      <option value="ROOT" name="ww">Root</option>
+    <select [(ngModel)]="certificate[0].type" name="erer" [disabled]="!selectedItem">
+      <option value="ROOT" name="ww" [disabled]="!nesto">Root</option>
       <option value="INTERMEDIARY" name="aasd">Intermediary</option>
       <option value="END_ENTITY" name="etrt">End Entity</option>
     </select>
-  <!--<mat-form-field>
-    <mat-label>
-      Issuer:
-    </mat-label>
-    <mat-select [(ngModel)]="selectedItem" (ngModelChange)="selectedIssuer($event)">
-      <mat-option *ngFor="let issuer of issuerList" [value]="issuer.commonName">
-        {{ issuer.commonName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>-->
+
     <label>Issuer:</label>
     <select name="issuer" [(ngModel)]="selectedItem" (ngModelChange)="selectedIssuer($event)">
       <option *ngFor="let issuer of issuerList" [value]="issuer.alias">{{ issuer.alias }}</option>

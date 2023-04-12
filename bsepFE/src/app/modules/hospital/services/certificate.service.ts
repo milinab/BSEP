@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {CertificateModel} from "../model/certificate.model";
 import {Room} from "../model/room.model";
 import {CertificateIssuerDTOModel} from "../model/certificateIssuerDTO.model";
@@ -12,6 +12,7 @@ export class CertificateService {
 
   apiHost: string = 'http://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private alias: string | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -39,5 +40,34 @@ export class CertificateService {
   getIssueByAlias(alias: string): Observable<CertificateIssuerDTOModel>{
     return this.http.get<CertificateIssuerDTOModel>(this.apiHost + 'api/certificate/issues/'+alias, {headers: this.headers});
   }
+
+  uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    };
+
+    return this.http.post(this.apiHost + '/upload', formData, options);
+  }
+
+  downloadCertificate(certificateId: string): Observable<Blob> {
+    const options = {
+      responseType: 'blob' as const, // Set response type as blob
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(this.apiHost + 'api/certificate/download/' + certificateId, {
+      headers: this.headers,
+      responseType: 'arraybuffer'
+    }).pipe(map((data: ArrayBuffer) => {
+      return new Blob([data], { type: 'application/octet-stream' });
+    }));
+  }
+
 
 }

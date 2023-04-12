@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {CertificateService} from "../../hospital/services/certificate.service";
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-all-certificates',
@@ -52,6 +53,11 @@ export class AllCertificatesComponent implements OnInit {
         console.log('Error fetching end-entity certificates', error);
       }
     );
+  }
+  downloadCertificate(certificateId: string) {
+    this.certificateService.downloadCertificate(certificateId).subscribe((data: Blob) => {
+      saveAs(data, 'certificate.txt');
+    });
   }
 
 }

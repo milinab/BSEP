@@ -4,7 +4,10 @@
   </div>
   <div class="certificates-list">
     <ul>
-      <li *ngFor="let cert of rootCertificates">{{ cert }}</li>
+      <li *ngFor="let cert of rootCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
     </ul>
   </div>
 </div>
@@ -15,7 +18,10 @@
   </div>
   <div class="certificates-list">
     <ul>
-      <li *ngFor="let cert of intermediaryCertificates">{{ cert }}</li>
+      <li *ngFor="let cert of intermediaryCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
     </ul>
   </div>
 </div>
@@ -26,7 +32,10 @@
   </div>
   <div class="certificates-list">
     <ul>
-      <li *ngFor="let cert of endEntityCertificates">{{ cert }}</li>
+      <li *ngFor="let cert of endEntityCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
     </ul>
   </div>
 </div>

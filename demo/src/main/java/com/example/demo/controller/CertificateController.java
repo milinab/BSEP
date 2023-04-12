@@ -7,12 +7,16 @@ import com.example.demo.keystores.KeyStoreReader;
 import com.example.demo.model.*;
 import com.example.demo.service.CertificateService;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.security.KeyPair;
 import java.security.KeyStore;
@@ -146,4 +150,34 @@ public class CertificateController {
         CertificateIssuerDTO issue = certificateService.findByAlias(alias);
         return new ResponseEntity<>(issue, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/readOne/{alias}")
+    public ResponseEntity<String> getOneCert(@PathVariable(value = "alias") String alias){
+        String aliasss = alias;
+        String keyStoreFile = "src/main/resources/static/root.jks";
+        String keyStorePass = "password";
+        String certificate = keyStoreReader.readCertificate(keyStoreFile, keyStorePass, aliasss);
+        return new ResponseEntity<>(certificate, HttpStatus.OK);
+    }
+
+    @GetMapping("/download/{certificateId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<InputStreamResource> downloadCertificate(@PathVariable String certificateId) {
+        try {
+            File file = new File("src/main/resources/static/root.jks");
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=certificate.crt");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentLength(file.length())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(new InputStreamResource(new FileInputStream(file)));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

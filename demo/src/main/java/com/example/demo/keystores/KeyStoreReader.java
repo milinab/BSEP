@@ -84,7 +84,7 @@ public class KeyStoreReader {
     /**
      * Ucitava sertifikat is KS fajla
      */
-    public Certificate readCertificate(String keyStoreFile, String keyStorePass, String alias) {
+    public String readCertificate(String keyStoreFile, String keyStorePass, String alias) {
         try {
             //kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -94,7 +94,9 @@ public class KeyStoreReader {
 
             if(ks.isKeyEntry(alias)) {
                 Certificate cert = ks.getCertificate(alias);
-                return cert;
+                String cert2;
+                cert2 = convertToReadableFormat(cert);
+                return cert2;
             }
         } catch (KeyStoreException e) {
             e.printStackTrace();
@@ -147,7 +149,7 @@ public class KeyStoreReader {
         sb.append("Serial Number: ").append(x509cert.getSerialNumber().toString()).append("\n");
         sb.append("Validity: ").append(x509cert.getStartDate()).append(" - ").append(x509cert.getEndDate()).append("\n");
         sb.append("Algorithm: ").append(cert.getPublicKey().getAlgorithm()).append("\n");
-        sb.append("Public Key: ").append(Base64.getEncoder().encodeToString(cert.getPublicKey().getEncoded())).append("\n");
+        //sb.append("Public Key: ").append(Base64.getEncoder().encodeToString(cert.getPublicKey().getEncoded())).append("\n");
         return sb.toString();
     }
 
