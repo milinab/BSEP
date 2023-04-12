@@ -4,7 +4,7 @@ export class CertificateModel {
   organization: string = '';
   commonName: string = '';
   location: Location = new Location();
-  type: any;
+  type: boolean | undefined;
   keyStorePassword: string = 'password';
   startDate: Date = new Date();
   endDate: Date = new Date();

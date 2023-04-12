@@ -33,4 +33,6 @@ public interface CertificateService {
 
     List<CertificateIssuerDTO> findAllIssuers();
 
+    CertificateIssuerDTO findByAlias(String alias);
+
 }

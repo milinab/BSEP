@@ -51,7 +51,7 @@ public class CertificateServiceImpl implements CertificateService {
     public void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate){
         String password = certificateData.getKeyStorePassword();
         String fileName = certificateData.getKeyStoreName();
-        String alias = certificateData.getAlias();
+        String alias = UUID.randomUUID().toString();
         BufferedInputStream in = null;
 
         try {
@@ -118,6 +118,8 @@ public class CertificateServiceImpl implements CertificateService {
         builder.addRDN(BCStyle.CN, intermediateCertificate.getCommonName());
         builder.addRDN(BCStyle.O, intermediateCertificate.getOrganization());
         builder.addRDN(BCStyle.OU, intermediateCertificate.getLocation().getCountry());
+        builder.addRDN(BCStyle.OU, intermediateCertificate.getLocation().getState());
+        builder.addRDN(BCStyle.OU, intermediateCertificate.getLocation().getCity());
         return new Issuer(issuerKey, builder.build());
     }
     @Override
@@ -176,4 +178,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<CertificateIssuerDTO> findAllIssuers(){ return certificateIssuerRepository.findAll();}
+
+    @Override
+    public CertificateIssuerDTO findByAlias(String alias) {
+        return certificateIssuerRepository.findByAlias(alias);
+    }
 }

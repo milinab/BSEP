@@ -7,21 +7,23 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MaterialModule} from "../../material/material.module";
 import { AllCertificatesComponent } from './all-certificates/all-certificates.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
     HomeComponent,
     AllCertificatesComponent,
   ],
-  imports: [
-    CommonModule,
-    AppRoutingModule,
-    FormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MaterialModule,
-    ReactiveFormsModule
+    imports: [
+        CommonModule,
+        AppRoutingModule,
+        FormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        MatSelectModule
 
-  ]
+    ]
 })
 export class PagesModule { }

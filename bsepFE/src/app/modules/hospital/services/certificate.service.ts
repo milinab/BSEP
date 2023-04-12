@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CertificateModel} from "../model/certificate.model";
 import {Room} from "../model/room.model";
+import {CertificateIssuerDTOModel} from "../model/certificateIssuerDTO.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class CertificateService {
 
   getEndEntityCerts(): Observable<String> {
     return this.http.get<String>(this.apiHost + 'api/certificate/end-entity-certs', {headers: this.headers});
+  }
+
+  getIssues(): Observable<CertificateIssuerDTOModel[]> {
+    return this.http.get<CertificateIssuerDTOModel[]>(this.apiHost + 'api/certificate/allCertificateIssuers', {headers: this.headers});
+  }
+
+  getIssueByAlias(alias: string): Observable<CertificateIssuerDTOModel>{
+    return this.http.get<CertificateIssuerDTOModel>(this.apiHost + 'api/certificate/issues/'+alias, {headers: this.headers});
   }
 
 }

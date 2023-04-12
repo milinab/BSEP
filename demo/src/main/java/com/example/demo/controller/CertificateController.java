@@ -88,7 +88,7 @@ public class CertificateController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<Certificate> create(@RequestBody List<CertificateData> certificateData) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
-        CertificateIssuerDTO certificateIssuer = new CertificateIssuerDTO();
+        /*CertificateIssuerDTO certificateIssuer = new CertificateIssuerDTO();
         certificateIssuer.setCommonName(certificateData.get(1).getCommonName());
         certificateIssuer.setOrganization(certificateData.get(1).getOrganization());
         if(certificateData.get(0).getType().equals(CertificateType.ROOT)) {
@@ -96,7 +96,7 @@ public class CertificateController {
         } else {
             certificateIssuer.setType(false);
         }
-        certificateService.saveIssuer(certificateIssuer);
+        certificateService.saveIssuer(certificateIssuer);*/
         try {
             Subject subject = certificateService.generateSubject(certificateData.get(0));
             KeyPair keyPair = certificateService.generateKeyPair();
@@ -141,4 +141,9 @@ public class CertificateController {
         return new ResponseEntity<>(issuerList, HttpStatus.OK);
     }
 
+    @GetMapping("/issues/{alias}")
+    public ResponseEntity<CertificateIssuerDTO> getIssueByAlias(@PathVariable(value = "alias") String alias) {
+        CertificateIssuerDTO issue = certificateService.findByAlias(alias);
+        return new ResponseEntity<>(issue, HttpStatus.OK);
+    }
 }
