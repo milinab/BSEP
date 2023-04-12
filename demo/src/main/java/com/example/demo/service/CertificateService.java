@@ -38,4 +38,6 @@ public interface CertificateService {
 
     CertificateIssuerDTO findByAlias(String alias);
 
+    CertificateStatusDTO findCertificateStatusByAlias(String alias);
+
 }

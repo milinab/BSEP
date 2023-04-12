@@ -151,6 +151,12 @@ public class CertificateController {
         return new ResponseEntity<>(issue, HttpStatus.OK);
     }
 
+    @GetMapping("/certificateStatus/{alias}")
+    public ResponseEntity<CertificateStatusDTO> getCertificateStatusByAlias(@PathVariable(value = "alias") String alias) {
+        CertificateStatusDTO cs = certificateService.findCertificateStatusByAlias(alias);
+        return new ResponseEntity<>(cs, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/readOne/{alias}")
     public ResponseEntity<String> getOneCert(@PathVariable(value = "alias") String alias){
         String aliasss = alias;

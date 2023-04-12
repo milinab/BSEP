@@ -193,4 +193,9 @@ public class CertificateServiceImpl implements CertificateService {
     public CertificateIssuerDTO findByAlias(String alias) {
         return certificateIssuerRepository.findByAlias(alias);
     }
+
+    @Override
+    public CertificateStatusDTO findCertificateStatusByAlias(String alias) {
+        return certificateStatusRepository.findCertificateStatusByAlias(alias);
+    }
 }
