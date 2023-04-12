@@ -3,8 +3,12 @@ package com.example.demo.controller;
 
 import com.example.demo.certificates.CertificateGenerator;
 import com.example.demo.dto.CertificateIssuerDTO;
+import com.example.demo.dto.CertificateStatusDTO;
 import com.example.demo.keystores.KeyStoreReader;
-import com.example.demo.model.*;
+import com.example.demo.model.Certificate;
+import com.example.demo.model.CertificateData;
+import com.example.demo.model.Issuer;
+import com.example.demo.model.Subject;
 import com.example.demo.service.CertificateService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.io.InputStreamResource;
@@ -24,6 +28,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchProviderException;
 import java.security.cert.X509Certificate;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
@@ -92,22 +97,17 @@ public class CertificateController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<Certificate> create(@RequestBody List<CertificateData> certificateData) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
-        /*CertificateIssuerDTO certificateIssuer = new CertificateIssuerDTO();
-        certificateIssuer.setCommonName(certificateData.get(1).getCommonName());
-        certificateIssuer.setOrganization(certificateData.get(1).getOrganization());
-        if(certificateData.get(0).getType().equals(CertificateType.ROOT)) {
-            certificateIssuer.setType(true);
-        } else {
-            certificateIssuer.setType(false);
-        }
-        certificateService.saveIssuer(certificateIssuer);*/
+        CertificateStatusDTO certificateStatus = new CertificateStatusDTO();
+        certificateStatus.setStatus(true);
         try {
             Subject subject = certificateService.generateSubject(certificateData.get(0));
             KeyPair keyPair = certificateService.generateKeyPair();
             Issuer issuer = certificateService.generateIssuer(keyPair.getPrivate(), certificateData.get(1));
+            String alias = UUID.randomUUID().toString();
             X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.get(0).getStartDate(), certificateData.get(0).getEndDate(), "65");
-            certificateService.writingCertificateInFile(keyPair, certificateData.get(0), KeyStore.getInstance("JKS", "SUN"), certificate);
-
+            certificateService.writingCertificateInFile(keyPair, certificateData.get(0), KeyStore.getInstance("JKS", "SUN"), certificate, alias);
+            certificateStatus.setAlias(alias);
+            certificateService.saveCertificateStatus(certificateStatus);
             return new ResponseEntity<>(new Certificate(), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -179,5 +179,7 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CertificateIssuerDTO;
+import com.example.demo.dto.CertificateStatusDTO;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.CertificateData;
 import com.example.demo.model.Issuer;
@@ -21,7 +22,7 @@ public interface CertificateService {
 
     Issuer generateIssuer(PrivateKey issuerKey, CertificateData intermediateCertificate);
 
-    void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate);
+    void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate, String alias);
 
     Subject generateSubject(CertificateData intermediateCertificate);
 
@@ -30,6 +31,8 @@ public interface CertificateService {
     Boolean invalidateCertificate(String keyStoreFile, String keyStorePass, String alias);
 
     CertificateIssuerDTO saveIssuer(CertificateIssuerDTO ciDTO);
+
+    CertificateStatusDTO saveCertificateStatus(CertificateStatusDTO csDTO);
 
     List<CertificateIssuerDTO> findAllIssuers();
 

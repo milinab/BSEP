@@ -1,12 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CertificateIssuerDTO;
+import com.example.demo.dto.CertificateStatusDTO;
 import com.example.demo.keystores.KeyStoreReader;
 import com.example.demo.keystores.KeyStoreWriter;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.*;
 import com.example.demo.repository.CertificateIssuerRepository;
 import com.example.demo.repository.CertificateRepository;
+import com.example.demo.repository.CertificateStatusRepository;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,15 @@ public class CertificateServiceImpl implements CertificateService {
 
     private CertificateRepository certificateRepository;
     private CertificateIssuerRepository certificateIssuerRepository;
+    private CertificateStatusRepository certificateStatusRepository;
     private KeyStoreReader keyStoreReader;
 
     @Autowired
-    public CertificateServiceImpl(CertificateRepository certificateRepository, KeyStoreReader keyStoreReader, CertificateIssuerRepository certificateIssuerRepository){
+    public CertificateServiceImpl(CertificateRepository certificateRepository, KeyStoreReader keyStoreReader,
+                                  CertificateIssuerRepository certificateIssuerRepository, CertificateStatusRepository certificateStatusRepository){
         this.certificateRepository = certificateRepository;
         this.certificateIssuerRepository = certificateIssuerRepository;
+        this.certificateStatusRepository = certificateStatusRepository;
         this.keyStoreReader = keyStoreReader;
     }
 
@@ -48,10 +53,9 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate){
+    public void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate, String alias){
         String password = certificateData.getKeyStorePassword();
         String fileName = certificateData.getKeyStoreName();
-        String alias = UUID.randomUUID().toString();
         BufferedInputStream in = null;
 
         try {
@@ -174,6 +178,12 @@ public class CertificateServiceImpl implements CertificateService {
     public CertificateIssuerDTO saveIssuer(CertificateIssuerDTO ciDTO){
         ciDTO.setId(UUID.randomUUID().toString());
         return certificateIssuerRepository.save(ciDTO);
+    }
+
+    @Override
+    public CertificateStatusDTO saveCertificateStatus(CertificateStatusDTO csDTO){
+        csDTO.setId(UUID.randomUUID().toString());
+        return certificateStatusRepository.save(csDTO);
     }
 
     @Override
