@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CertificateIssuerDTO;
 import com.example.demo.keystores.KeyStoreReader;
 import com.example.demo.keystores.KeyStoreWriter;
-import com.example.demo.model.*;
 import com.example.demo.model.Certificate;
+import com.example.demo.model.*;
+import com.example.demo.repository.CertificateIssuerRepository;
 import com.example.demo.repository.CertificateRepository;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -16,22 +18,21 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
     private CertificateRepository certificateRepository;
+    private CertificateIssuerRepository certificateIssuerRepository;
     private KeyStoreReader keyStoreReader;
 
     @Autowired
-    public CertificateServiceImpl(CertificateRepository certificateRepository, KeyStoreReader keyStoreReader){
+    public CertificateServiceImpl(CertificateRepository certificateRepository, KeyStoreReader keyStoreReader, CertificateIssuerRepository certificateIssuerRepository){
         this.certificateRepository = certificateRepository;
+        this.certificateIssuerRepository = certificateIssuerRepository;
         this.keyStoreReader = keyStoreReader;
     }
 
@@ -153,7 +154,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public Boolean invalidateCertificate(String keyStoreFile, String keyStorePass, String alias) {
-        //Optional<Certificate> certificate = keyStoreReader.readCertificate(keyStoreFile , keyStorePass, alias);
+        /*//Optional<Certificate> certificate = keyStoreReader.readCertificate(keyStoreFile , keyStorePass, alias);
         Optional<Certificate> certificate = certificateRepository.findById(alias);
         Date endDate = certificate.get().getEndDate();
         LocalDate localEndDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -163,9 +164,16 @@ public class CertificateServiceImpl implements CertificateService {
             return false;
         }
         certificate.get().setCertificateStatus(CertificateStatus.REVOKED);
-        certificateRepository.save(certificate.get());
+        certificateRepository.save(certificate.get());*/
         return true;
     }
 
+    @Override
+    public CertificateIssuerDTO saveIssuer(CertificateIssuerDTO ciDTO){
+        ciDTO.setId(UUID.randomUUID().toString());
+        return certificateIssuerRepository.save(ciDTO);
+    }
 
+    @Override
+    public List<CertificateIssuerDTO> findAllIssuers(){ return certificateIssuerRepository.findAll();}
 }

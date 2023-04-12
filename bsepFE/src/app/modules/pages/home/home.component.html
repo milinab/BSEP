@@ -1,22 +1,73 @@
 <div class="form-container">
   <form (ngSubmit)="createCertificate()"  class="container-search">
-<!--    <label>Common name:</label>-->
-<!--    <input type="text" name="departurePlace" [(ngModel)]="certificate.commonName">-->
+    <label>Organization:</label>
+    <input type="text"  name = "aa" [(ngModel)]="certificate[0].organization">
 
-<!--    <label>Organization unit:</label>-->
-<!--    <input type="text" name="arrivalPlace" [(ngModel)]="certificate.organizationUnit">-->
+    <label>Common name:</label>
+    <input type="text"  name = "bb" [(ngModel)]="certificate[0].commonName">
 
-<!--    <label>Organization name:</label>-->
-<!--    <input type="text" name="departureDate" [(ngModel)]="certificate.organizationName">-->
+    <label>State</label>
+    <input type="text"  name = "cc" [(ngModel)]="certificate[0].location.country">
 
-<!--    <label>Locality name:</label>-->
-<!--    <input type="text" name="arrivalDate" [(ngModel)]="certificate.localityName">-->
+    <label>City:</label>
+    <input type="text"  name = "dd" [(ngModel)]="certificate[0].location.city">
 
-<!--    <label>State name:</label>-->
-<!--    <input type="text" name="numPassengers" [(ngModel)]="certificate.stateName">-->
+    <label>Country</label>
+    <input type="text" name = "ee" [(ngModel)]="certificate[0].location.state">
 
-<!--    <label>Country:</label>-->
-<!--    <input type="text" name="numPassengers" [(ngModel)]="certificate.country">-->
+    <label>Organization2:</label>
+    <input type="text"  name = "aa" [(ngModel)]="certificate[1].organization">
+
+    <label>Common name2:</label>
+    <input type="text"  name = "bb" [(ngModel)]="certificate[1].commonName">
+
+    <label>State2</label>
+    <input type="text"  name = "cc" [(ngModel)]="certificate[1].location.country">
+
+    <label>City2:</label>
+    <input type="text"  name = "dd" [(ngModel)]="certificate[1].location.city">
+
+    <label>Country2</label>
+    <input type="text" name = "ee" [(ngModel)]="certificate[1].location.state">
+
+    <label>Type:</label>
+    <select [(ngModel)]="certificate[0].type" name="erer">
+      <option value="ROOT" name="ww">Root</option>
+      <option value="INTERMEDIARY" name="aasd">Intermediary</option>
+      <option value="END_ENTITY" name="etrt">End Entity</option>
+    </select>
+
+    <div>
+      <mat-form-field appearance="fill" class="input-schedule">
+        <mat-label>Departure date</mat-label>
+        <input matInput name="picker" [matDatepicker]="picker" [(ngModel)]="certificate[0].startDate" [formControl]="dateFormControl">
+        <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
+          Please enter a date
+        </mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('required')">
+        Date is <strong>required</strong>
+        </mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill" class="input-schedule">
+        <mat-label>Departure date</mat-label>
+        <input matInput name="picker2" [matDatepicker]="picker2" [(ngModel)]="certificate[0].endDate" [formControl]="dateFormControl">
+        <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
+          Please enter a date
+        </mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('required')">
+          Date is <strong>required</strong>
+        </mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
 
     <button type="submit">Submit</button>
 

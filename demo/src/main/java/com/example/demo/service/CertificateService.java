@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CertificateIssuerDTO;
 import com.example.demo.model.Certificate;
 import com.example.demo.model.CertificateData;
 import com.example.demo.model.Issuer;
@@ -27,5 +28,9 @@ public interface CertificateService {
     KeyPair generateKeyPair();
 
     Boolean invalidateCertificate(String keyStoreFile, String keyStorePass, String alias);
+
+    CertificateIssuerDTO saveIssuer(CertificateIssuerDTO ciDTO);
+
+    List<CertificateIssuerDTO> findAllIssuers();
 
 }

@@ -1,0 +1,32 @@
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>Root Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of rootCertificates">{{ cert }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>Intermediary Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of intermediaryCertificates">{{ cert }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>End-Entity Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of endEntityCertificates">{{ cert }}</li>
+    </ul>
+  </div>
+</div>

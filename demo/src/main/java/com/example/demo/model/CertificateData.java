@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
-import com.example.demo.dto.IssuerDTO;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -14,7 +16,7 @@ public class CertificateData {
     @Id
     private String  id;
     private String organization;
-    private String serialNumber;
+    private int serialNumber;
     private String commonName;
     private String alias;
     private boolean isValid;
