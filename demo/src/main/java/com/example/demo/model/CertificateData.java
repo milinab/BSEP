@@ -14,7 +14,7 @@ public class CertificateData {
     @Id
     private String  id;
     private String organization;
-    private String serialNumber;
+    private int serialNumber;
     private String commonName;
     private String alias;
     private boolean isValid;

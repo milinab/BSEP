@@ -17,6 +17,7 @@ import java.security.*;
 import java.security.cert.X509Certificate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -41,9 +42,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public void writingCertificateInFile(KeyPair keyPair, CertificateData certificateData, KeyStore keyStore, X509Certificate certificate){
-        String password = certificateData.getKeyStorePassword();
+        String password = "password";
         String fileName = certificateData.getKeyStoreName();
-        String alias = certificateData.getAlias();
+        String alias = UUID.randomUUID().toString();
         BufferedInputStream in = null;
 
         try {

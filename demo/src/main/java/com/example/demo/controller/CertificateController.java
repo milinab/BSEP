@@ -23,12 +23,14 @@ import java.security.KeyStoreException;
 import java.security.NoSuchProviderException;
 import java.security.cert.X509Certificate;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "api/certificate")
 public class CertificateController {
-    @Autowired
+
     private final CertificateService certificateService;
     private KeyStoreReader keyStoreReader;
 
@@ -38,8 +40,24 @@ public class CertificateController {
         this.keyStoreReader = keyStoreReader;
     }
 
-    @GetMapping(value = "certs")
-    public ResponseEntity<List<String>> getAllCertificates(@RequestParam String keyStoreFile, @RequestParam String keyStorePass){
+    @GetMapping(value = "root-certs")
+    public ResponseEntity<List<String>> getRootCertificates(){
+        String keyStoreFile="src/main/resources/static/root.jks";
+        String keyStorePass = "password";
+        List<String> certificates = keyStoreReader.readAllCertificates(keyStoreFile, keyStorePass);
+        return new ResponseEntity<>(certificates, HttpStatus.OK);
+    }
+    @GetMapping(value = "intermediary-certs")
+    public ResponseEntity<List<String>> getIntermediaryCertificates(){
+        String keyStoreFile="src/main/resources/static/intermediary.jks";
+        String keyStorePass = "password";
+        List<String> certificates = keyStoreReader.readAllCertificates(keyStoreFile, keyStorePass);
+        return new ResponseEntity<>(certificates, HttpStatus.OK);
+    }
+    @GetMapping(value = "end-entity-certs")
+    public ResponseEntity<List<String>> getEndEntityCertificates(){
+        String keyStoreFile="src/main/resources/static/endEntity.jks";
+        String keyStorePass = "password";
         List<String> certificates = keyStoreReader.readAllCertificates(keyStoreFile, keyStorePass);
         return new ResponseEntity<>(certificates, HttpStatus.OK);
     }
@@ -79,7 +97,7 @@ public class CertificateController {
             Subject subject = certificateService.generateSubject(certificateData);
             KeyPair keyPair = certificateService.generateKeyPair();
             Issuer issuer = certificateService.generateIssuer(keyPair.getPrivate(), certificateData);
-            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.getStartDate(), certificateData.getEndDate(), certificateData.getSerialNumber());
+            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.getStartDate(), certificateData.getEndDate(), "65");
             certificateService.writingCertificateInFile(keyPair, certificateData, KeyStore.getInstance("JKS", "SUN"), certificate);
             return new ResponseEntity<>(new Certificate(), HttpStatus.CREATED);
         } catch (Exception e){
