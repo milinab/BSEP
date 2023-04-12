@@ -92,13 +92,13 @@ public class CertificateController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
-    public ResponseEntity<Certificate> create(@RequestBody CertificateData certificateData) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
+    public ResponseEntity<Certificate> create(@RequestBody List<CertificateData> certificateData) throws ConstraintViolationException, KeyStoreException, NoSuchProviderException, FileNotFoundException {
         try {
-            Subject subject = certificateService.generateSubject(certificateData);
+            Subject subject = certificateService.generateSubject(certificateData.get(0));
             KeyPair keyPair = certificateService.generateKeyPair();
-            Issuer issuer = certificateService.generateIssuer(keyPair.getPrivate(), certificateData);
-            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.getStartDate(), certificateData.getEndDate(), "65");
-            certificateService.writingCertificateInFile(keyPair, certificateData, KeyStore.getInstance("JKS", "SUN"), certificate);
+            Issuer issuer = certificateService.generateIssuer(keyPair.getPrivate(), certificateData.get(1));
+            X509Certificate certificate = new CertificateGenerator().generateCertificate(subject, issuer, certificateData.get(0).getStartDate(), certificateData.get(0).getEndDate(), "65");
+            certificateService.writingCertificateInFile(keyPair, certificateData.get(0), KeyStore.getInstance("JKS", "SUN"), certificate);
             return new ResponseEntity<>(new Certificate(), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

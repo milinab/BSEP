@@ -1,22 +1,37 @@
 <div class="form-container">
   <form (ngSubmit)="createCertificate()"  class="container-search">
     <label>Organization:</label>
-    <input type="text"  name = "aa" [(ngModel)]="certificate.organization">
+    <input type="text"  name = "aa" [(ngModel)]="certificate[0].organization">
 
     <label>Common name:</label>
-    <input type="text"  name = "bb" [(ngModel)]="certificate.commonName">
+    <input type="text"  name = "bb" [(ngModel)]="certificate[0].commonName">
 
     <label>State</label>
-    <input type="text"  name = "cc" [(ngModel)]="certificate.location.country">
+    <input type="text"  name = "cc" [(ngModel)]="certificate[0].location.country">
 
     <label>City:</label>
-    <input type="text"  name = "dd" [(ngModel)]="certificate.location.city">
+    <input type="text"  name = "dd" [(ngModel)]="certificate[0].location.city">
 
     <label>Country</label>
-    <input type="text" name = "ee" [(ngModel)]="certificate.location.state">
+    <input type="text" name = "ee" [(ngModel)]="certificate[0].location.state">
+
+    <label>Organization2:</label>
+    <input type="text"  name = "aa" [(ngModel)]="certificate[1].organization">
+
+    <label>Common name2:</label>
+    <input type="text"  name = "bb" [(ngModel)]="certificate[1].commonName">
+
+    <label>State2</label>
+    <input type="text"  name = "cc" [(ngModel)]="certificate[1].location.country">
+
+    <label>City2:</label>
+    <input type="text"  name = "dd" [(ngModel)]="certificate[1].location.city">
+
+    <label>Country2</label>
+    <input type="text" name = "ee" [(ngModel)]="certificate[1].location.state">
 
     <label>Type:</label>
-    <select [(ngModel)]="certificate.type" name="erer">
+    <select [(ngModel)]="certificate[0].type" name="erer">
       <option value="ROOT" name="ww">Root</option>
       <option value="INTERMEDIARY" name="aasd">Intermediary</option>
       <option value="END_ENTITY" name="etrt">End Entity</option>
@@ -25,7 +40,7 @@
     <div>
       <mat-form-field appearance="fill" class="input-schedule">
         <mat-label>Departure date</mat-label>
-        <input matInput name="picker" [matDatepicker]="picker" [(ngModel)]="certificate.startDate" [formControl]="dateFormControl">
+        <input matInput name="picker" [matDatepicker]="picker" [(ngModel)]="certificate[0].startDate" [formControl]="dateFormControl">
         <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
           Please enter a date
         </mat-error>
@@ -41,7 +56,7 @@
     <div>
       <mat-form-field appearance="fill" class="input-schedule">
         <mat-label>Departure date</mat-label>
-        <input matInput name="picker2" [matDatepicker]="picker2" [(ngModel)]="certificate.endDate" [formControl]="dateFormControl">
+        <input matInput name="picker2" [matDatepicker]="picker2" [(ngModel)]="certificate[0].endDate" [formControl]="dateFormControl">
         <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
           Please enter a date
         </mat-error>

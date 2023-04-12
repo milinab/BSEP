@@ -11,11 +11,13 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class HomeComponent implements OnInit {
   dateFormControl = new FormControl('', [Validators.required, Validators.required]);
-  public certificate: CertificateModel = new CertificateModel();
+  certificate: CertificateModel[] = [];
 
   constructor(private certificateService: CertificateService) { }
 
   ngOnInit(): void {
+    this.certificate.push(new CertificateModel());
+    this.certificate.push(new CertificateModel());
   }
 
   createCertificate(): void {
