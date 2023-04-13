@@ -4,6 +4,7 @@ import {map, Observable} from "rxjs";
 import {CertificateModel} from "../model/certificate.model";
 import {Room} from "../model/room.model";
 import {CertificateIssuerDTOModel} from "../model/certificateIssuerDTO.model";
+import {CertificateStatusDTOModel} from "../model/certificateStatusDTO.model";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,10 @@ export class CertificateService {
 
   getIssueByAlias(alias: string): Observable<CertificateIssuerDTOModel>{
     return this.http.get<CertificateIssuerDTOModel>(this.apiHost + 'api/certificate/issues/'+alias, {headers: this.headers});
+  }
+
+  getCertificateStatusByAlias(alias: string | undefined): Observable<CertificateStatusDTOModel>{
+    return this.http.get<CertificateStatusDTOModel>(this.apiHost + 'api/certificate/certificateStatus/'+alias, {headers: this.headers});
   }
 
   uploadFile(file: File) {

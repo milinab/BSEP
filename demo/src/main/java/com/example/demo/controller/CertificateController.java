@@ -158,6 +158,7 @@ public class CertificateController {
     }
 
     @GetMapping(value = "/readOne/{alias}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> getOneCert(@PathVariable(value = "alias") String alias){
         String aliasss = alias;
         String keyStoreFile = "src/main/resources/static/root.jks";

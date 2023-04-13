@@ -8,11 +8,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MaterialModule} from "../../material/material.module";
 import { AllCertificatesComponent } from './all-certificates/all-certificates.component';
 import {MatSelectModule} from "@angular/material/select";
+import { CheckComponent } from './check/check.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     AllCertificatesComponent,
+    CheckComponent,
   ],
     imports: [
         CommonModule,
