@@ -188,6 +188,7 @@ public class CertificateController {
     }
 
     @PutMapping(consumes = "application/json", value = "/revoke/{alias}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CertificateStatusDTO> revokeCertificate(@PathVariable("alias") String alias) {
         Boolean certificate = certificateService.revokeCertificate(alias);
         if (certificate== false){

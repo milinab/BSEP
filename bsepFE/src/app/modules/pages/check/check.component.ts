@@ -9,7 +9,7 @@ import {CertificateService} from "../../hospital/services/certificate.service";
 })
 export class CheckComponent implements OnInit {
 
-  alias: string | undefined;
+  alias: string | undefined ;
   certificateStatus: CertificateStatusDTOModel | undefined;
 
   constructor(private certificateService: CertificateService) {}
@@ -18,9 +18,20 @@ export class CheckComponent implements OnInit {
     this.certificateService.getCertificateStatusByAlias(this.alias)
       .subscribe((data: CertificateStatusDTOModel) => {
         this.certificateStatus = data;
+        console.log(this.certificateStatus.status);
       }, (error) => {
         console.log(error);
       });
+  }
+
+  public revokeCertificate(alias: any) {
+    this.certificateService.revokeCertificate(alias).subscribe( res =>
+    {
+      this.getCertificateStatus();
+      alert("Success!")
+    }, error => {
+      alert("Can't revoke!")
+    })
   }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@
 </div>
 <div *ngIf="certificateStatus">
   <h2>Status for Alias {{alias}}:</h2>
-  <p><strong>Revoked:</strong> {{certificateStatus ? 'No' : 'Yes'}}</p>
+  <p><strong>Revoked:</strong> {{certificateStatus.status ? 'No' : 'Yes'}}</p>
+  <button (click)="revokeCertificate(alias)">Revoke Certificate</button>
 </div>
 <br>

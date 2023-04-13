@@ -18,6 +18,10 @@ export class CertificateService {
   constructor(private http: HttpClient) { }
 
 
+  revokeCertificate(alias: string): Observable<any>{
+    return this.http.put<any>(this.apiHost + 'api/certificate/revoke/' + alias, {headers: this.headers});
+  }
+
   createCertificate(certificate: any): Observable<any> {
     return this.http.post<any>(this.apiHost + 'api/certificate/create', certificate, {headers: this.headers});
   }
