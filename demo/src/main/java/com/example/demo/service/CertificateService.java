@@ -40,4 +40,6 @@ public interface CertificateService {
 
     CertificateStatusDTO findCertificateStatusByAlias(String alias);
 
+    Boolean revokeCertificate(String alias);
+
 }

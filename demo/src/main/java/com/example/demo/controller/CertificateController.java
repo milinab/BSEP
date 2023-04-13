@@ -187,6 +187,13 @@ public class CertificateController {
         }
     }
 
-
+    @PutMapping(consumes = "application/json", value = "/revoke/{alias}")
+    public ResponseEntity<CertificateStatusDTO> revokeCertificate(@PathVariable("alias") String alias) {
+        Boolean certificate = certificateService.revokeCertificate(alias);
+        if (certificate== false){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

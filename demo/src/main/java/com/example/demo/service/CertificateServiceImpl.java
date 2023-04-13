@@ -22,6 +22,7 @@ import java.security.*;
 import java.security.cert.X509Certificate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -197,5 +198,17 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public CertificateStatusDTO findCertificateStatusByAlias(String alias) {
         return certificateStatusRepository.findCertificateStatusByAlias(alias);
+    }
+
+    @Override
+    public Boolean revokeCertificate(String alias) {
+        Optional<CertificateStatusDTO> certificateStatus = Optional.ofNullable(certificateStatusRepository.findCertificateStatusByAlias(alias));
+        if(certificateStatus.get().getStatus().equals(false))
+        {
+            return false;
+        }
+        certificateStatus.get().setStatus(false);
+        certificateStatusRepository.save(certificateStatus.get());
+        return true;
     }
 }
