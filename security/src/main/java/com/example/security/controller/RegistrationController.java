@@ -17,6 +17,11 @@ public class RegistrationController {
         return registrationService.register(request);
     }
 
+    @PostMapping(path = "pending")
+    public String pendingRegister(@RequestBody RegistrationRequest request){
+        return registrationService.pendingRegister(request);
+    }
+
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
