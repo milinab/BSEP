@@ -1,7 +1,6 @@
 package com.example.security.service;
 
 import com.example.security.email.EmailSender;
-import com.example.security.enums.AppUserRole;
 import com.example.security.model.AppUser;
 import com.example.security.registration.EmailValidator;
 import com.example.security.registration.RegistrationRequest;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static com.example.security.enums.AppUserRole.ADMIN;
 
 @Service
 @AllArgsConstructor
@@ -26,13 +27,16 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
+        if(request.getRole().equals(ADMIN)){
+            throw new IllegalStateException("Admin can't be registered");
+        }
         String token =  appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        AppUserRole.HR
+                        request.getRole()
                 )
         );
 
