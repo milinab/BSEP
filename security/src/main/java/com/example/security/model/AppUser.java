@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,14 +33,24 @@ public class AppUser implements UserDetails {
             generator = "student_sequence"
     )
     private Long id;
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private String email;
+    @Column
     private String password;
+    @Column
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
+    @Column
     private Boolean locked = false;
+    @Column
     private Boolean enabled = false;
+
+    @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
+    private List<Work> allProjects;
 
     public AppUser(String firstName,
                    String lastName,
