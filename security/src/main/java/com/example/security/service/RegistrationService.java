@@ -29,7 +29,7 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-        if(request.getRole().equals(ADMIN)){
+        if(request.getAppUserRole().equals(ADMIN)){
             throw new IllegalStateException("Admin can't be registered");
         }
 
@@ -71,7 +71,7 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-        if(request.getRole().equals(ADMIN)){
+        if(request.getAppUserRole().equals(ADMIN)){
             throw new IllegalStateException("Admin can't be registered");
         }
         String token = appUserService.signUpUser(
@@ -80,7 +80,7 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        request.getRole(),
+                        request.getAppUserRole(),
                         RegistrationStatus.PENDING
                 )
         );
