@@ -1,6 +1,7 @@
 package com.example.security.service;
 
 import com.example.security.email.EmailSender;
+import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import com.example.security.registration.EmailValidator;
 import com.example.security.registration.RegistrationRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static com.example.security.enums.AppUserRole.ADMIN;
 
@@ -30,20 +32,61 @@ public class RegistrationService {
         if(request.getRole().equals(ADMIN)){
             throw new IllegalStateException("Admin can't be registered");
         }
-        String token =  appUserService.signUpUser(
+
+        AppUser existingUser = (AppUser) appUserService.loadUserByUsername(request.getEmail());
+
+        if (existingUser == null) {
+            throw new IllegalStateException("User not found");
+        }
+
+        existingUser.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+        appUserService.updateUser(existingUser);
+
+        String token = generateConfirmationToken(existingUser);
+        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
+
+        emailSender.send(
+                request.getEmail(),
+                buildEmail(request.getFirstName(), link)
+        );
+
+        return token;
+    }
+
+    private String generateConfirmationToken(AppUser user) {
+        String token = generateToken(); // Use a different method name for generating the token
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusSeconds(1800), user);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        return confirmationToken.getToken();
+    }
+
+    private String generateToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    public String pendingRegister(RegistrationRequest request) {
+        boolean isValidEmail =  emailValidator.test(request.getEmail());
+        if(!isValidEmail){
+            throw new IllegalStateException("email not valid");
+        }
+        if(request.getRole().equals(ADMIN)){
+            throw new IllegalStateException("Admin can't be registered");
+        }
+        String token = appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        request.getRole()
+                        request.getRole(),
+                        RegistrationStatus.PENDING
                 )
         );
 
-        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
+/*        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
-                buildEmail(request.getFirstName(), link));
+                buildEmail(request.getFirstName(), link));*/
         return token;
     }
 

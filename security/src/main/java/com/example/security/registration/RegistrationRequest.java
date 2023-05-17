@@ -1,6 +1,7 @@
 package com.example.security.registration;
 
 import com.example.security.enums.AppUserRole;
+import com.example.security.enums.RegistrationStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,5 +16,6 @@ public class RegistrationRequest {
     private final String lastName;
     private final String email;
     private final AppUserRole role;
+    private final RegistrationStatus registrationStatus;
     private final String password;
 }

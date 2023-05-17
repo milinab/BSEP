@@ -1,6 +1,7 @@
 package com.example.security.model;
 
 import com.example.security.enums.AppUserRole;
+import com.example.security.enums.RegistrationStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,8 @@ public class AppUser implements UserDetails {
     @Column
     private Boolean enabled = false;
 
+    private RegistrationStatus registrationStatus;
+
     @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
     private List<Work> allProjects;
 
@@ -56,12 +59,14 @@ public class AppUser implements UserDetails {
                    String lastName,
                    String email,
                    String password,
-                   AppUserRole appUserRole) {
+                   AppUserRole appUserRole,
+                   RegistrationStatus registrationStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
+        this.registrationStatus = registrationStatus;
     }
 
     @Override
