@@ -50,6 +50,7 @@ public class AppUser implements UserDetails {
     @Column
     private Boolean enabled = false;
 
+    @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
     @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)

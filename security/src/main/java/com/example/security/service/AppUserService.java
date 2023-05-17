@@ -1,5 +1,6 @@
 package com.example.security.service;
 
+import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import com.example.security.registration.token.ConfirmationToken;
 import com.example.security.registration.token.ConfirmationTokenService;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +30,10 @@ public class AppUserService implements UserDetailsService {
 
     public void updateUser(AppUser appUser){
         appUserRepository.save(appUser);
+    }
+
+    public List<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) {
+        return appUserRepository.findByRegistrationStatus(registrationStatus);
     }
 
 

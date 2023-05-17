@@ -53,6 +53,8 @@ public class RegistrationService {
         return token;
     }
 
+
+
     private String generateConfirmationToken(AppUser user) {
         String token = generateToken(); // Use a different method name for generating the token
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusSeconds(1800), user);
