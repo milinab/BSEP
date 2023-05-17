@@ -40,7 +40,7 @@ public class RegistrationService {
         }
 
         existingUser.setRegistrationStatus(RegistrationStatus.ACCEPTED);
-        appUserService.updateUser(existingUser);
+        appUserService.saveUser(existingUser);
 
         String token = generateConfirmationToken(existingUser);
         String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
