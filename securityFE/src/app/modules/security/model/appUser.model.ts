@@ -4,7 +4,7 @@ export class AppUser{
   password: string = '';
   firstName: string = '';
   lastName: string = '';
-  role: string = '';
+  appUserRole: string = '';
 
 
   public constructor(obj?: any) {
@@ -14,7 +14,7 @@ export class AppUser{
       this.password = obj.password;
       this.firstName = obj.firstName;
       this.lastName = obj.lastName;
-      this.role = obj.role;
+      this.appUserRole = obj.appUserRole;
     }
   }
 }
