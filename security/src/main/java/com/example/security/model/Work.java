@@ -1,6 +1,9 @@
 package com.example.security.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -21,5 +24,8 @@ public class Work {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    private int duration;
+    private String description;
 
 }

@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Getter
 @Setter
@@ -53,8 +52,8 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
-    @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
-    private List<Work> allProjects;
+/*    @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
+    private List<Work> allProjects;*/
 
     public AppUser(String firstName,
                    String lastName,
