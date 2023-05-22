@@ -93,6 +93,29 @@ public class RegistrationService {
     }
 
     @Transactional
+    public void denyRegistration(Long userId, String denialReason) {
+        AppUser user = appUserService.getUserById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
+
+        user.setRegistrationStatus(RegistrationStatus.DENIED);
+        appUserService.saveUser(user);
+
+        String email = user.getEmail();
+        String subject = "Registration Denied";
+        String message = "Dear " + user.getFirstName() + ",\n\n" +
+                "We regret to inform you that your registration request has been denied.\n" +
+                "Reason: " + denialReason + "\n" +
+                "If you have any questions, please feel free to contact us.\n\n" +
+                "Best regards,\n" +
+                "Your Application Team";
+
+        emailSender.sendDeny(email, subject, message);
+    }
+
+
+    @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)

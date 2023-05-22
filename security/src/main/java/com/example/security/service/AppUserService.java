@@ -29,6 +29,11 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    public AppUser getUserById(Long userId) {
+        Optional<AppUser> userOptional = appUserRepository.findById(userId);
+        return userOptional.orElse(null);
+    }
+
     public void saveUser(AppUser appUser){
         appUserRepository.save(appUser);
     }
