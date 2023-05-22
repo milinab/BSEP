@@ -4,16 +4,24 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
 import {FormsModule} from "@angular/forms";
+import { MatTableModule } from '@angular/material/table';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     RegistrationComponent,
+    AdminProfileComponent,
+    ProjectsComponent,
+    UsersComponent
   ],
     imports: [
         CommonModule,
         AppRoutingModule,
         FormsModule,
+        MatTableModule
     ]
 })
 export class PagesModule { }

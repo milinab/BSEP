@@ -1,12 +1,17 @@
 package com.example.security.controller;
 
+import com.example.security.dto.UserDto;
 import com.example.security.model.AppUser;
 import com.example.security.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/v1/user")
 public class UserController {
 
@@ -26,8 +31,19 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PutMapping("/{id}")
-    public AppUser updateUser(@RequestBody AppUser user, @PathVariable("id") Long id) {
-        return userService.edit(user, id);
+//    @PutMapping("/{id}")
+//    public ResponseEntity<UserDto> updateUser(@RequestBody AppUser user, @PathVariable("id") Long id){
+//        AppUser editUser = userService.edit(user, id);
+//        if (editUser == null) {
+//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//        }else {
+//            return new ResponseEntity<>(new UserDto(user), HttpStatus.OK);
+//        }
+//    }
+
+
+    @GetMapping("/{id}")
+    public AppUser findById(@PathVariable("id") Long id) {
+        return userService.findById(id);
     }
 }

@@ -8,9 +8,13 @@ import { HospitalModule } from "./modules/hospital/hospital.module";
 import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MaterialModule,
     PagesModule,
     HospitalModule,
-    MatDialogModule
+    MatDialogModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

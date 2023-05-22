@@ -1,0 +1,29 @@
+.user-profile {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-profile h2 {
+    margin-bottom: 20px;
+  }
+  
+  .user-profile div {
+    margin-bottom: 10px;
+  }
+  
+  .user-profile label {
+    font-weight: bold;
+  }
+  
+  .user-profile span {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  

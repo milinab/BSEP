@@ -1,0 +1,15 @@
+<h1>Projects:</h1>
+<ul>
+    <li *ngFor="let project of projects">
+      <span class="user-name">{{ project.name}}</span>
+    </li>
+  </ul>
+
+  <form (submit)="createProject()">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="project.name" required>
+      <button>Create Project</button>
+
+    </div>
+    </form>
