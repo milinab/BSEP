@@ -33,4 +33,8 @@ export class AppUserService{
     return this.http.put<AppUser>(url, user, {headers: this.headers});
   }
   
+  getPendingUsers(): Observable<AppUser[]> {
+    const url = `${this.apiHost}api/v1/appUser/pending`;
+    return this.http.get<AppUser[]>(url, { headers: this.headers });
+  }
 }

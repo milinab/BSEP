@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UsersComponent } from './users/users.component';
+import { ValidateRegistrationComponent } from './validate-registration/validate-registration.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UsersComponent } from './users/users.component';
     RegistrationComponent,
     AdminProfileComponent,
     ProjectsComponent,
-    UsersComponent
+    UsersComponent,
+    ValidateRegistrationComponent
   ],
     imports: [
         CommonModule,

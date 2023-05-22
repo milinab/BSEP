@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WorkService {
@@ -36,6 +37,22 @@ public class WorkService {
             workRepository.save(work);
         }
 
+    }
+
+    public Work updateWork(Long id, Work updatedWork) throws Exception {
+        Optional<Work> optionalWork = workRepository.findById(id);
+        if (optionalWork.isPresent()) {
+            Work work = optionalWork.get();
+            work.setDescription(updatedWork.getDescription());
+
+            return workRepository.save(work);
+        } else {
+            throw new Exception("Work not found with ID: " + id);
+        }
+    }
+
+    public List<Work> getWorksByWorkerId(Long workerId) {
+        return workRepository.findByWorkerId(workerId);
     }
 
 

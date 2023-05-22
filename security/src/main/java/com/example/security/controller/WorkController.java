@@ -1,8 +1,11 @@
 package com.example.security.controller;
 
 import com.example.security.dto.WorkDto;
+import com.example.security.model.Work;
 import com.example.security.service.WorkService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -20,4 +23,20 @@ public class WorkController {
         workService.addWorkersToProject(workDto);
     }
 
+
+    @GetMapping("/{workerId}")
+    public ResponseEntity<List<Work>> getWorksByWorkerId(@PathVariable Long workerId) {
+        List<Work> works = workService.getWorksByWorkerId(workerId);
+        return ResponseEntity.ok(works);
+    }
+
+    @PutMapping("/description/{id}")
+    public ResponseEntity<String> updateWork(@PathVariable Long id, @RequestBody Work updatedWork) {
+        try {
+            Work updatedEntity = workService.updateWork(id, updatedWork);
+            return ResponseEntity.ok("Work updated successfully");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

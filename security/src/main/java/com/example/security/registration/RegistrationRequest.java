@@ -15,7 +15,7 @@ public class RegistrationRequest {
     private final String firstName;
     private final String lastName;
     private final String email;
-    private final AppUserRole role;
+    private final AppUserRole appUserRole;
     private final RegistrationStatus registrationStatus;
     private final String password;
 }

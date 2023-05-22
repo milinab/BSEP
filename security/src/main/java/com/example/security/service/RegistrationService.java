@@ -29,7 +29,7 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-        if(request.getRole().equals(ADMIN)){
+        if(request.getAppUserRole().equals(ADMIN)){
             throw new IllegalStateException("Admin can't be registered");
         }
 
@@ -40,7 +40,7 @@ public class RegistrationService {
         }
 
         existingUser.setRegistrationStatus(RegistrationStatus.ACCEPTED);
-        appUserService.updateUser(existingUser);
+        appUserService.saveUser(existingUser);
 
         String token = generateConfirmationToken(existingUser);
         String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
@@ -52,6 +52,8 @@ public class RegistrationService {
 
         return token;
     }
+
+
 
     private String generateConfirmationToken(AppUser user) {
         String token = generateToken(); // Use a different method name for generating the token
@@ -69,7 +71,7 @@ public class RegistrationService {
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-        if(request.getRole().equals(ADMIN)){
+        if(request.getAppUserRole().equals(ADMIN)){
             throw new IllegalStateException("Admin can't be registered");
         }
         String token = appUserService.signUpUser(
@@ -78,7 +80,7 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        request.getRole(),
+                        request.getAppUserRole(),
                         RegistrationStatus.PENDING
                 )
         );

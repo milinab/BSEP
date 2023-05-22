@@ -1,5 +1,6 @@
 package com.example.security.service;
 
+import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import com.example.security.registration.token.ConfirmationToken;
 import com.example.security.registration.token.ConfirmationTokenService;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,8 +29,30 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public void updateUser(AppUser appUser){
+    public void saveUser(AppUser appUser){
         appUserRepository.save(appUser);
+    }
+
+    public AppUser updateAppUser(String email, AppUser updatedUser) throws Exception {
+        Optional<AppUser> existingUserOptional = appUserRepository.findByEmail(email);
+        if (existingUserOptional.isEmpty()) {
+            throw new Exception("User not found");
+        }
+
+        AppUser existingUser = existingUserOptional.get();
+
+        // Update the necessary fields of the existing user with the new data
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setAppUserRole(updatedUser.getAppUserRole());
+
+        // Save the updated user in the repository
+        return appUserRepository.save(existingUser);
+    }
+
+    public List<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) {
+        return appUserRepository.findByRegistrationStatus(registrationStatus);
     }
 
 

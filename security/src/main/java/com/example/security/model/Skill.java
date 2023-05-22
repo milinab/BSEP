@@ -12,20 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Work {
+public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "worker_id")
-    private AppUser worker;
-
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
-
-    private int duration;
-    private String description;
-
+    @JoinColumn(name = "user_id")
+    private AppUser user;
+    private String skillName;
+    private int skillScore;
 }
