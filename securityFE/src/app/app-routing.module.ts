@@ -9,12 +9,13 @@ import {ValidateRegistrationComponent} from "./modules/pages/validate-registrati
 import { LoginComponent } from "./modules/pages/login/login.component";
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'admin-profile', component: AdminProfileComponent},
   { path: 'users', component: UsersComponent },
   { path: 'projects', component: ProjectsComponent },
-  { path: 'validate-registration', component: ValidateRegistrationComponent }
+  { path: 'validate-registration', component: ValidateRegistrationComponent },
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
