@@ -6,9 +6,10 @@ import { AdminProfileComponent } from "./modules/pages/admin-profile/admin-profi
 import { UsersComponent } from "./modules/pages/users/users.component";
 import { ProjectsComponent } from "./modules/pages/projects/projects.component";
 import {ValidateRegistrationComponent} from "./modules/pages/validate-registration/validate-registration.component";
+import { LoginComponent } from "./modules/pages/login/login.component";
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'admin-profile', component: AdminProfileComponent},
   { path: 'users', component: UsersComponent },

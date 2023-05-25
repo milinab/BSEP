@@ -16,4 +16,8 @@ export class AuthService {
     return this.http.post<any>(this.apiHost + 'api/v1/registration', registerRequest, {headers: this.headers});
   }
 
+  authenticate(loginRequest: any): Observable<any> {
+    return this.http.post<any>(this.apiHost + 'api/v1/auth/authenticate', loginRequest, {headers: this.headers});
+  }
+
 }
