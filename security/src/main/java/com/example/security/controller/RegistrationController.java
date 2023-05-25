@@ -26,4 +26,9 @@ public class RegistrationController {
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }
+
+    @PostMapping(path = "{userId}/deny")
+    public void denyRegistration(@PathVariable("userId") Long userId, @RequestParam("reason") String denialReason) {
+        registrationService.denyRegistration(userId, denialReason);
+    }
 }

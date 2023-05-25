@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //
 //    private final AppUserService appUserService;
 //    private final PasswordEncoder bCryptPasswordEncoder;
-   // private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
 //    protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +30,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //                .anyRequest()
 //                .authenticated();
 //    }
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(daoAuthenticationProvider());
+//    }
+//
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider provider =
+//                new DaoAuthenticationProvider();
+//        provider.setPasswordEncoder(bCryptPasswordEncoder);
+//        provider.setUserDetailsService(appUserService);
+//        return provider;
+//    }
+//}
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("**")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated();
+//    }
+//
+//    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider(daoAuthenticationProvider());
 //    }
