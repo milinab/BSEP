@@ -21,13 +21,13 @@ export class AdminProfileComponent implements OnInit {
 
   constructor(private appUserService : AppUserService, private router: Router, private route: ActivatedRoute, private tokenStorageService: TokenStorageService) { }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     var loggedUser = this.tokenStorageService.getUser();
     console.log("loggedUser ", loggedUser)
     this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
       this.appUser = res;
       console.log("GETOVAN USER:", this.appUser)
-      
+
       this.user.id = this.appUser.id;
       this.user.email = this.appUser.email;
       this.user.firstName = this.appUser.firstName;
@@ -36,7 +36,7 @@ export class AdminProfileComponent implements OnInit {
       this.user.appUserRole = this.appUser.appUserRole
     });
 
-  }  
+  }
 
   updateUser(): void {
     console.log("UPDATE USER COMPONENT");
@@ -51,6 +51,6 @@ export class AdminProfileComponent implements OnInit {
       }
     );
   }
-  
-  
+
+
 }
