@@ -1,0 +1,30 @@
+<div *ngIf="user">
+  <h2>User Profile</h2>
+  <div>
+    <label>First name:</label>
+    <input type="text" [(ngModel)]="user.firstName">
+  </div>
+  <div>
+    <label>Last name:</label>
+    <input type="text" [(ngModel)]="user.lastName">
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="user.email" readonly>
+  </div>
+  <div>
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="user.password">
+  </div>
+  <div>
+    <label>Role:</label>
+    <input type="role" [(ngModel)]="user.appUserRole">
+  </div>
+  <button (click)="updateUser()">Update</button>
+
+  <div>
+    <h2>Upload File</h2>
+    <input type="file" #fileInput>
+    <button (click)="uploadFile()">Upload</button>
+  </div>
+</div>

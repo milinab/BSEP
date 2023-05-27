@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { AllWorkersByProjectComponent } from './all-workers-by-project/all-workers-by-project.component';
+import { EngineerProfileComponent } from './engineer-profile/engineer-profile.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AllWorkersByProjectComponent } from './all-workers-by-project/all-worke
     UsersComponent,
     ValidateRegistrationComponent,
     LoginComponent,
-    AllWorkersByProjectComponent
+    AllWorkersByProjectComponent,
+    EngineerProfileComponent
   ],
     imports: [
         CommonModule,
