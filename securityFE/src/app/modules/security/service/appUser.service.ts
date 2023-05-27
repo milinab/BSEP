@@ -32,7 +32,11 @@ export class AppUserService{
     const url = `${this.apiHost}api/v1/user/${id}`;
     return this.http.put<AppUser>(url, user, {headers: this.headers});
   }
-  
+
+  //updateManager(user: any): Observable<any> {
+  //  return this.http.put<any>(this.apiHost + 'api/v1/appUser/updateManager/' + user.id, user,{headers: this.headers});
+  //}
+
   getPendingUsers(): Observable<AppUser[]> {
     const url = `${this.apiHost}api/v1/appUser/pending`;
     return this.http.get<AppUser[]>(url, { headers: this.headers });

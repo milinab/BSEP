@@ -9,6 +9,18 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UsersComponent } from './users/users.component';
 import { ValidateRegistrationComponent } from './validate-registration/validate-registration.component';
+import {ManagerProfileComponent} from "./manager-profile/manager-profile.component";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {ManagerProfileUpdateComponent} from "./manager-profile-update/manager-profile-update.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {ChangePasswordComponent} from "./change-password/change-password.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {ManagerPastProjectsComponent} from "./manager-past-projects/manager-past-projects.component";
+import {ManagerCurrentProjectsComponent} from "./manager-current-projects/manager-current-projects.component";
+import {ProjectEmployeesComponent} from "./project-employees/project-employees.component";
 
 @NgModule({
   declarations: [
@@ -17,13 +29,25 @@ import { ValidateRegistrationComponent } from './validate-registration/validate-
     AdminProfileComponent,
     ProjectsComponent,
     UsersComponent,
-    ValidateRegistrationComponent
+    ValidateRegistrationComponent,
+    ManagerProfileComponent,
+    ManagerProfileUpdateComponent,
+    ChangePasswordComponent,
+    ManagerPastProjectsComponent,
+    ManagerCurrentProjectsComponent,
+    ProjectEmployeesComponent
   ],
-    imports: [
-        CommonModule,
-        AppRoutingModule,
-        FormsModule,
-        MatTableModule
-    ]
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    FormsModule,
+    MatTableModule,
+    MatDividerModule,
+    MatCardModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ]
 })
 export class PagesModule { }
