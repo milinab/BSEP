@@ -17,11 +17,11 @@
       <td>{{ user.lastName }}</td>
       <td>{{ user.appUserRole }}</td>
       <td>
-
         <button (click)="registerUser(user)">Register</button>
-        <!--
-        <button (click)="declineUser(user)">Decline</button>
--->
+        <button (click)="denyRegistration(user.id, declineReason.value)">Decline</button>
+        <div>
+          <input type="text" #declineReason placeholder="Enter reason">
+        </div>
       </td>
     </tr>
     </tbody>

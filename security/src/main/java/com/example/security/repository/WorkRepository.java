@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface WorkRepository extends JpaRepository<Work, Long> {
     List<Work> findByWorkerId(Long workerId);
+
+    List<Work> findByProjectId(Long projectId);
 }

@@ -4,6 +4,8 @@ export class UserDto{
     password: string = '';
     firstName: string = '';
     lastName: string = '';
+    appUserRole: string = '';
+
 
  public constructor(obj?: any) {
     if (obj) {
@@ -12,6 +14,7 @@ export class UserDto{
       this.password = obj.password;
       this.firstName = obj.firstName;
       this.lastName = obj.lastName;
+      this.appUserRole = obj.appUserRole
     }
   }
 }

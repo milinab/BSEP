@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MatTableModule } from '@angular/material/table';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { ProjectsComponent } from './projects/projects.component';
@@ -21,6 +21,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {ManagerPastProjectsComponent} from "./manager-past-projects/manager-past-projects.component";
 import {ManagerCurrentProjectsComponent} from "./manager-current-projects/manager-current-projects.component";
 import {ProjectEmployeesComponent} from "./project-employees/project-employees.component";
+import { LoginComponent } from './login/login.component';
+import { AllWorkersByProjectComponent } from './all-workers-by-project/all-workers-by-project.component';
+import { EngineerProfileComponent } from './engineer-profile/engineer-profile.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import {ProjectEmployeesComponent} from "./project-employees/project-employees.c
     ChangePasswordComponent,
     ManagerPastProjectsComponent,
     ManagerCurrentProjectsComponent,
-    ProjectEmployeesComponent
+    ProjectEmployeesComponent,
+    LoginComponent,
+    AllWorkersByProjectComponent,
+    EngineerProfileComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,8 @@ import {ProjectEmployeesComponent} from "./project-employees/project-employees.c
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
   ]
 })
 export class PagesModule { }

@@ -24,11 +24,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-//    public AppUser edit(AppUser user, Long id) {
-//        Optional<AppUser> editUser = userRepository.findById(id);
-//        AppUser editedUser = userRepository.save(user);
-//        return editUser.isEmpty() ? null : editedUser;
-//    }
+    public AppUser edit(AppUser user, Long id) {
+        Optional<AppUser> editUser = userRepository.findById(id);
+        AppUser editedUser = userRepository.save(user);
+        return editUser.isEmpty() ? null : editedUser;
+    }
     public AppUser findById(Long id) {
         Optional<AppUser> user = userRepository.findById(id);
         if (user.isEmpty()) {

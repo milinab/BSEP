@@ -40,4 +40,26 @@ export class ValidateRegistrationComponent implements OnInit {
       }
     );
   }
-}
+
+
+  denyRegistration(userId: number, denialReason: string) {
+    this.authService.denyRegistration(userId, denialReason).subscribe(
+      () => {
+        alert('Registration denied');
+        // Optionally, you can refresh the list of pending users after denying registration
+        this.appUserService.getPendingUsers().subscribe(
+          (users: AppUser[]) => {
+            this.users = users;
+          },
+          (error: any) => {
+            console.error('Error fetching pending users:', error);
+          }
+        );
+      },
+      (error: any) => {
+        alert('Error denying registration');
+        console.error('Deny registration error:', error);
+      }
+    );
+  }
+  }

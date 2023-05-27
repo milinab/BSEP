@@ -31,15 +31,15 @@ public class UserController {
         return userService.createUser(user);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<UserDto> updateUser(@RequestBody AppUser user, @PathVariable("id") Long id){
-//        AppUser editUser = userService.edit(user, id);
-//        if (editUser == null) {
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }else {
-//            return new ResponseEntity<>(new UserDto(user), HttpStatus.OK);
-//        }
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody AppUser user, @PathVariable("id") Long id){
+        AppUser editUser = userService.edit(user, id);
+        if (editUser == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else {
+            return new ResponseEntity<>(new UserDto(user), HttpStatus.OK);
+        }
+    }
 
 
     @GetMapping("/{id}")
