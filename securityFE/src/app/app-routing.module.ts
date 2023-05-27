@@ -8,16 +8,17 @@ import { ProjectsComponent } from "./modules/pages/projects/projects.component";
 import {ValidateRegistrationComponent} from "./modules/pages/validate-registration/validate-registration.component";
 import { LoginComponent } from "./modules/pages/login/login.component";
 import {EngineerProfileComponent} from "./modules/pages/engineer-profile/engineer-profile.component";
+import {AuthGuard} from "./modules/guard/authGuard";
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'admin-profile', component: AdminProfileComponent},
-  { path: 'users', component: UsersComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'validate-registration', component: ValidateRegistrationComponent },
+  { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard]},
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
+  { path: 'validate-registration', component: ValidateRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'engineer-profile', component: EngineerProfileComponent}
+  { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
