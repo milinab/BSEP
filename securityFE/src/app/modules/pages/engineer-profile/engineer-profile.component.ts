@@ -6,6 +6,8 @@ import {AppUserService} from "../../security/service/appUser.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TokenStorageService} from "../../security/service/token-storage.service";
 import {AttachmentService} from "../../security/service/attachment.service";
+import {Work} from "../../security/model/work.model";
+import {WorkService} from "../../security/service/work.service";
 
 @Component({
   selector: 'app-engineer-profile',
@@ -14,11 +16,12 @@ import {AttachmentService} from "../../security/service/attachment.service";
 })
 export class EngineerProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
+  works: Work[] = [];
   public user: UserDto = new UserDto();
   public userToken: UserToken = new UserToken("","",0);
   appUser: AppUser | undefined;
 
-  constructor(private attachmentService: AttachmentService, private appUserService : AppUserService, private router: Router, private route: ActivatedRoute, private tokenStorageService: TokenStorageService) { }
+  constructor(private workService: WorkService, private attachmentService: AttachmentService, private appUserService : AppUserService, private router: Router, private route: ActivatedRoute, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     var loggedUser = this.tokenStorageService.getUser();
@@ -33,6 +36,9 @@ export class EngineerProfileComponent implements OnInit {
       this.user.lastName = this.appUser.lastName;
       this.user.password = this.appUser.password;
       this.user.appUserRole = this.appUser.appUserRole
+
+      this.getWorksByWorkerId(this.user.id);
+
     });
 
   }
@@ -66,6 +72,16 @@ export class EngineerProfileComponent implements OnInit {
       );
     }
   }
-
-
+  getWorksByWorkerId(workerId: number): void {
+    this.workService.getWorksByWorkerId(workerId).subscribe(
+      (works) => {
+        this.works = works;
+        // Handle success as needed
+      },
+      (error) => {
+        console.error('Failed to fetch works:', error);
+        // Handle error as needed
+      }
+    );
+  }
 }

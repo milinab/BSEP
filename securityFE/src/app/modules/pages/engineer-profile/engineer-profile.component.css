@@ -1,14 +1,13 @@
-/* Overall container */
-div {
+.container {
   margin: 20px auto;
   padding: 20px;
-  border:none;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  width: 300px;
+  width: 400px;
 }
 
 h2 {
-  font-size: 28px; /* Increase font size */
+  font-size: 28px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -26,10 +25,10 @@ input[type="password"],
 input[type="role"] {
   width: 100%;
   padding: 10px;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 15px;
-  font-size: 20px; /* Increase font size */
+  font-size: 16px;
 }
 
 button {
@@ -39,7 +38,7 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* Increase font size */
+  font-size: 18px;
   font-weight: bold;
   width: 100%;
 }
@@ -51,4 +50,21 @@ button:hover {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
