@@ -10,6 +10,7 @@ import com.example.security.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,4 +57,12 @@ public class WorkService {
     }
 
 
+    public List<AppUser> getAllWorkersByProject(Long projectId) {
+        List<Work> works = workRepository.findByProjectId(projectId);
+        List<AppUser> users = new ArrayList<>();
+        for(Work work: works) {
+            users.add(work.getWorker());
+        }
+        return users;
+    }
 }

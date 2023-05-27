@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +78,13 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public AppUser getAppUserByEmail (String email) throws Exception{
+        Optional<AppUser> appUser = appUserRepository.findByEmail(email);
+        if (appUser.isEmpty()) {
+            throw new Exception("App user is not found with Email: " + email);
+        }
+        return appUser.get();
     }
 }

@@ -8,5 +8,6 @@ export class UserToken {
       this.id = id;
       this.role = role;
     }
+    
   }
   

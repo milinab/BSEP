@@ -12,6 +12,7 @@ import { ValidateRegistrationComponent } from './validate-registration/validate-
 import { LoginComponent } from './login/login.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
+import { AllWorkersByProjectComponent } from './all-workers-by-project/all-workers-by-project.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatInputModule } from '@angular/material/input';
     ProjectsComponent,
     UsersComponent,
     ValidateRegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    AllWorkersByProjectComponent
   ],
     imports: [
         CommonModule,

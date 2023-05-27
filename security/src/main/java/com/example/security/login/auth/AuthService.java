@@ -32,4 +32,5 @@ public class AuthService {
                 .token(jwtToken)
                 .build();
     }
+
 }

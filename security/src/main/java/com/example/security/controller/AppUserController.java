@@ -2,6 +2,7 @@ package com.example.security.controller;
 
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
+import com.example.security.model.Work;
 import com.example.security.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/appUser")
@@ -31,4 +33,15 @@ public class AppUserController {
         }
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<AppUser> getAppUserByEmail(
+            @PathVariable("email") String email
+    ) {
+        try {
+            return ResponseEntity.ok(appUserService.getAppUserByEmail(email));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

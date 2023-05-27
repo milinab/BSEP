@@ -12,7 +12,7 @@ import { UserDto } from "../dto/user";
 export class AppUserService{
   apiHost: string = 'http://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-
+  baseApiUrl: string = 'http://localhost:8082/api/v1/user';
 
   constructor(private http: HttpClient) { }
 
@@ -24,17 +24,25 @@ export class AppUserService{
     return this.http.get<AppUser>(this.apiHost + 'api/v1/user/' + id, {headers: this.headers});
   }
 
-  // updateUser(user: AppUser, id: number): Observable<AppUser> {
-  //   return this.http.put<AppUser>(this.apiHost + 'api/v1/user' + id, user, {headers: this.headers});
-  // }
-
-  updateUser(user: UserDto, id: number): Observable<UserDto> {
-    const url = `${this.apiHost}api/v1/user/${id}`;
-    return this.http.put<AppUser>(url, user, {headers: this.headers});
+  getUser(id: number, token: string): Observable<AppUser> {
+    return this.http.get<AppUser>(this.apiHost + 'api/v1/user' + id, {headers: this.headers});
   }
+
+  updateUser(payload: any): Observable<void> {
+    const url = `${this.baseApiUrl}/`+payload.id; 
+    console.log(payload);
+    console.log("URLLL" + url);
+    return this.http.put<void>(url, JSON.stringify(payload), { headers: this.headers });
+  }
+  
   
   getPendingUsers(): Observable<AppUser[]> {
     const url = `${this.apiHost}api/v1/appUser/pending`;
     return this.http.get<AppUser[]>(url, { headers: this.headers });
   }
+
+  getByEmail(email: string): Observable<AppUser> {
+    return this.http.get<AppUser>(this.apiHost + 'api/v1/appUser/' + email, { headers: this.headers });
+  }
+
 }

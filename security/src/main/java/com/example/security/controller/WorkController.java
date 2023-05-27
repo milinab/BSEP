@@ -1,6 +1,7 @@
 package com.example.security.controller;
 
 import com.example.security.dto.WorkDto;
+import com.example.security.model.AppUser;
 import com.example.security.model.Work;
 import com.example.security.service.WorkService;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,6 @@ public class WorkController {
         workService.addWorkersToProject(workDto);
     }
 
-
     @GetMapping("/{workerId}")
     public ResponseEntity<List<Work>> getWorksByWorkerId(@PathVariable Long workerId) {
         List<Work> works = workService.getWorksByWorkerId(workerId);
@@ -38,5 +38,10 @@ public class WorkController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/workersByProject/{id}")
+    public List<AppUser> getAllWorkersByProject(@PathVariable("id") Long projectId){
+        return workService.getAllWorkersByProject(projectId);
     }
 }

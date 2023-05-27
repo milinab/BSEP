@@ -1,5 +1,6 @@
 package com.example.security.login.auth;
 
+import com.example.security.model.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,5 +19,6 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
+
 }
 
