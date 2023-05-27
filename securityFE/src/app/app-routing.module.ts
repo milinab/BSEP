@@ -6,6 +6,14 @@ import { AdminProfileComponent } from "./modules/pages/admin-profile/admin-profi
 import { UsersComponent } from "./modules/pages/users/users.component";
 import { ProjectsComponent } from "./modules/pages/projects/projects.component";
 import {ValidateRegistrationComponent} from "./modules/pages/validate-registration/validate-registration.component";
+import {ManagerProfileComponent} from "./modules/pages/manager-profile/manager-profile.component";
+import {ManagerProfileUpdateComponent} from "./modules/pages/manager-profile-update/manager-profile-update.component";
+import {ChangePasswordComponent} from "./modules/pages/change-password/change-password.component";
+import {ManagerPastProjectsComponent} from "./modules/pages/manager-past-projects/manager-past-projects.component";
+import {
+  ManagerCurrentProjectsComponent
+} from "./modules/pages/manager-current-projects/manager-current-projects.component";
+import {ProjectEmployeesComponent} from "./modules/pages/project-employees/project-employees.component";
 import { LoginComponent } from "./modules/pages/login/login.component";
 import {EngineerProfileComponent} from "./modules/pages/engineer-profile/engineer-profile.component";
 import {AuthGuard} from "./modules/guard/authGuard";
@@ -13,6 +21,12 @@ import {AuthGuard} from "./modules/guard/authGuard";
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'registration', component: RegistrationComponent },
+  { path: 'manager-profile', component: ManagerProfileComponent},
+  { path: 'manager-profile/update', component: ManagerProfileUpdateComponent},
+  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'manager-past-projects', component: ManagerPastProjectsComponent},
+  { path: 'manager-current-projects', component: ManagerCurrentProjectsComponent},
+  { path: 'project-employees', component: ProjectEmployeesComponent},
   { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard]},
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },

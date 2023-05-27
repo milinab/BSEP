@@ -29,13 +29,16 @@ export class AppUserService{
   }
 
   updateUser(payload: any): Observable<void> {
-    const url = `${this.baseApiUrl}/`+payload.id; 
+    const url = `${this.baseApiUrl}/`+payload.id;
     console.log(payload);
     console.log("URLLL" + url);
     return this.http.put<void>(url, JSON.stringify(payload), { headers: this.headers });
   }
-  
-  
+
+  //updateManager(user: any): Observable<any> {
+  //  return this.http.put<any>(this.apiHost + 'api/v1/appUser/updateManager/' + user.id, user,{headers: this.headers});
+  //}
+
   getPendingUsers(): Observable<AppUser[]> {
     const url = `${this.apiHost}api/v1/appUser/pending`;
     return this.http.get<AppUser[]>(url, { headers: this.headers });
