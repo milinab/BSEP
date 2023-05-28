@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../security/model/project.model';
 import { ProjectService } from '../../security/service/project.service';
 import { UserDto } from '../../security/dto/user';
+import {TokenStorageService} from "../../security/service/token-storage.service";
 
 @Component({
   selector: 'app-manager-profile-update',
@@ -14,13 +15,21 @@ import { UserDto } from '../../security/dto/user';
 })
 export class ManagerProfileUpdateComponent implements OnInit {
   public user: UserDto = new UserDto();
+  appUser: AppUser | undefined;
 
-  constructor(private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private appUserService : AppUserService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.appUserService.getById(1).subscribe(res => {
       this.user = res;
     })
+    const loggedUser = this.tokenStorageService.getUser();
+    console.log("ovo je user:");
+    console.log(loggedUser);
+    this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
+      this.appUser = res;
+      console.log("GETOVAN USER:", this.appUser);
+    });
   }
 
   public cancel(): void {

@@ -18,28 +18,31 @@ import { LoginComponent } from "./modules/pages/login/login.component";
 import { AllWorkersByProjectComponent } from "./modules/pages/all-workers-by-project/all-workers-by-project.component";
 import {EngineerProfileComponent} from "./modules/pages/engineer-profile/engineer-profile.component";
 import {AuthGuard} from "./modules/guard/authGuard";
+import {ManagerGuard} from "./modules/guard/managerGuard";
+import {AdminGuard} from "./modules/guard/adminGuard";
+import {A} from "@angular/cdk/keycodes";
+import {EngineerGuard} from "./modules/guard/engineerGuard";
+import {ForbiddenPageComponent} from "./modules/pages/forbidden-page/forbidden-page.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'admin-profile', component: AdminProfileComponent},
+  { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AdminGuard, AuthGuard]},
   { path: 'users', component: UsersComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'validate-registration', component: ValidateRegistrationComponent },
-  { path: 'login', component: LoginComponent},
   { path: 'all-workers-by-project', component: AllWorkersByProjectComponent},
-  { path: 'manager-profile', component: ManagerProfileComponent},
-  { path: 'manager-profile/update', component: ManagerProfileUpdateComponent},
-  { path: 'change-password', component: ChangePasswordComponent},
-  { path: 'manager-past-projects', component: ManagerPastProjectsComponent},
-  { path: 'manager-current-projects', component: ManagerCurrentProjectsComponent},
-  { path: 'project-employees', component: ProjectEmployeesComponent},
-  { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard]},
+  { path: 'manager-profile', component: ManagerProfileComponent, canActivate: [ManagerGuard, AuthGuard]},
+  { path: 'manager-profile/update', component: ManagerProfileUpdateComponent, canActivate: [ManagerGuard, AuthGuard]},
+  { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard, ManagerGuard]},
+  { path: 'manager-past-projects', component: ManagerPastProjectsComponent, canActivate: [ManagerGuard, AuthGuard]},
+  { path: 'manager-current-projects', component: ManagerCurrentProjectsComponent, canActivate: [ManagerGuard, AuthGuard]},
+  { path: 'project-employees', component: ProjectEmployeesComponent, canActivate: [AuthGuard, ManagerGuard]},
+  { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
   { path: 'validate-registration', component: ValidateRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard]}
+  { path: 'forbidden-page', component: ForbiddenPageComponent},
+  { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard, EngineerGuard]}
 ];
 
 @NgModule({

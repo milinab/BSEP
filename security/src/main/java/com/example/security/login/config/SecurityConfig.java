@@ -27,16 +27,13 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/authenticate").permitAll()
-                .antMatchers("/api/v1/registration/pending").permitAll()
-                .anyRequest().authenticated() // Require authentication for all other endpoints
+                .antMatchers("/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors();
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }
@@ -44,7 +41,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200") // Add your frontend URL here
+                .allowedOrigins("https://localhost:4200") // Add your frontend URL here
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);

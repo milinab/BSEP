@@ -24,6 +24,7 @@ import {ProjectEmployeesComponent} from "./project-employees/project-employees.c
 import { LoginComponent } from './login/login.component';
 import { AllWorkersByProjectComponent } from './all-workers-by-project/all-workers-by-project.component';
 import { EngineerProfileComponent } from './engineer-profile/engineer-profile.component';
+import {ForbiddenPageComponent} from "./forbidden-page/forbidden-page.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EngineerProfileComponent } from './engineer-profile/engineer-profile.co
     ProjectEmployeesComponent,
     LoginComponent,
     AllWorkersByProjectComponent,
-    EngineerProfileComponent
+    EngineerProfileComponent,
+    ForbiddenPageComponent
   ],
   imports: [
     CommonModule,
