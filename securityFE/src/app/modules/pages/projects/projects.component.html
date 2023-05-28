@@ -1,6 +1,6 @@
 <h1>Projects:</h1>
 <ul>
-    <li *ngFor="let project of projects">
+    <li *ngFor="let project of projects" (click)="onProjectClick(project)">
       <span class="user-name">{{ project.name}}</span>
     </li>
   </ul>

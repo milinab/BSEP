@@ -1,1 +1,26 @@
-<p>all-workers-by-project works!</p>
+<h1>Add a worker to the project</h1>
+<div>
+<select [(ngModel)]="selectedWorker">
+    <option value=""></option>
+    <option *ngFor="let worker of workers" [value]="worker.id">{{ worker.firstName }} {{ worker.lastName }}</option>
+  </select>
+  <button (click)="addWorkerToProject()">Add worker</button>
+</div>
+<h1>Workers:</h1>
+<table class="worker-table">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+  </tbody>
+</table>
+

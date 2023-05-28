@@ -7,6 +7,7 @@ import { UsersComponent } from "./modules/pages/users/users.component";
 import { ProjectsComponent } from "./modules/pages/projects/projects.component";
 import {ValidateRegistrationComponent} from "./modules/pages/validate-registration/validate-registration.component";
 import { LoginComponent } from "./modules/pages/login/login.component";
+import { AllWorkersByProjectComponent } from "./modules/pages/all-workers-by-project/all-workers-by-project.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'validate-registration', component: ValidateRegistrationComponent },
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'all-workers-by-project', component: AllWorkersByProjectComponent}
 ];
 
 @NgModule({

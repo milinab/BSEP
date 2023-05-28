@@ -17,12 +17,14 @@ export class WorkService {
   constructor(private http: HttpClient) { }
 
   getAllWorkersByProject(projectId: number): Observable<AppUser[]> {
-    const url = '${this.baseApiUrl}//workersByProject/${projectId}';
+  //  const url = '${this.baseApiUrl}/workersByProject/${projectId}';
+    const url = `${this.baseApiUrl}/workersByProject/`+projectId; 
+    console.log("URLLL"+url);
     return this.http.get<AppUser[]>(url);
   }
 
   addWorkersToProjects(payload:any) : Observable<void> {
-    return this.http.post<void>('${this.baseApiUrl}//addWorkersToProjects', JSON.stringify(payload), {headers: this.headers});
+    return this.http.post<void>(`${this.baseApiUrl}/addWorkersToProjects`, JSON.stringify(payload), {headers: this.headers});
   }
 
 }

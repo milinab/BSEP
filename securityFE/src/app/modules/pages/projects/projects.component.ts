@@ -18,7 +18,18 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.getProjects().subscribe(res =>{
       this.projects = res;
+      console.log(res)
     })
+  }
+
+  // onProjectClick(project: any): void {
+  //   console.log('Project ID:', project.id);
+  //   this.router.navigate(['/all-workers-by-project', project.id]);
+  // }
+  
+  onProjectClick(project: Project): void {
+    this.router.navigate(['/all-workers-by-project'], { queryParams: { project: JSON.stringify(project.id) } });
+    console.log("ID PROJ "+ project.id);
   }
 
   createProject(): void {

@@ -21,6 +21,7 @@ public class WorkController {
 
     @PostMapping("/addWorkersToProjects")
     public void addWorkersToProjects(@RequestBody WorkDto workDto){
+        System.out.println("ID SA FRONTA:  " + workDto.getProjectId());
         workService.addWorkersToProject(workDto);
     }
 
