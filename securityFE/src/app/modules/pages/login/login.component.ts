@@ -12,11 +12,13 @@ import { TokenStorageService } from '../../security/service/token-storage.servic
 })
 export class LoginComponent implements OnInit {
 
-  
+
   loginForm = new FormGroup({
     email: new FormControl<string | undefined>(undefined),
     password: new FormControl<string | undefined>(undefined)
   })
+
+  private authenticated = localStorage.getItem('TOKEN_KEY') ? true : false;
 
   constructor(private authService: AuthService, private tokenStorageService:TokenStorageService, private router:Router) { }
 
@@ -35,7 +37,9 @@ export class LoginComponent implements OnInit {
           console.log(response)
           this.tokenStorageService.saveToken(response.token)
           this.tokenStorageService.saveUser(response.token)
+          const test = window.sessionStorage.getItem('TOKEN_KEY')
           alert("Success!");
+          console.log(test);
           this.router.navigate(['']).then(
             ()=>{
               window.location.reload();

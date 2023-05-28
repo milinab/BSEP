@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class ProjectService {
 
-  apiHost: string = 'http://localhost:8082/';
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
 
   getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.apiHost + 'api/v1/project', {headers: this.headers});
+    return this.https.get<Project[]>(this.apiHost + 'api/v1/project', {headers: this.headers});
   }
 
   createProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.apiHost + 'api/v1/project', project, {headers: this.headers});
+    return this.https.post<Project>(this.apiHost + 'api/v1/project', project, {headers: this.headers});
   }
 }

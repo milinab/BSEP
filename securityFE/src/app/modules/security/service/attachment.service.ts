@@ -6,15 +6,15 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AttachmentService{
-  apiHost: string = 'http://localhost:8082/';
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
 
   uploadFile(file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<any>(this.apiHost + 'upload', formData);
+    return this.https.post<any>(this.apiHost + 'upload', formData);
   }
 }

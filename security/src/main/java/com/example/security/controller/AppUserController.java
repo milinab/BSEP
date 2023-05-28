@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping(path = "api/v1/appUser")
 @AllArgsConstructor
 public class AppUserController {

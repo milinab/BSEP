@@ -7,24 +7,24 @@ import {Observable} from "rxjs";
 })
 export class AuthService {
 
-  apiHost: string = 'http://localhost:8082/';
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
 
   register(registerRequest: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/v1/registration', registerRequest, {headers: this.headers});
+    return this.https.post<any>(this.apiHost + 'api/v1/registration', registerRequest, {headers: this.headers});
   }
 
   authenticate(loginRequest: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/v1/auth/authenticate', loginRequest, {headers: this.headers});
+    return this.https.post<any>(this.apiHost + 'api/v1/auth/authenticate', loginRequest, {headers: this.headers});
   }
 
   denyRegistration(userId: number, denialReason: string): Observable<any> {
     const url = `${this.apiHost}api/v1/registration/${userId}/deny`;
     const params = new HttpParams().set('reason', denialReason);
     const options = { headers: this.headers, params: params };
-    return this.http.post<any>(url, null, options);
+    return this.https.post<any>(url, null, options);
   }
 
 }
