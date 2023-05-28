@@ -81,7 +81,7 @@ public class RegistrationService {
                         request.getEmail(),
                         request.getPassword(),
                         request.getAppUserRole(),
-                        RegistrationStatus.ACCEPTED
+                        RegistrationStatus.PENDING
                 )
         );
 /*
