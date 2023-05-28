@@ -34,10 +34,23 @@ export class WorkService {
     return this.https.get<Work[]>(url);
   }
 
+  getCurrentWorksByWorkerId(workerId: number): Observable<Work[]> {
+    const url = `${this.baseApiUrl}/current/${workerId}`;
+    return this.https.get<Work[]>(url);
+  }
+
+  getPastWorksByWorkerId(workerId: number): Observable<Work[]> {
+    const url = `${this.baseApiUrl}/past/${workerId}`;
+    return this.https.get<Work[]>(url);
+  }
+
   updateWorkDescription(id: number, updatedWork: Work): Observable<string> {
     const url = `${this.baseApiUrl}/description/${id}`;
     return this.https.put<string>(url, updatedWork, { headers: this.headers });
   }
 
+  dismissWorker(id: number): Observable<any>{
+    return this.https.put<any>(this.apiHost + '/dismiss/' + id, {headers: this.headers});
+  }
 
 }

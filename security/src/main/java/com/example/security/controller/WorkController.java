@@ -31,6 +31,18 @@ public class WorkController {
         return ResponseEntity.ok(works);
     }
 
+    @GetMapping("/current/{workerId}")
+    public ResponseEntity<List<Work>> getCurrentWorksByWorkerId(@PathVariable Long workerId) {
+        List<Work> works = workService.getCurrentWorksByWorkerId(workerId);
+        return ResponseEntity.ok(works);
+    }
+
+    @GetMapping("/past/{workerId}")
+    public ResponseEntity<List<Work>> getPastWorksByWorkerId(@PathVariable Long workerId) {
+        List<Work> works = workService.getPastWorksByWorkerId(workerId);
+        return ResponseEntity.ok(works);
+    }
+
     @PutMapping("/description/{id}")
     public ResponseEntity<String> updateWork(@PathVariable Long id, @RequestBody Work updatedWork) {
         try {
@@ -45,4 +57,14 @@ public class WorkController {
     public List<AppUser> getAllWorkersByProject(@PathVariable("id") Long projectId){
         return workService.getAllWorkersByProject(projectId);
     }
+
+//    @PutMapping(consumes = "application/json", value = "/dismiss/{id}")
+//    public ResponseEntity<Work> dismiss(@PathVariable("id") Long id) {
+//        Boolean appointment = appointmentService.cancelAppointment(id);
+//        if (appointment== false){
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

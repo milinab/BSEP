@@ -1,5 +1,5 @@
 <div class="container">
-  <table mat-table [dataSource]="employees"   class="example-table">
+  <table mat-table [dataSource]="workers"   class="example-table">
     <!-- Number Column -->
     <ng-container matColumnDef="Name">
       <th mat-header-cell matSort *matHeaderCellDef>Project name</th>
@@ -13,7 +13,19 @@
       <th mat-header-cell matSort *matHeaderCellDef>Project name</th>
       <td mat-cell *matCellDef="let row">{{row.email}}</td>
     </ng-container>
+    <ng-container matColumnDef="Cancel">
+      <th mat-header-cell *matHeaderCellDef>Dismiss</th>
+      <td mat-cell *matCellDef="let row"><button mat-mini-fab (click)="dismiss(row.id)">
+        <mat-icon>delete</mat-icon>
+      </button></td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <button mat-stroked-button (click)="back()">
+    Back
+  </button>
+  <button mat-stroked-button (click)="add()">
+    Add employee
+  </button>
 </div>

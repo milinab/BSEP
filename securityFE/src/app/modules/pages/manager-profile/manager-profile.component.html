@@ -12,7 +12,7 @@
         <mat-card-title class="class-title">USER INFORMATION</mat-card-title>
         <mat-icon class="edit-icon" (click)="editProfile()">edit</mat-icon>
       </div>
-      <mat-card-content>
+      <mat-card-content >
         <p>Name: {{user.firstName}}</p>
         <mat-divider></mat-divider>
         <p>Surname: {{user.lastName}}</p>
@@ -35,6 +35,9 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <button mat-stroked-button (click)="back()">
+    Back
+  </button>
 </div>
 
 

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           const test = window.sessionStorage.getItem('TOKEN_KEY')
           alert("Success!");
           console.log(test);
-          this.router.navigate(['']).then(
+          this.router.navigate(['/home']).then(
             ()=>{
               window.location.reload();
             }

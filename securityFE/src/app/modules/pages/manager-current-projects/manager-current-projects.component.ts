@@ -6,6 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../security/model/project.model';
 import { ProjectService } from '../../security/service/project.service';
 import { UserDto } from '../../security/dto/user';
+import {Work} from "../../security/model/work.model";
+import {WorkService} from "../../security/service/work.service";
+import {TokenStorageService} from "../../security/service/token-storage.service";
 
 @Component({
   selector: 'app-manager-current-projects',
@@ -15,16 +18,34 @@ import { UserDto } from '../../security/dto/user';
 export class ManagerCurrentProjectsComponent implements OnInit {
   public user: UserDto = new UserDto();
   @Input() projects :Project[]=[]
-  displayedColumns: string[] = ['Name'];
-  constructor(private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
+  works: Work[] = [];
+  appUser: AppUser | undefined;
+
+  constructor(private workService: WorkService, private tokenStorageService: TokenStorageService, private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.appUserService.getById(1).subscribe(res => {
-      this.user = res;
-    })
+    var loggedUser = this.tokenStorageService.getUser();
+    console.log("loggedUser ", loggedUser)
+    this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
+      this.appUser = res;
+      console.log("GETOVAN USER:", this.appUser)
+
+      this.user.id = this.appUser.id;
+      this.user.email = this.appUser.email;
+      this.user.firstName = this.appUser.firstName;
+      this.user.lastName = this.appUser.lastName;
+      this.user.password = this.appUser.password;
+      this.user.appUserRole = this.appUser.appUserRole
+
+      this.getWorksByWorkerId(this.user.id);
+    });
   }
 
   public cancel(): void {
+    this.router.navigate(['/manager-profile'])
+  }
+
+  public back(): void {
     this.router.navigate(['/manager-profile'])
   }
 
@@ -33,14 +54,21 @@ export class ManagerCurrentProjectsComponent implements OnInit {
       && this.user?.email != '';
   }
 
-  public updateUser(): void {
-    if (!this.isValidInput()) return;
-    //this.appUserService.updateUser(this.user).subscribe(res => {
-    //  this.router.navigate(['/profile']);
-    //});
+  getWorksByWorkerId(workerId: number): void {
+    this.workService.getCurrentWorksByWorkerId(workerId).subscribe(
+      (works) => {
+        this.works = works;
+        // Handle success as needed
+      },
+      (error) => {
+        console.error('Failed to fetch works:', error);
+        // Handle error as needed
+      }
+    );
   }
 
-  public changePassword(): void {
-    this.router.navigate(['change-password'])
+  public engineers(id: number): void {
+  console.log("project id:",id);
+  this.router.navigate(['/project-employees/' + id]);
   }
 }

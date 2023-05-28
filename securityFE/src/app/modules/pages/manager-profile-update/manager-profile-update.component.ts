@@ -20,15 +20,18 @@ export class ManagerProfileUpdateComponent implements OnInit {
   constructor(private appUserService : AppUserService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.appUserService.getById(1).subscribe(res => {
-      this.user = res;
-    })
-    const loggedUser = this.tokenStorageService.getUser();
-    console.log("ovo je user:");
-    console.log(loggedUser);
+    var loggedUser = this.tokenStorageService.getUser();
+    console.log("loggedUser ", loggedUser)
     this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
       this.appUser = res;
-      console.log("GETOVAN USER:", this.appUser);
+      console.log("GETOVAN USER:", this.appUser)
+
+      this.user.id = this.appUser.id;
+      this.user.email = this.appUser.email;
+      this.user.firstName = this.appUser.firstName;
+      this.user.lastName = this.appUser.lastName;
+      this.user.password = this.appUser.password;
+      this.user.appUserRole = this.appUser.appUserRole
     });
   }
 
@@ -36,16 +39,23 @@ export class ManagerProfileUpdateComponent implements OnInit {
     this.router.navigate(['/manager-profile'])
   }
 
+
+
   private isValidInput(): boolean {
     return this.user?.firstName != '' && this.user?.lastName != ''
       && this.user?.email != '';
   }
 
   public updateUser(): void {
-    if (!this.isValidInput()) return;
-    //this.appUserService.updateUser(this.user).subscribe(res => {
-    //  this.router.navigate(['/manager-profile']);
-    //});
+    this.appUserService.updateUser(this.user).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['manager-profile'])
+      },
+      error => {
+        console.error('Failed to update user:', error);
+      }
+    );
   }
 
   public changePassword(): void {
