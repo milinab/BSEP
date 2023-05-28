@@ -1,0 +1,47 @@
+<div *ngIf="user" class="container">
+  <h2>User Profile</h2>
+  <div>
+    <label>First name:</label>
+    <input type="text" [(ngModel)]="user.firstName">
+  </div>
+  <div>
+    <label>Last name:</label>
+    <input type="text" [(ngModel)]="user.lastName">
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="user.email" readonly>
+  </div>
+  <div>
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="user.password">
+  </div>
+  <div>
+    <label>Role:</label>
+    <input type="text" [(ngModel)]="user.appUserRole">
+  </div>
+  <button (click)="updateUser()">Update</button>
+
+  <div>
+    <h2>Upload File</h2>
+    <input type="file" #fileInput>
+    <button (click)="uploadFile()">Upload</button>
+  </div>
+  <h2>Works for Worker</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Job description</th>
+      <th>Duration</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let work of works">
+      <td>{{ work.project.name }}</td>
+      <td>{{ work.description }}</td>
+      <td>{{ work.duration }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

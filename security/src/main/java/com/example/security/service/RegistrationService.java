@@ -84,8 +84,8 @@ public class RegistrationService {
                         RegistrationStatus.PENDING
                 )
         );
-
-/*        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
+/*
+        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));*/

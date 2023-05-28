@@ -27,4 +27,15 @@ export class WorkService {
     return this.http.post<void>(`${this.baseApiUrl}/addWorkersToProjects`, JSON.stringify(payload), {headers: this.headers});
   }
 
+  getWorksByWorkerId(workerId: number): Observable<Work[]> {
+    const url = `${this.baseApiUrl}/${workerId}`;
+    return this.http.get<Work[]>(url);
+  }
+
+  updateWorkDescription(id: number, updatedWork: Work): Observable<string> {
+    const url = `${this.baseApiUrl}/description/${id}`;
+    return this.http.put<string>(url, updatedWork, { headers: this.headers });
+  }
+
+
 }

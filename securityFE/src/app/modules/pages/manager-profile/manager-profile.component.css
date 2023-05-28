@@ -1,0 +1,113 @@
+.name-card {
+  padding-left: 20px;
+  border-radius: 3px;
+  border: #DCD6CC 1px solid;
+  background-color: white;
+}
+
+.class-title {
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-left: 10px;
+}
+
+.class-patient {
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-left: 5px;
+  font-size: 30px;
+  text-align: left;
+}
+.flex-card .class-butt {
+  margin-bottom: 10px;
+  padding: 6px;
+  font-size: 22px;
+  text-align: center;
+  justify-content: center;
+  margin-left: auto;
+}
+.flex-card{
+  display: flex;
+}
+p {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.info-card {
+  width: 40%;
+  margin-left: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 3px;
+  border: #DCD6CC 1px solid;
+  background-color: white;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.inf {
+  display: flex;
+  flex-direction: row;
+  padding-left: 10%;
+  padding-top: 5%;
+  padding-right: 5%;
+}
+
+.inf2 {
+  display: flex;
+  flex-direction: row;
+  padding-left: 10%;
+  padding-top: 1%;
+  padding-right: 6%;
+}
+
+.icon {
+  padding-left: 3%;
+  padding-top: 3%;
+  padding-right:4%;
+  margin-left: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.photo {
+  transform: scale(4);
+  padding-top: 5%;
+  padding-left: 15%;
+}
+
+.hospital-card {
+  width: 90%;
+  margin-left: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ifParagraph {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.gender {
+  margin-left: 5px;
+}
+
+.address {
+  margin-left: 85px;
+}
+
+.doctor {
+  margin-left: 140px;
+}
+
+.edit-button {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-icon {
+  padding: 2%;
+}
