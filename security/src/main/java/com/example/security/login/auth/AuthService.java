@@ -1,7 +1,11 @@
 package com.example.security.login.auth;
 
+import com.example.security.email.EmailSender;
 import com.example.security.login.config.JwtService;
 import com.example.security.model.AppUser;
+import com.example.security.registration.EmailValidator;
+import com.example.security.registration.token.ConfirmationToken;
+import com.example.security.registration.token.ConfirmationTokenService;
 import com.example.security.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +25,10 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private EmailValidator emailValidator;
+    private final EmailSender emailSender;
+
+    private final ConfirmationTokenService confirmationTokenService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
          authenticationManager.authenticate(
@@ -32,5 +43,8 @@ public class AuthService {
                 .token(jwtToken)
                 .build();
     }
-
 }
+
+
+
+

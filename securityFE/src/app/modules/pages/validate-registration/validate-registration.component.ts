@@ -28,15 +28,15 @@ export class ValidateRegistrationComponent implements OnInit {
   }
 
   registerUser(user: AppUser) {
-    this.authService.register(user).subscribe(
+    this.authService.registerr(user).subscribe(
       () => {
         alert('Registered successfully');
         // Reset the user object after successful registration
         this.user = new AppUser();
       },
       (error: any) => {
-        alert('Error during registration');
-        console.error('Registration error:', error);
+       // alert('Error during registration');
+       // console.error('Registration error:', error);
       }
     );
   }

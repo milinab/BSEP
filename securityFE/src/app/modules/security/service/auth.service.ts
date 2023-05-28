@@ -13,6 +13,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   register(registerRequest: any): Observable<any> {
+    return this.http.post<any>(this.apiHost + 'api/v1/registration/pending', registerRequest, {headers: this.headers});
+  }
+
+  registerr(registerRequest: any): Observable<any> {
     return this.http.post<any>(this.apiHost + 'api/v1/registration', registerRequest, {headers: this.headers});
   }
 

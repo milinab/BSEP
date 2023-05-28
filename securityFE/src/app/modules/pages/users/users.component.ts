@@ -17,6 +17,15 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUsers().subscribe(res => {
       this.users = res;
+      this.users = this.users.filter(w => {
+        let isAdmin = false;
+  
+        if (w.appUserRole === 'ADMIN') isAdmin = true;
+  
+        return !isAdmin;
+      });
     })
   }
+
+
 }

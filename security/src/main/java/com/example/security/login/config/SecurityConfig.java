@@ -27,9 +27,10 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/authenticate").permitAll()
-                .antMatchers("/api/v1/registration/pending").permitAll()
-                .anyRequest().authenticated() // Require authentication for all other endpoints
+                .antMatchers("/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
