@@ -4,6 +4,7 @@ import com.example.security.dto.WorkDto;
 import com.example.security.model.AppUser;
 import com.example.security.model.Work;
 import com.example.security.service.WorkService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
@@ -19,12 +20,14 @@ public class WorkController {
         this.workService = workService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addWorkersToProjects")
     public void addWorkersToProjects(@RequestBody WorkDto workDto){
         System.out.println("ID SA FRONTA:  " + workDto.getProjectId());
         workService.addWorkersToProject(workDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{workerId}")
     public ResponseEntity<List<Work>> getWorksByWorkerId(@PathVariable Long workerId) {
         List<Work> works = workService.getWorksByWorkerId(workerId);

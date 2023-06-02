@@ -2,6 +2,7 @@ package com.example.security.controller;
 
 import com.example.security.model.Project;
 import com.example.security.service.ProjectService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ProjectController {
         return projectService.getAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Project createProject(@RequestBody Project project){
         return projectService.createProject(project);

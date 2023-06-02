@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'project-employees', component: ProjectEmployeesComponent, canActivate: [ManagerGuard, AuthGuard]},
   { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AdminGuard, AuthGuard]},
-  { path: 'all-workers-by-project', component: AllWorkersByProjectComponent},
+  { path: 'all-workers-by-project', component: AllWorkersByProjectComponent, canActivate: [AdminGuard, AuthGuard]},
   { path: 'manager-profile', component: ManagerProfileComponent, canActivate: [ManagerGuard, AuthGuard]},
   { path: 'manager-profile/update', component: ManagerProfileUpdateComponent, canActivate: [ManagerGuard, AuthGuard]},
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard, ManagerGuard]},
@@ -38,14 +38,13 @@ const routes: Routes = [
   { path: 'manager-current-projects', component: ManagerCurrentProjectsComponent, canActivate: [ManagerGuard, AuthGuard]},
   { path: 'project-employees/:id', component: ProjectEmployeesComponent, canActivate: [AuthGuard, ManagerGuard]},
   { path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard, AdminGuard]},
-
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'validate-registration', component: ValidateRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'validate-registration', component: ValidateRegistrationComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'forbidden-page', component: ForbiddenPageComponent},
   { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard, EngineerGuard]},
-  { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard]}
+  { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard, AdminGuard]}
 
 ];
 

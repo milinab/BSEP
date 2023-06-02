@@ -8,7 +8,7 @@ import {RolePermission} from "../model/role-permission.model";
 })
 export class RolePermissionService {
 
-  private apiUrl = 'http://localhost:8082/api/role-permissions';
+  private apiUrl = 'https://localhost:8082/api/role-permissions';
 
   constructor(private http: HttpClient) { }
 

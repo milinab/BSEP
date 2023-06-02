@@ -26,7 +26,6 @@ export class WorkService {
 
   addWorkersToProjects(payload:any) : Observable<void> {
     return this.https.post<void>(`${this.baseApiUrl}/addWorkersToProjects`, JSON.stringify(payload), {headers: this.headers});
-
   }
 
   getWorksByWorkerId(workerId: number): Observable<Work[]> {
