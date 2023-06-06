@@ -10,42 +10,47 @@ import { UserDto } from "../dto/user";
 })
 
 export class AppUserService{
-  apiHost: string = 'http://localhost:8082/';
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-  baseApiUrl: string = 'http://localhost:8082/api/v1/user';
+  baseApiUrl: string = 'https://localhost:8082/api/v1/user';
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
 
   getUsers(): Observable<AppUser[]> {
-    return this.http.get<AppUser[]>(this.apiHost + 'api/v1/user', {headers: this.headers});
+    return this.https.get<AppUser[]>(this.apiHost + 'api/v1/user', {headers: this.headers});
   }
 
   getById(id: number): Observable<AppUser> {
-    return this.http.get<AppUser>(this.apiHost + 'api/v1/user/' + id, {headers: this.headers});
+    return this.https.get<AppUser>(this.apiHost + 'api/v1/user/' + id, {headers: this.headers});
   }
 
   getUser(id: number, token: string): Observable<AppUser> {
-    return this.http.get<AppUser>(this.apiHost + 'api/v1/user' + id, {headers: this.headers});
+    return this.https.get<AppUser>(this.apiHost + 'api/v1/user' + id, {headers: this.headers});
   }
 
   updateUser(payload: any): Observable<void> {
     const url = `${this.baseApiUrl}/`+payload.id;
     console.log(payload);
     console.log("URLLL" + url);
-    return this.http.put<void>(url, JSON.stringify(payload), { headers: this.headers });
+    return this.https.put<void>(url, JSON.stringify(payload), { headers: this.headers });
   }
 
   //updateManager(user: any): Observable<any> {
-  //  return this.http.put<any>(this.apiHost + 'api/v1/appUser/updateManager/' + user.id, user,{headers: this.headers});
+  //  return this.https.put<any>(this.apiHost + 'api/v1/appUser/updateManager/' + user.id, user,{headers: this.headers});
   //}
 
   getPendingUsers(): Observable<AppUser[]> {
     const url = `${this.apiHost}api/v1/appUser/pending`;
-    return this.http.get<AppUser[]>(url, { headers: this.headers });
+    return this.https.get<AppUser[]>(url, { headers: this.headers });
   }
 
   getByEmail(email: string): Observable<AppUser> {
-    return this.http.get<AppUser>(this.apiHost + 'api/v1/appUser/' + email, { headers: this.headers });
+    return this.https.get<AppUser>(this.apiHost + 'api/v1/appUser/' + email, { headers: this.headers });
+  }
+
+  getEngineerUsers(): Observable<AppUser[]> {
+    const url = `${this.apiHost}api/v1/appUser/engineer`;
+    return this.https.get<AppUser[]>(url, { headers: this.headers });
   }
 
 }

@@ -1,5 +1,6 @@
 package com.example.security.repository;
 
+import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     Optional<AppUser> findByEmail(String email);
     List<AppUser> findByRegistrationStatus(RegistrationStatus status);
+
+    List<AppUser> findByAppUserRole(AppUserRole appUserRole);
 
     @Transactional
     @Modifying

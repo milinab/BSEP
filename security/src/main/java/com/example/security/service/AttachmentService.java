@@ -3,8 +3,11 @@ package com.example.security.service;
 import com.example.security.model.Attachment;
 import com.example.security.repository.AttachmentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 public class AttachmentService {
@@ -34,11 +37,21 @@ public class AttachmentService {
     }
 
 
-    public Attachment getAttachment(String fileId) throws Exception {
+    public Attachment getAttachment(Long fileId) throws Exception {
         return attachmentRepository
                 .findById(fileId)
                 .orElseThrow(
                         () -> new Exception("File not found with Id: " + fileId));
     }
+    @Transactional
+    public Attachment getAttachmentByAppUserId(Long appUserId) throws Exception {
+        return attachmentRepository.findByAppUser_Id(appUserId)
+                .orElseThrow(() -> new Exception("File not found for App User ID: " + appUserId));
+    }
+
+    public List<Attachment> getAllAttachments() {
+        return attachmentRepository.findAll();
+    }
+
 
 }

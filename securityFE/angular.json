@@ -63,6 +63,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "securityFE:build",
+            "ssl": true,
+            "sslCert": "./src/assets/localhost.crt",
+            "sslKey": "./src/assets/localhost.key"
+          },
           "configurations": {
             "production": {
               "browserTarget": "HospitalFront:build:production"

@@ -28,7 +28,7 @@ export class AllWorkersByProjectComponent implements OnInit {
     this.projectId = Number(this.route.snapshot.queryParamMap.get('project'));
     console.log('Project ID:', this.projectId);
     //getProject by Id .. subscribe(res => {
-    //this.project = res;  
+    //this.project = res;
     //|]})
     if (this.project) {
       console.log("Ako proj postoji")
@@ -94,7 +94,7 @@ export class AllWorkersByProjectComponent implements OnInit {
       workersId: workerId
     };
     this.workService.addWorkersToProjects(payload).subscribe(data => console.log(data));
-    window.location.reload();
+    //window.location.reload();
   }
 
 }

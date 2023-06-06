@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../security/model/project.model';
 import { ProjectService } from '../../security/service/project.service';
 import { UserDto } from '../../security/dto/user';
+import {WorkService} from "../../security/service/work.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-project-employees',
@@ -14,15 +16,38 @@ import { UserDto } from '../../security/dto/user';
 })
 export class ProjectEmployeesComponent implements OnInit {
   public user: UserDto = new UserDto();
-  @Input() employees :AppUser[]=[]
+  @Input() workers :AppUser[]=[]
   displayedColumns: string[] = ['Name','Surname', 'Email'];
-  constructor(private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private workService : WorkService, private appUserService : AppUserService, private router: Router, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
-    this.appUserService.getById(1).subscribe(res => {
-      this.user = res;
-    })
+    this.initEmployees();
+
   }
 
+  public initEmployees(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.workService.getAllWorkersByProject(params['id']).subscribe(res => {
+        this.workers = res;
+        console.log("workers:", this.workers)
+      })
+    });
+  }
 
+  public back(): void {
+    this.location.back();
+  }
+
+  public add(): void {
+    this.location.back();
+  }
+
+  public dismiss(id: number): void {
+    //this.workService.dismissWorker(id).subscribe( res =>
+    //{
+    //  this.initEmployees();
+    //  alert("Success!")
+    //});
+    this.location.back();
+  }
 }

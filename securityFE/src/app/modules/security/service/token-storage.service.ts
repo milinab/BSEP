@@ -11,8 +11,8 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
   appUser: AppUser | undefined;
-  constructor(private http: HttpClient) { }
-  apiHost: string = 'http://localhost:8082/';
+  constructor(private https: HttpClient) { }
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
 
@@ -41,7 +41,7 @@ export class TokenStorageService {
     console.log("userObject", userObject);
 
 
-   
+
     let userTk: UserToken = new UserToken(userObject.sub, userObject.id, userObject.role);
     console.log("userTk", userTk)
 

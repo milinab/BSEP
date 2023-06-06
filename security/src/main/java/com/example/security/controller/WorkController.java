@@ -4,12 +4,13 @@ import com.example.security.dto.WorkDto;
 import com.example.security.model.AppUser;
 import com.example.security.model.Work;
 import com.example.security.service.WorkService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping(path = "api/v1/work")
 public class WorkController {
 
@@ -19,15 +20,29 @@ public class WorkController {
         this.workService = workService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addWorkersToProjects")
     public void addWorkersToProjects(@RequestBody WorkDto workDto){
         System.out.println("ID SA FRONTA:  " + workDto.getProjectId());
         workService.addWorkersToProject(workDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{workerId}")
     public ResponseEntity<List<Work>> getWorksByWorkerId(@PathVariable Long workerId) {
         List<Work> works = workService.getWorksByWorkerId(workerId);
+        return ResponseEntity.ok(works);
+    }
+
+    @GetMapping("/current/{workerId}")
+    public ResponseEntity<List<Work>> getCurrentWorksByWorkerId(@PathVariable Long workerId) {
+        List<Work> works = workService.getCurrentWorksByWorkerId(workerId);
+        return ResponseEntity.ok(works);
+    }
+
+    @GetMapping("/past/{workerId}")
+    public ResponseEntity<List<Work>> getPastWorksByWorkerId(@PathVariable Long workerId) {
+        List<Work> works = workService.getPastWorksByWorkerId(workerId);
         return ResponseEntity.ok(works);
     }
 
@@ -45,4 +60,14 @@ public class WorkController {
     public List<AppUser> getAllWorkersByProject(@PathVariable("id") Long projectId){
         return workService.getAllWorkersByProject(projectId);
     }
+
+//    @PutMapping(consumes = "application/json", value = "/dismiss/{id}")
+//    public ResponseEntity<Work> dismiss(@PathVariable("id") Long id) {
+//        Boolean appointment = appointmentService.cancelAppointment(id);
+//        if (appointment== false){
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

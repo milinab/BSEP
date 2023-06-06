@@ -2,12 +2,13 @@ package com.example.security.controller;
 
 import com.example.security.model.Project;
 import com.example.security.service.ProjectService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping(path = "api/v1/project")
 public class ProjectController {
 
@@ -22,6 +23,7 @@ public class ProjectController {
         return projectService.getAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Project createProject(@RequestBody Project project){
         return projectService.createProject(project);

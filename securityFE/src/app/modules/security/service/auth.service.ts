@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 })
 export class AuthService {
 
-  apiHost: string = 'http://localhost:8082/';
+  apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   registerr(registerRequest: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/v1/registration', registerRequest, {headers: this.headers});
+    return this.http.post<any>(this.apiHost + 'api/v1/registration/register', registerRequest, {headers: this.headers});
   }
 
   authenticate(loginRequest: any): Observable<any> {

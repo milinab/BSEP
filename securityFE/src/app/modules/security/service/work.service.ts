@@ -9,33 +9,47 @@ import { JsonPipe } from '@angular/common';
   providedIn: 'root'
 })
 export class WorkService {
-  apiHost: string = 'http://localhost:8082/';
-  baseApiUrl: string = 'http://localhost:8082/api/v1/work';
+  apiHost: string = 'https://localhost:8082/';
+  baseApiUrl: string = 'https://localhost:8082/api/v1/work';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
 
   getAllWorkersByProject(projectId: number): Observable<AppUser[]> {
-  //  const url = '${this.baseApiUrl}/workersByProject/${projectId}';
-    const url = `${this.baseApiUrl}/workersByProject/`+projectId; 
+
+    //const url = '${this.baseApiUrl}//workersByProject/${projectId}';
+    const url = `${this.baseApiUrl}/workersByProject/`+projectId;
     console.log("URLLL"+url);
-    return this.http.get<AppUser[]>(url);
+    return this.https.get<AppUser[]>(url);
   }
 
   addWorkersToProjects(payload:any) : Observable<void> {
-    return this.http.post<void>(`${this.baseApiUrl}/addWorkersToProjects`, JSON.stringify(payload), {headers: this.headers});
+    return this.https.post<void>(`${this.baseApiUrl}/addWorkersToProjects`, JSON.stringify(payload), {headers: this.headers});
   }
 
   getWorksByWorkerId(workerId: number): Observable<Work[]> {
     const url = `${this.baseApiUrl}/${workerId}`;
-    return this.http.get<Work[]>(url);
+    return this.https.get<Work[]>(url);
+  }
+
+  getCurrentWorksByWorkerId(workerId: number): Observable<Work[]> {
+    const url = `${this.baseApiUrl}/current/${workerId}`;
+    return this.https.get<Work[]>(url);
+  }
+
+  getPastWorksByWorkerId(workerId: number): Observable<Work[]> {
+    const url = `${this.baseApiUrl}/past/${workerId}`;
+    return this.https.get<Work[]>(url);
   }
 
   updateWorkDescription(id: number, updatedWork: Work): Observable<string> {
     const url = `${this.baseApiUrl}/description/${id}`;
-    return this.http.put<string>(url, updatedWork, { headers: this.headers });
+    return this.https.put<string>(url, updatedWork, { headers: this.headers });
   }
 
+  dismissWorker(id: number): Observable<any>{
+    return this.https.put<any>(this.apiHost + '/dismiss/' + id, {headers: this.headers});
+  }
 
 }

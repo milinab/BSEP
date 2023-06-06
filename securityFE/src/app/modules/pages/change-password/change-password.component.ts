@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../security/model/project.model';
 import { ProjectService } from '../../security/service/project.service';
 import { UserDto } from '../../security/dto/user';
+import {TokenStorageService} from "../../security/service/token-storage.service";
 
 @Component({
   selector: 'app-change-password',
@@ -14,17 +15,24 @@ import { UserDto } from '../../security/dto/user';
 })
 export class ChangePasswordComponent implements OnInit {
   public user: UserDto = new UserDto();
+  appUser: AppUser | undefined;
 
-  constructor(private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private tokenStorageService: TokenStorageService, private appUserService : AppUserService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.appUserService.getById(1).subscribe(res => {
-      this.user = res;
-    })
-  }
+    var loggedUser = this.tokenStorageService.getUser();
+    console.log("loggedUser ", loggedUser)
+    this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
+      this.appUser = res;
+      console.log("GETOVAN USER:", this.appUser)
 
-  public cancel(): void {
-    this.router.navigate(['/profile'])
+      this.user.id = this.appUser.id;
+      this.user.email = this.appUser.email;
+      this.user.firstName = this.appUser.firstName;
+      this.user.lastName = this.appUser.lastName;
+      this.user.password = this.appUser.password;
+      this.user.appUserRole = this.appUser.appUserRole
+    });
   }
 
   private isValidInput(): boolean {
@@ -32,17 +40,19 @@ export class ChangePasswordComponent implements OnInit {
       && this.user?.email != '';
   }
 
-  public updateUser(): void {
-    if (!this.isValidInput()) return;
-    //this.appUserService.updateUser(this.user).subscribe(res => {
-    //  this.router.navigate(['/profile']);
-    //});
+  public changePassword(): void {
+    this.appUserService.updateUser(this.user).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['manager-profile/update'])
+      },
+      error => {
+        console.error('Failed to update user:', error);
+      }
+    );
   }
 
-  public changePassword(): void {
-    //this.appUserService.updateUser(this.user).subscribe(res => {
-    //  alert("Success!");
-    //  console.log(this.user)
-    //});
+  public cancel(): void {
+    this.router.navigate(['/manager-profile/update'])
   }
 }

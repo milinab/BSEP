@@ -18,10 +18,8 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers().subscribe(res => {
       this.users = res;
       this.users = this.users.filter(w => {
-        let isAdmin = false;
-  
+        let isAdmin = false;  
         if (w.appUserRole === 'ADMIN') isAdmin = true;
-  
         return !isAdmin;
       });
     })

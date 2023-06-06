@@ -97,3 +97,8 @@ mat-form-field {
   padding-top: 5%;
   padding-left: 2%;
 }
+
+.dis {
+  display: flex;
+  flex-direction: row;
+}

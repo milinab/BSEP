@@ -57,6 +57,28 @@ public class WorkService {
         return workRepository.findByWorkerId(workerId);
     }
 
+    public List<Work> getCurrentWorksByWorkerId(Long workerId) {
+        List<Work> allWorks = workRepository.findByWorkerId(workerId);
+        List<Work> currentWorks = new ArrayList<>();
+        for (Work work : allWorks) {
+            if(work.getEndTime()==null) {
+                currentWorks.add(work);
+            }
+        }
+        return currentWorks;
+    }
+
+    public List<Work> getPastWorksByWorkerId(Long workerId) {
+        List<Work> allWorks = workRepository.findByWorkerId(workerId);
+        List<Work> pastWorks = new ArrayList<>();
+        for (Work work : allWorks) {
+            if(work.getEndTime()!=null) {
+                pastWorks.add(work);
+            }
+        }
+        return pastWorks;
+    }
+
 
     public List<AppUser> getAllWorkersByProject(Long projectId) {
         List<Work> works = workRepository.findByProjectId(projectId);

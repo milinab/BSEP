@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 
 @Getter
@@ -28,5 +29,6 @@ public class Work {
 
     private int duration;
     private String description;
-
+    private LocalDate startTime;
+    private LocalDate endTime;
 }
