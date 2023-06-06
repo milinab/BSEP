@@ -17,4 +17,8 @@ export class AttachmentService{
 
     return this.https.post<any>(this.apiHost + 'upload', formData);
   }
+
+  downloadFileByAppUserId(appUserId: number): Observable<any> {
+    return this.https.get(`${this.apiHost}download/appUser/${appUserId}`, { responseType: 'blob' });
+  }
 }

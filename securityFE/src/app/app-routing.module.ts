@@ -24,6 +24,7 @@ import {A} from "@angular/cdk/keycodes";
 import {EngineerGuard} from "./modules/guard/engineerGuard";
 import {ForbiddenPageComponent} from "./modules/pages/forbidden-page/forbidden-page.component";
 import {AllWorkersByProjectComponent} from "./modules/pages/all-workers-by-project/all-workers-by-project.component";
+import {EngineersCvComponent} from "./modules/pages/engineers-cv/engineers-cv.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -44,7 +45,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'forbidden-page', component: ForbiddenPageComponent},
   { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard, EngineerGuard]},
-  { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard, AdminGuard]}
+  { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard, AdminGuard]},
+  { path: 'engineers-cv', component: EngineersCvComponent}
 
 ];
 

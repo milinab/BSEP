@@ -48,4 +48,9 @@ export class AppUserService{
     return this.https.get<AppUser>(this.apiHost + 'api/v1/appUser/' + email, { headers: this.headers });
   }
 
+  getEngineerUsers(): Observable<AppUser[]> {
+    const url = `${this.apiHost}api/v1/appUser/engineer`;
+    return this.https.get<AppUser[]>(url, { headers: this.headers });
+  }
+
 }

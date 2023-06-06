@@ -1,5 +1,6 @@
 package com.example.security.service;
 
+import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import com.example.security.registration.token.ConfirmationToken;
@@ -87,4 +88,9 @@ public class AppUserService implements UserDetailsService {
         }
         return appUser.get();
     }
+
+    public List<AppUser> getUsersByUserRole(AppUserRole userRole) {
+        return appUserRepository.findByAppUserRole(userRole);
+    }
+
 }

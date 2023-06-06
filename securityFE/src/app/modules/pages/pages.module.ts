@@ -26,6 +26,7 @@ import { AllWorkersByProjectComponent } from './all-workers-by-project/all-worke
 import { EngineerProfileComponent } from './engineer-profile/engineer-profile.component';
 import {ForbiddenPageComponent} from "./forbidden-page/forbidden-page.component";
 import {RbacComponent} from "./rbac/rbac.component";
+import { EngineersCvComponent } from './engineers-cv/engineers-cv.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {RbacComponent} from "./rbac/rbac.component";
     AllWorkersByProjectComponent,
     EngineerProfileComponent,
     ForbiddenPageComponent,
-    RbacComponent
+    RbacComponent,
+    EngineersCvComponent
   ],
   imports: [
     CommonModule,
