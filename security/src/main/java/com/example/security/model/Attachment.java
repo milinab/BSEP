@@ -16,6 +16,8 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    String path;
     private String fileName;
     private String fileType;
     @Lob
