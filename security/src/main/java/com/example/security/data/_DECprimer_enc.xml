@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><cv>
+  <name>John</name>
+  <surname>Doe</surname>
+  <address>123 Main St, Anytown, USA</address>
+  <seniority>medior</seniority>
+  <skills>
+    <skill>
+      <name>Java</name>
+      <value>5</value>
+    </skill>
+    <skill>
+      <name>Python django</name>
+      <value>2</value>
+    </skill>
+    <skill>
+      <name>C# .NET</name>
+      <value>4</value>
+    </skill>
+  </skills>
+  <projects>
+    <project>
+      <title>Project A</title>
+      <duration>12</duration>
+      <description>Developed and implemented an inventory management system.</description>
+    </project>
+    <project>
+      <title>Project B</title>
+      <duration>6</duration>
+      <description>Led a cross-functional team in redesigning the company's e-commerce website.</description>
+    </project>
+  </projects>
+</cv>

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
     Optional<Attachment> findByAppUser_Id(Long appUserId);
+    Attachment findByPath(String path);
 }
