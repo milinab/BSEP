@@ -7,6 +7,7 @@ import com.example.security.registration.token.ConfirmationToken;
 import com.example.security.registration.token.ConfirmationTokenService;
 import com.example.security.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,9 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +26,21 @@ public class AppUserService implements UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        AppUser appUser = appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (appUser == null) {
+            throw new UsernameNotFoundException("User not found in the database");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(appUser.getAppUserRole().toString()));
+        return new org.springframework.security.core.userdetails.User(
+                appUser.getEmail(),
+                appUser.getPassword(),
+                authorities) {
+            @Override
+            public boolean isEnabled() {
+                return appUser.getEnabled();
+            }
+        };
     }
 
     public AppUser getUserById(Long userId) {
@@ -50,7 +63,8 @@ public class AppUserService implements UserDetailsService {
         // Update the necessary fields of the existing user with the new data
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
-        existingUser.setPassword(updatedUser.getPassword());
+        String encodedPassword = passwordEncoder.encode(updatedUser.getPassword());
+        existingUser.setPassword(encodedPassword);
         existingUser.setAppUserRole(updatedUser.getAppUserRole());
 
         // Save the updated user in the repository
