@@ -14,27 +14,41 @@ import javax.persistence.*;
 @Entity
 public class Attachment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    String path;
     private String fileName;
     private String fileType;
     @Lob
     private byte[] data;
 
+    private String path;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", nullable = true)
     private AppUser appUser;
-    public Attachment(String fileName, String fileType, byte[] data) {
+    public Attachment( String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+    }
+
+    public Attachment( String fileName, String fileType, byte[] data, String path) {
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.data = data;
+        this.path = path;
     }
     public Attachment(String fileName, String fileType, byte[] data, AppUser appUser) {
         this.appUser = appUser;
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+    }
+    public Attachment(String fileName, String fileType, byte[] data, AppUser appUser, String path) {
+        this.appUser = appUser;
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.data = data;
+        this.path = path;
     }
 }

@@ -30,6 +30,22 @@ public class AttachmentController {
         this.asymmetricKeyEncryption = asymmetricKeyEncryption;
     }
 
+    @GetMapping("/download/file")
+    public ResponseEntity<Resource> downloadFileByPath(@RequestParam("path") String path) throws Exception {
+        Attachment attachment = null;
+        attachment = attachmentService.getAttachmentByPath(path);
+
+        if (attachment == null) {
+            throw new Exception("File not found with path: " + path);
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(attachment.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getFileName() + "\"")
+                .body(new ByteArrayResource(attachment.getData()));
+    }
+
+
     @PostMapping("/encrypt")
     public ResponseEntity<String> encryptDocument(@RequestBody String filePath) {
         asymmetricKeyEncryption.testIt(filePath);
@@ -43,17 +59,24 @@ public class AttachmentController {
     }
 
     @PostMapping("/upload")
-    public AttachmentData uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+    public AttachmentData uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("appUserId") Long appUserId) throws Exception {
         Attachment attachment = null;
-        String downloadURl = "";
-        attachment = attachmentService.saveAttachment(file);
-        downloadURl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(String.valueOf(attachment.getId()))
-                .toUriString();
+        String downloadURL = "";
+        try {
+            String filePath = file.getOriginalFilename(); // Dobijanje putanje selektovanog fajla
+            asymmetricKeyEncryption.testIt(filePath); // Enkripcija fajla
+
+            attachment = attachmentService.saveAttachment(file, appUserId);
+            downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(String.valueOf(attachment.getId()))
+                    .toUriString();
+        } catch (Exception e) {
+            throw new Exception("Could not save File: " + file.getOriginalFilename());
+        }
 
         return new AttachmentData(attachment.getFileName(),
-                downloadURl,
+                downloadURL,
                 file.getContentType(),
                 file.getSize());
     }

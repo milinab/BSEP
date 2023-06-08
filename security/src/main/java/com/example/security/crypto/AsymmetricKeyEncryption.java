@@ -38,7 +38,8 @@ public class AsymmetricKeyEncryption {
     }
     public void testIt(String filePath) {
         // ucitava se dokument
-        Document doc = loadDocument(filePath);
+        String full_file_path = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/" + filePath;
+        Document doc = loadDocument(full_file_path);
 
         // generise tajni session kljuc
         System.out.println("Generating secret key ....");
@@ -52,7 +53,7 @@ public class AsymmetricKeyEncryption {
         doc = encrypt(doc, secretKey, cert);
 
         String OUT_FILE = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/";
-        String fileName = new File(filePath).getName();
+        String fileName = new File(full_file_path).getName();
         OUT_FILE+= "enc_";
         OUT_FILE += fileName;
         // snima se tajni kljuc
@@ -118,8 +119,9 @@ public class AsymmetricKeyEncryption {
     private SecretKey generateDataEncryptionKey() {
 
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("DESede"); // Triple
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES"); // Triple
             // DES
+            keyGenerator.init(256);
             return keyGenerator.generateKey();
 
         } catch (NoSuchAlgorithmException e) {
@@ -133,14 +135,14 @@ public class AsymmetricKeyEncryption {
         try {
 
             // cipher za kriptovanje XML-a
-            XMLCipher xmlCipher = XMLCipher.getInstance(XMLCipher.TRIPLEDES);
+            XMLCipher xmlCipher = XMLCipher.getInstance(XMLCipher.AES_128);
 
             // inicijalizacija za kriptovanje
             xmlCipher.init(XMLCipher.ENCRYPT_MODE, key);
 
             // cipher za kriptovanje tajnog kljuca,
             // Koristi se Javni RSA kljuc za kriptovanje
-            XMLCipher keyCipher = XMLCipher.getInstance(XMLCipher.RSA_v1dot5);
+            XMLCipher keyCipher = XMLCipher.getInstance(XMLCipher.RSA_OAEP);
 
             // inicijalizacija za kriptovanje tajnog kljuca javnim RSA kljucem
             keyCipher.init(XMLCipher.WRAP_MODE, certificate.getPublicKey());
