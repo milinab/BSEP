@@ -1,5 +1,3 @@
-<h2>Engineer Users</h2>
-
 <table class="table">
   <thead>
   <tr>
@@ -12,10 +10,9 @@
   <tbody>
   <tr *ngFor="let user of engineerUsers">
     <td>{{ user.firstName }}</td>
-    <td>{{ user.lastName }}</td>
     <td>{{ user.email }}</td>
     <td>
-      <a class="btn btn-primary" [href]="'https://localhost:8082/download/' + user.id" target="_blank" download>Download CV</a>
+      <button class="btn btn-primary" (click)="showCv(user.id)">Show CV</button>
     </td>
   </tr>
   </tbody>
