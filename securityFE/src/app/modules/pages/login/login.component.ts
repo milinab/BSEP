@@ -35,10 +35,11 @@ export class LoginComponent implements OnInit {
         next: response => {
           console.log("X")
           console.log(response)
-          this.tokenStorageService.saveToken(response.accessToken)
-          this.tokenStorageService.saveUser(response.accessToken)
+          this.tokenStorageService.saveToken(response.token)
+          this.tokenStorageService.saveUser(response.token)
           const test = window.sessionStorage.getItem('TOKEN_KEY')
           alert("Success!");
+          console.log(test);
           this.router.navigate(['/home']).then(
             ()=>{
               window.location.reload();

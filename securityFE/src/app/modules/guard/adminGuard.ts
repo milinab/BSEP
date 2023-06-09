@@ -26,6 +26,7 @@ export class AdminGuard implements CanActivate {
     return new Promise<boolean>((resolve, reject) => {
       this.appUserService.getByEmail(loggedUser.sub).subscribe(res => {
         this.appUser = res;
+        console.log("this.appUser", this.appUser);
 
         if (this.appUser?.appUserRole === "ADMIN") {
           // Korisnik je admin, dozvoli pristup

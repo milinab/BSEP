@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserToken } from '../model/userToken.model';
+import { Observable } from 'rxjs';
 import { AppUser } from '../model/appUser.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 const TOKEN_KEY = 'auth-token';
@@ -34,7 +35,6 @@ export class TokenStorageService {
     return !!window.sessionStorage.getItem(TOKEN_KEY);
   }
   public saveUser(token: string): void {
-    console.log(token)
     let user: string = atob(token.split('.')[1]);
     console.log(user)
     let userObject = JSON.parse(user)

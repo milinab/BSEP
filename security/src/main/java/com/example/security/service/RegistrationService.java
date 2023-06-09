@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.example.security.enums.AppUserRole.ADMIN;
+
 @Service
 @AllArgsConstructor
 public class RegistrationService {
@@ -79,7 +81,7 @@ public class RegistrationService {
                         request.getEmail(),
                         request.getPassword(),
                         request.getAppUserRole(),
-                        RegistrationStatus.ACCEPTED
+                        RegistrationStatus.PENDING
                 )
         );
 /*
