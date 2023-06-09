@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 public class CvService {
@@ -80,4 +81,7 @@ public class CvService {
         return Files.readAllBytes(path);
     }
 
+    public List<Cv> getAllCvs() {
+        return cvRepository.findAllWithAppUser();
+    }
 }
