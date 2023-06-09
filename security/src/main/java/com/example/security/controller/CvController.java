@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -70,11 +69,6 @@ public class CvController {
         }
     }
 
-
-    @GetMapping("/cvs")
-    public List<Cv> getAllCvs() {
-        return cvService.getAllCvs();
-    }
 
 
 }
