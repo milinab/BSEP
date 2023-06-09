@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 public class CvService {
@@ -73,7 +74,9 @@ public class CvService {
 
         return decryptedFilePath;
     }
-
+    public List<Cv> getAllCvs() {
+        return cvRepository.findAllWithAppUser();
+    }
 
     public byte[] getFileData(String filePath) throws IOException {
         Path path = Paths.get(filePath);
