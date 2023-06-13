@@ -1,19 +1,16 @@
 package com.example.security.controller;
 
+import com.example.security.dto.AppUserDto;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
-import com.example.security.model.Work;
 import com.example.security.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,7 +36,7 @@ public class AppUserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<AppUser> getAppUserByEmail(
+    public ResponseEntity<AppUserDto> getAppUserByEmail(
             @PathVariable("email") String email
     ) {
         try {

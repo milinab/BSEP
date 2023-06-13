@@ -32,7 +32,6 @@ export class AdminProfileComponent implements OnInit {
       this.user.email = this.appUser.email;
       this.user.firstName = this.appUser.firstName;
       this.user.lastName = this.appUser.lastName;
-      this.user.password = this.appUser.password;
       this.user.appUserRole = this.appUser.appUserRole
     });
 

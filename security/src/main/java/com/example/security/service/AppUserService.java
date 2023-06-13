@@ -1,5 +1,6 @@
 package com.example.security.service;
 
+import com.example.security.dto.AppUserDto;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
@@ -80,12 +81,20 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.enableAppUser(email);
     }
 
-    public AppUser getAppUserByEmail (String email) throws Exception{
+    public AppUserDto getAppUserByEmail (String email) throws Exception{
         Optional<AppUser> appUser = appUserRepository.findByEmail(email);
         if (appUser.isEmpty()) {
             throw new Exception("App user is not found with Email: " + email);
         }
-        return appUser.get();
+        AppUser user = appUser.get();
+        AppUserDto userDto = new AppUserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        userDto.setAppUserRole(user.getAppUserRole());
+
+        return userDto;
     }
 
     public List<AppUser> getUsersByUserRole(AppUserRole userRole) {
