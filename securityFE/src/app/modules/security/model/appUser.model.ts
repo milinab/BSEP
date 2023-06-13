@@ -1,3 +1,5 @@
+import { getLocaleDateFormat } from "@angular/common";
+
 export class AppUser{
   id: number = 0;
   email: string = '';
@@ -5,6 +7,7 @@ export class AppUser{
   firstName: string = '';
   lastName: string = '';
   appUserRole: string = '';
+  startDate: string = '';
 
 
   public constructor(obj?: any) {
@@ -15,6 +18,7 @@ export class AppUser{
       this.firstName = obj.firstName;
       this.lastName = obj.lastName;
       this.appUserRole = obj.appUserRole;
+      this.startDate = obj.startDate;
     }
   }
 }

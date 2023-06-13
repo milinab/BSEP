@@ -13,10 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -91,6 +90,38 @@ public class AppUserService implements UserDetailsService {
 
     public List<AppUser> getUsersByUserRole(AppUserRole userRole) {
         return appUserRepository.findByAppUserRole(userRole);
+    }
+
+    public List<AppUser> searchUsers(String firstName, String lastName, String email, LocalDate startDate) {
+        List<AppUser> allEngineers = getUsersByUserRole(AppUserRole.SOFTWARE_ENGINEER);
+        List<AppUser> matchingUsers = new ArrayList<>();
+
+        for (AppUser user : allEngineers) {
+            boolean match = true;
+
+            if (firstName != null && !firstName.isEmpty()) {
+                match = match && user.getFirstName() != null && user.getFirstName().toLowerCase().contains(firstName.toLowerCase());
+            }
+
+            if (lastName != null && !lastName.isEmpty()) {
+                match = match && user.getLastName() != null && user.getLastName().toLowerCase().contains(lastName.toLowerCase());
+            }
+
+            if (email != null && !email.isEmpty()) {
+                match = match && user.getEmail() != null && user.getEmail().toLowerCase().contains(email.toLowerCase());
+            }
+
+            if (startDate != null) {
+                System.out.println("date: "+ startDate);
+                match = match && user.getStartDate() != null && user.getStartDate().isBefore(startDate);
+            }
+
+            if (match) {
+                matchingUsers.add(user);
+            }
+        }
+
+        return matchingUsers;
     }
 
 }

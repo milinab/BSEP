@@ -1,0 +1,36 @@
+<div *ngIf="allEngineers">
+    <h2>All Engineers:</h2>
+    <ul>
+      <li *ngFor="let user of allEngineers">
+        {{ user.firstName }} {{ user.lastName }} {{ user.email }} {{ user.startDate | date: 'dd/MM/yyyy' }}
+      </li>
+    </ul>
+  </div>
+  
+  <form (ngSubmit)="searchUsers()">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" [(ngModel)]="user.firstName" name="firstName">
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" [(ngModel)]="user.lastName" name="lastName">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="user.email" name="email">
+    </div>
+    <div>
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" [(ngModel)]="user.startDate" name="startDate">
+    </div>
+    <button type="submit">Search</button>
+  </form>
+  <div *ngIf="matchingUsers">
+    <h2>Matching Users:</h2>
+    <ul>
+      <li *ngFor="let user of matchingUsers">
+        {{ user.firstName }} {{ user.lastName }} {{ user.email }} {{ user.startDate | date: 'dd/MM/yyyy' }}
+      </li>
+    </ul>
+  </div>

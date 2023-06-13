@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -50,11 +51,11 @@ public class AppUser implements UserDetails {
     @Column
     private Boolean enabled = false;
 
+    @Column
+    private LocalDate startDate;
+
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
-
-/*    @OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
-    private List<Work> allProjects;*/
 
     public AppUser(String firstName,
                    String lastName,

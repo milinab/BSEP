@@ -3,12 +3,17 @@ package com.example.security.controller;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
+import com.example.security.model.Work;
 import com.example.security.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -48,6 +53,21 @@ public class AppUserController {
     @GetMapping(path = "engineer")
     public List<AppUser> getEngineerUsers() {
         return appUserService.getUsersByUserRole(AppUserRole.SOFTWARE_ENGINEER);
+    }
+
+    @GetMapping("/search")
+    public List<AppUser> searchUsers(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String startDateString
+    ) {
+        LocalDate startDate = null;
+        if (startDateString != null && !startDateString.isEmpty()) {
+            startDate = LocalDate.parse(startDateString);
+        }
+
+        return appUserService.searchUsers(firstName, lastName, email, startDate);
     }
 
 }

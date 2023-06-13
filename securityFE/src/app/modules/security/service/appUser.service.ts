@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { AppUser } from "../model/appUser.model";
 import { Observable } from "rxjs";
 import { UserDto } from "../dto/user";
@@ -13,6 +13,7 @@ export class AppUserService{
   apiHost: string = 'https://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   baseApiUrl: string = 'https://localhost:8082/api/v1/user';
+  baseUrl: string = 'https://localhost:8082/api/v1/appUser';
 
   constructor(private https: HttpClient) { }
 
@@ -51,6 +52,20 @@ export class AppUserService{
   getEngineerUsers(): Observable<AppUser[]> {
     const url = `${this.apiHost}api/v1/appUser/engineer`;
     return this.https.get<AppUser[]>(url, { headers: this.headers });
+  }
+
+  // searchUsers(searchCriteria: any) {
+  //   const url = `${this.baseUrl}/search`;
+  //   return this.https.get<AppUser[]>(url, {params: searchCriteria});
+  // }
+  searchUsers(firstName: string, lastName: string, email: string, startDate: string): Observable<AppUser[]> {
+    const params = new HttpParams()
+      .set('firstName', firstName || '')
+      .set('lastName', lastName || '')
+      .set('email', email || '')
+      .set('startDateString', startDate || '');
+
+    return this.https.get<AppUser[]>(`${this.baseUrl}/search`, { params });
   }
 
 }
