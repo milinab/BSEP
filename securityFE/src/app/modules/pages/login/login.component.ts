@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
         next: response => {
           console.log("X")
           console.log(response)
-          this.tokenStorageService.saveToken(response.token)
-          this.tokenStorageService.saveUser(response.token)
+          this.tokenStorageService.saveToken(response.accessToken)
+          this.tokenStorageService.saveUser(response.accessToken)
           const test = window.sessionStorage.getItem('TOKEN_KEY')
           alert("Success!");
           console.log(test);
