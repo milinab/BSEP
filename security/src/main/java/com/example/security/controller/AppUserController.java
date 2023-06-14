@@ -57,14 +57,22 @@ public class AppUserController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String startDateString
+            @RequestParam(required = false) String startDateString,
+            @RequestParam(required = false) String endDateString
     ) {
         LocalDate startDate = null;
+        LocalDate endDate = null;
+
         if (startDateString != null && !startDateString.isEmpty()) {
             startDate = LocalDate.parse(startDateString);
         }
 
-        return appUserService.searchUsers(firstName, lastName, email, startDate);
+        if (endDateString != null && !endDateString.isEmpty()) {
+            endDate = LocalDate.parse(endDateString);
+        }
+
+        return appUserService.searchUsers(firstName, lastName, email, startDate, endDate);
     }
+
 
 }

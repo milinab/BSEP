@@ -8,6 +8,7 @@ export class AppUser{
   lastName: string = '';
   appUserRole: string = '';
   startDate: string = '';
+  endDate: string = '';
 
 
   public constructor(obj?: any) {
@@ -19,6 +20,7 @@ export class AppUser{
       this.lastName = obj.lastName;
       this.appUserRole = obj.appUserRole;
       this.startDate = obj.startDate;
+      this.endDate = obj.endDate;
     }
   }
 }

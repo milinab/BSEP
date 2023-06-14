@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './search-engineers.component.html',
   styleUrls: ['./search-engineers.component.css']
 })
+
 export class SearchEngineersComponent implements OnInit {
 
   public user: AppUser = new AppUser();
@@ -29,7 +30,7 @@ export class SearchEngineersComponent implements OnInit {
 
   searchUsers(): void {
    // const startDateString: string | null = this.startDate !== '' ? new Date(this.startDate).toISOString() : null;
-    this.appUserService.searchUsers(this.user.firstName, this.user.lastName, this.user.email, this.user.startDate)
+    this.appUserService.searchUsers(this.user.firstName, this.user.lastName, this.user.email, this.user.startDate, this.user.endDate)
       .subscribe(matchingUsers => {
         this.matchingUsers = matchingUsers;
       });

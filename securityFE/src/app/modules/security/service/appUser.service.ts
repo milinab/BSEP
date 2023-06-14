@@ -58,12 +58,14 @@ export class AppUserService{
   //   const url = `${this.baseUrl}/search`;
   //   return this.https.get<AppUser[]>(url, {params: searchCriteria});
   // }
-  searchUsers(firstName: string, lastName: string, email: string, startDate: string): Observable<AppUser[]> {
+  searchUsers(firstName: string, lastName: string, email: string, startDate: string, endDate: string): Observable<AppUser[]> {
     const params = new HttpParams()
       .set('firstName', firstName || '')
       .set('lastName', lastName || '')
       .set('email', email || '')
-      .set('startDateString', startDate || '');
+      .set('startDateString', startDate || '')
+      .set('endDateString', endDate || '')
+
 
     return this.https.get<AppUser[]>(`${this.baseUrl}/search`, { params });
   }

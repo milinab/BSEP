@@ -117,7 +117,7 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findByAppUserRole(userRole);
     }
 
-    public List<AppUser> searchUsers(String firstName, String lastName, String email, LocalDate startDate) {
+    public List<AppUser> searchUsers(String firstName, String lastName, String email, LocalDate startDate, LocalDate endDate) {
         List<AppUser> allEngineers = getUsersByUserRole(AppUserRole.SOFTWARE_ENGINEER);
         List<AppUser> matchingUsers = new ArrayList<>();
 
@@ -136,9 +136,8 @@ public class AppUserService implements UserDetailsService {
                 match = match && user.getEmail() != null && user.getEmail().toLowerCase().contains(email.toLowerCase());
             }
 
-            if (startDate != null) {
-                System.out.println("date: "+ startDate);
-                match = match && user.getStartDate() != null && user.getStartDate().isBefore(startDate);
+            if (startDate != null && endDate != null) {
+                match = match && user.getStartDate() != null && user.getStartDate().isAfter(startDate) && user.getStartDate().isBefore(endDate);
             }
 
             if (match) {
@@ -148,5 +147,6 @@ public class AppUserService implements UserDetailsService {
 
         return matchingUsers;
     }
+
 
 }

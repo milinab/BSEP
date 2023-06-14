@@ -24,6 +24,10 @@
       <label for="startDate">Start Date:</label>
       <input type="date" id="startDate" [(ngModel)]="user.startDate" name="startDate">
     </div>
+    <div>
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" [(ngModel)]="user.endDate" name="endDate">
+    </div>
     <button type="submit">Search</button>
   </form>
   <div *ngIf="matchingUsers">
