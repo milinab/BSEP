@@ -56,7 +56,8 @@ public class SecurityConfig {
         http.authorizeRequests().antMatchers(
                 "/api/v1/auth/authenticate",
                 "/api/v1/auth/logout",
-                "/api/v1/auth/token/refresh"
+                "/api/v1/auth/token/refresh",
+                "/api/v1/registration/pending"
         ).permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
