@@ -5,6 +5,8 @@ import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
 import com.example.security.service.AppUserService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AppUserController {
     private AppUserService appUserService;
+    //Logger logger = LoggerFactory.getLogger(AppUserController.class);
 
     @GetMapping(path = "pending")
     public List<AppUser> getPendingUsers() {

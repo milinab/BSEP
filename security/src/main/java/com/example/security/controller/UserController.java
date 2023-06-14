@@ -3,6 +3,8 @@ package com.example.security.controller;
 import com.example.security.dto.UserDto;
 import com.example.security.model.AppUser;
 import com.example.security.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     public UserController(UserService userService) {
         this.userService = userService;

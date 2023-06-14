@@ -3,6 +3,8 @@ package com.example.security.controller;
 import com.example.security.registration.RegistrationRequest;
 import com.example.security.service.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private RegistrationService registrationService;
+    //Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @PostMapping("/register")
     public String register(@RequestBody RegistrationRequest request){

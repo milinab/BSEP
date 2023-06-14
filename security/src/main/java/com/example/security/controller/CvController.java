@@ -4,6 +4,8 @@ import com.example.security.crypto.AsymmetricKeyDecryption;
 import com.example.security.crypto.AsymmetricKeyEncryption;
 import com.example.security.model.Cv;
 import com.example.security.service.CvService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://localhost:4200")
 public class CvController {
     private CvService cvService;
+    Logger logger = LoggerFactory.getLogger(CvController.class);
     private AsymmetricKeyEncryption asymmetricKeyEncryption;
     private AsymmetricKeyDecryption asymmetricKeyDecryption;
 

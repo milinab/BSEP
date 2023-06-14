@@ -2,6 +2,8 @@ package com.example.security.controller;
 
 import com.example.security.model.RolePermission;
 import com.example.security.service.RolePermissionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/role-permissions")
 public class RolePermissionController {
     private final RolePermissionService rolePermissionService;
+    Logger logger = LoggerFactory.getLogger(RolePermissionController.class);
 
     public RolePermissionController(RolePermissionService rolePermissionService) {
         this.rolePermissionService = rolePermissionService;

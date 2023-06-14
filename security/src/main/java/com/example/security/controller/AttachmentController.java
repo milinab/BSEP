@@ -5,6 +5,8 @@ import com.example.security.crypto.AsymmetricKeyEncryption;
 import com.example.security.model.Attachment;
 import com.example.security.model.AttachmentData;
 import com.example.security.service.AttachmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +25,8 @@ public class AttachmentController {
     private AttachmentService attachmentService;
     private AsymmetricKeyEncryption asymmetricKeyEncryption;
     private AsymmetricKeyDecryption asymmetricKeyDecryption;
+
+    Logger logger = LoggerFactory.getLogger(AttachmentController.class);
 
     public AttachmentController(AttachmentService attachmentService, AsymmetricKeyDecryption asymmetricKeyDecryption, AsymmetricKeyEncryption asymmetricKeyEncryption) {
         this.attachmentService = attachmentService;
