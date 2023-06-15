@@ -1,6 +1,7 @@
 package com.example.security.service;
 
 import com.example.security.dto.AppUserDto;
+import com.example.security.dto.EditPasswordDto;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
@@ -148,5 +149,34 @@ public class AppUserService implements UserDetailsService {
         return matchingUsers;
     }
 
+    public void blockUser(String email){
+        Optional<AppUser> appUserOptional = appUserRepository.findByEmail(email);
+        if (appUserOptional.isEmpty()){
+            return;
+        }
+        AppUser oldUser = appUserOptional.get();
+        oldUser.setBlocked(true);
+        appUserRepository.save(oldUser);
+    }
+
+    public void unblockUser(String email){
+        Optional<AppUser> appUserOptional = appUserRepository.findByEmail(email);
+        if (appUserOptional.isEmpty()){
+            return;
+        }
+        AppUser oldUser = appUserOptional.get();
+        oldUser.setBlocked(false);
+        appUserRepository.save(oldUser);
+    }
+
+    public void updatePassword(EditPasswordDto editPasswordDto){
+        Optional<AppUser> appUserOptional = appUserRepository.findByEmail(editPasswordDto.getEmail());
+        if(appUserOptional.isEmpty()){
+            return;
+        }
+        AppUser oldUser = appUserOptional.get();
+        oldUser.setPassword(passwordEncoder.encode(editPasswordDto.getEditedPassword()));
+        appUserRepository.save(oldUser);
+    }
 
 }

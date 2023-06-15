@@ -1,6 +1,7 @@
 package com.example.security.controller;
 
 import com.example.security.dto.AppUserDto;
+import com.example.security.dto.EditPasswordDto;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
@@ -72,6 +73,24 @@ public class AppUserController {
         }
 
         return appUserService.searchUsers(firstName, lastName, email, startDate, endDate);
+    }
+
+    @PutMapping("/block/{email}")
+    public ResponseEntity blockUser(@PathVariable("email") String email){
+        appUserService.blockUser(email);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/unblock/{email}")
+    public ResponseEntity unblockUser(@PathVariable("email") String email){
+        appUserService.unblockUser(email);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity updatePassword(@RequestBody EditPasswordDto editPasswordDto){
+        appUserService.updatePassword(editPasswordDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

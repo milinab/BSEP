@@ -53,6 +53,8 @@ public class AppUser implements UserDetails {
     @Column
     private LocalDate startDate;
 
+    @Column
+    private Boolean blocked = false;
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
