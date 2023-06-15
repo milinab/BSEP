@@ -26,20 +26,25 @@ public class UserController {
 
     @GetMapping
     public List<AppUser> getAll(){
+        logger.info("Returning all users");
         return userService.getAll();
     }
 
     @PostMapping
     public AppUser createUser(@RequestBody AppUser user){
+        logger.info("Creating user: {}", user.getUsername());
         return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody AppUser user, @PathVariable("id") Long id){
+        logger.info("Updating user: {}", user.getUsername());
         AppUser editUser = userService.edit(user, id);
         if (editUser == null) {
+            logger.warn("User not found");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }else {
+            logger.info("User updated successfully");
             return new ResponseEntity<>(new UserDto(user), HttpStatus.OK);
         }
     }
@@ -47,6 +52,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public AppUser findById(@PathVariable("id") Long id) {
+        logger.info("Finding user by ID");
         return userService.findById(id);
     }
 }

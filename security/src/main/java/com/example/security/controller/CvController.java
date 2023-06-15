@@ -33,6 +33,7 @@ public class CvController {
 
     @PostMapping("/uploadCv")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("appUserId") Long appUserId) throws Exception {
+        logger.info("Uploading CV for appUserId: {}", appUserId);
         Cv cv = null;
         String downloadURL = "";
         try {
@@ -44,7 +45,9 @@ public class CvController {
                     .path("/download/")
                     .path(String.valueOf(cv.getId()))
                     .toUriString();
+            logger.info("CV uploaded successfully. Download URL: {}", downloadURL);
         } catch (Exception e) {
+            logger.error("Error uploading CV for appUserId: {}", appUserId);
             throw new Exception("Could not save File: " + file.getOriginalFilename());
         }
 
@@ -53,6 +56,7 @@ public class CvController {
 
     @GetMapping("/downloadCv/{appUserId}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long appUserId) throws Exception {
+        logger.info("Downloading CV for appUserId: {}", appUserId);
         try {
             String filePath = cvService.getFilePathByAppUserId(appUserId);
             if (filePath == null) {
@@ -64,17 +68,19 @@ public class CvController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", "cv.docx");
-
+            logger.info("CV downloaded successfully.");
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(fileData);
         } catch (IOException e) {
+            logger.error("Error downloading CV for appUserId: {}", appUserId);
             throw new Exception("Could not read file for AppUser with ID: " + appUserId);
         }
     }
 
     @GetMapping("/cvs")
     public List<Cv> getAllCvs() {
+        logger.info("Retrieving all CVs");
         return cvService.getAllCvs();
     }
 

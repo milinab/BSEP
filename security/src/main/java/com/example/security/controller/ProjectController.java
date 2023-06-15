@@ -23,13 +23,17 @@ public class ProjectController {
 
     @GetMapping
     public List<Project> getAll(){
+        logger.info("Retrieving all projects");
         return projectService.getAll();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Project createProject(@RequestBody Project project){
-        return projectService.createProject(project);
+        logger.info("POST /api/v1/project - Creating a new project");
+        Project createdProject = projectService.createProject(project);
+        logger.info("POST /api/v1/project - Created new project with ID: {}", createdProject.getId());
+        return createdProject;
     }
 
 }

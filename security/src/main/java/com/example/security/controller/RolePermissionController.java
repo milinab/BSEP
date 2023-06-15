@@ -24,21 +24,27 @@ public class RolePermissionController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<RolePermission> addRolePermission(@RequestBody RolePermission rolePermission) {
+        logger.info("Adding new role permission");
         RolePermission createdRolePermission = rolePermissionService.addRolePermission(rolePermission);
+        logger.info("New role permission added successfully");
         return ResponseEntity.ok(createdRolePermission);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRolePermission(@PathVariable Long id) {
+        logger.info("Deleting role permission with ID {}", id);
         rolePermissionService.deleteRolePermission(id);
+        logger.info("Role permission deleted successfully");
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<RolePermission>> getAllRolePermissions() {
+        logger.info("Getting all role permissions");
         List<RolePermission> rolePermissions = rolePermissionService.getAllRolePermissions();
+        logger.info("Retrieved {} role permissions", rolePermissions.size());
         return ResponseEntity.ok(rolePermissions);
     }
 }

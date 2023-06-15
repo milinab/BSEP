@@ -16,15 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class SkillController {
     private SkillService skillService;
-    //Logger logger = LoggerFactory.getLogger(SkillController.class);
+    //private final Logger logger = LoggerFactory.getLogger(SkillController.class);
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateSkill(@PathVariable Long id, @RequestBody Skill skillToUpdate) throws Exception {
+        //logger.info("Updating skill with ID {}", skillToUpdate.getId());
         Skill updatedSkill = skillService.updateSkill(id, skillToUpdate);
         if (updatedSkill != null) {
+            //logger.info("Skill updated successfully");
             return ResponseEntity.ok("Skill updated successfully");
         } else {
+            //logger.error("Failed to update skill");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
