@@ -24,6 +24,16 @@ export class UsersComponent implements OnInit {
       });
     })
   }
+  
+  block(email: String) {
+    this.userService.blockUser(email).subscribe(data =>
+      console.log(data))
+  }
+
+  unblock(email: String) {
+    this.userService.unblockUser(email).subscribe(data =>
+      console.log(data))
+  }
 
 
 }

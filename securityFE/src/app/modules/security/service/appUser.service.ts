@@ -70,4 +70,20 @@ export class AppUserService{
     return this.https.get<AppUser[]>(`${this.baseUrl}/search`, { params });
   }
 
+  blockUser(email: any) : Observable<void>{
+    const url = `${this.baseUrl}/block/`+ email;
+    return this.https.put<void>(url, {}, { headers: this.headers });
+  }
+
+  unblockUser(email: any) : Observable<void>{
+    const url = `${this.baseUrl}/unblock/`+ email;
+    return this.https.put<void>(url, {}, { headers: this.headers });
+  }
+
+  updatePassword(payload: any) : Observable<void>{
+    console.log("updatePassword Payload: ", payload)
+    const url = `${this.baseUrl}/password`;
+    return this.https.put<void>(url, JSON.stringify(payload), { headers: this.headers });
+  }
+
 }

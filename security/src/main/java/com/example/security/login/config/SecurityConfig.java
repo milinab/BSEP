@@ -2,6 +2,7 @@ package com.example.security.login.config;
 
 import com.example.security.login.auth.CustomAuthenticationFilter;
 import com.example.security.login.auth.CustomAuthorizationFilter;
+import com.example.security.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AppUserService appUserService;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -49,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager(
-                http.getSharedObject(AuthenticationConfiguration.class)));
+                http.getSharedObject(AuthenticationConfiguration.class)), appUserService);
         customAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth/authenticate");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);

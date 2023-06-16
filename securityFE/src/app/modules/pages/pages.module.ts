@@ -28,6 +28,7 @@ import {ForbiddenPageComponent} from "./forbidden-page/forbidden-page.component"
 import {RbacComponent} from "./rbac/rbac.component";
 import { EngineersCvComponent } from './engineers-cv/engineers-cv.component';
 import { SearchEngineersComponent } from './search-engineers/search-engineers.component';
+import { HrProfileComponent } from './hr-profile/hr-profile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SearchEngineersComponent } from './search-engineers/search-engineers.co
     ForbiddenPageComponent,
     RbacComponent,
     EngineersCvComponent,
-    SearchEngineersComponent
+    SearchEngineersComponent,
+    HrProfileComponent
   ],
   imports: [
     CommonModule,

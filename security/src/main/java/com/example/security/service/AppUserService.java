@@ -179,4 +179,14 @@ public class AppUserService implements UserDetailsService {
         appUserRepository.save(oldUser);
     }
 
+    public boolean isBlocked(String email) {
+        var user = appUserRepository.findByEmail(email);
+        if (user.isEmpty())
+            return true;
+        if (user.get().getBlocked()) {
+            return true;
+        }
+        return false;
+    }
+
 }
