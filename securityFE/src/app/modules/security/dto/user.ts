@@ -14,7 +14,7 @@ export class UserDto{
       this.password = obj.password;
       this.firstName = obj.firstName;
       this.lastName = obj.lastName;
-      this.appUserRole = obj.appUserRole
+      this.appUserRole = obj.appUserRole;
     }
   }
 }

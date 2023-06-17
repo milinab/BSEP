@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDto } from '../../security/dto/user';
+import { UserToken } from '../../security/model/userToken.model';
 import { AppUser } from '../../security/model/appUser.model';
 import { AppUserService } from '../../security/service/appUser.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { Project } from '../../security/model/project.model';
-import { ProjectService } from '../../security/service/project.service';
-import { UserDto } from '../../security/dto/user';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../../security/service/token-storage.service';
-import { UserToken } from '../../security/model/userToken.model';
 
 @Component({
-  selector: 'app-admin-profile',
-  templateUrl: './admin-profile.component.html',
-  styleUrls: ['./admin-profile.component.css']
+  selector: 'app-hr-profile',
+  templateUrl: './hr-profile.component.html',
+  styleUrls: ['./hr-profile.component.css']
 })
-export class AdminProfileComponent implements OnInit {
+export class HrProfileComponent implements OnInit {
+
   public user: UserDto = new UserDto();
   public userToken: UserToken = new UserToken("","",0);
   appUser: AppUser | undefined;
@@ -61,6 +59,5 @@ export class AdminProfileComponent implements OnInit {
         console.log("NOVA: ",data));
         alert("password has been changed");
     }
-
 
 }

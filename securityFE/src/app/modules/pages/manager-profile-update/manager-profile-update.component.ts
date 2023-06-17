@@ -16,6 +16,7 @@ import {TokenStorageService} from "../../security/service/token-storage.service"
 export class ManagerProfileUpdateComponent implements OnInit {
   public user: UserDto = new UserDto();
   appUser: AppUser | undefined;
+  public newPassword = '';
 
   constructor(private appUserService : AppUserService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
@@ -58,7 +59,14 @@ export class ManagerProfileUpdateComponent implements OnInit {
     );
   }
 
-  public changePassword(): void {
-    this.router.navigate(['change-password'])
-  }
+  updatePassword(){
+    console.log("MEW PASS")
+      console.log(this.newPassword);
+      console.log(this.user);
+      this.appUserService.updatePassword({email:this.user.email,
+        editedPassword: this.newPassword}).subscribe(data =>
+        console.log("NOVA: ",data));
+        alert("password has been changed");
+    }
+
 }

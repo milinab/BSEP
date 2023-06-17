@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
           );
         },
         error: message => {
-          console.log(message.Error)
-          alert("Boom!Error!")
+          console.log(message.error.errorMessage)
+          alert(message.error.errorMessage)
         }
 
       }

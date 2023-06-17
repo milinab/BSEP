@@ -20,6 +20,7 @@ export class EngineerProfileComponent implements OnInit {
   public user: UserDto = new UserDto();
   public userToken: UserToken = new UserToken("", "", 0);
   appUser: AppUser | undefined;
+  public newPassword = '';
 
   constructor(
     private workService: WorkService,
@@ -41,7 +42,6 @@ export class EngineerProfileComponent implements OnInit {
       this.user.email = this.appUser.email;
       this.user.firstName = this.appUser.firstName;
       this.user.lastName = this.appUser.lastName;
-      this.user.password = this.appUser.password;
       this.user.appUserRole = this.appUser.appUserRole;
 
       this.getWorksByWorkerId(this.user.id);
@@ -90,4 +90,15 @@ export class EngineerProfileComponent implements OnInit {
       }
     );
   }
-}
+
+  updatePassword(){
+    console.log("MEW PASS")
+      console.log(this.newPassword);
+      console.log(this.user);
+      this.appUserService.updatePassword({email:this.user.email,
+        editedPassword: this.newPassword}).subscribe(data =>
+        console.log("NOVA: ",data));
+        alert("password has been changed");
+    }
+  }
+

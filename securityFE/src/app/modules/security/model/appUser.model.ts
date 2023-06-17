@@ -9,6 +9,7 @@ export class AppUser{
   appUserRole: string = '';
   startDate: string = '';
   endDate: string = '';
+  blocked: boolean = false;
 
 
   public constructor(obj?: any) {
@@ -21,6 +22,7 @@ export class AppUser{
       this.appUserRole = obj.appUserRole;
       this.startDate = obj.startDate;
       this.endDate = obj.endDate;
+      this.blocked = obj.block;
     }
   }
 }

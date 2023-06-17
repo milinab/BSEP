@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -25,8 +26,7 @@ public class AppUserController {
     //private Logger logger = LoggerFactory.getLogger(AppUserController.class);
 
     @GetMapping(path = "pending")
-    public List<AppUser> getPendingUsers() {
-        //logger.info("Getting pending users");
+    public Optional<AppUser> getPendingUsers() throws Exception {
         return appUserService.getUsersByRegistrationStatus(RegistrationStatus.PENDING);
     }
 

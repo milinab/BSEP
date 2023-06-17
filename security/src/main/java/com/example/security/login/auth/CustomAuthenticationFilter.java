@@ -1,8 +1,9 @@
 package com.example.security.login.auth;
 
 import com.auth0.jwt.JWT;
-import com.example.security.model.AppUser;
+import com.example.security.service.AppUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,9 +27,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
+    private final AppUserService appUserService;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, AppUserService appUserService) {
         this.authenticationManager = authenticationManager;
+        this.appUserService = appUserService;
     }
 
     @Override
@@ -37,9 +40,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String username = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, password);
-        return authenticationManager.authenticate(authenticationToken);
+        if (!appUserService.isBlocked(username)) {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(username, password);
+            return authenticationManager.authenticate(authenticationToken);
+        } else {
+            throw new AppUserIsBlockedException();
+        }
     }
 
 
@@ -81,7 +88,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Map<String, String> error = new HashMap<>();
         if (failed instanceof DisabledException) {
             error.put("errorMessage", "Email address not confirmed");
-        } else {
+        } else if (failed instanceof AppUserIsBlockedException) {
+            error.put("errorMessage", "User is blocked");
+        }
+        else {
             error.put("errorMessage", "Incorrect email or password");
         }
         response.setContentType(APPLICATION_JSON_VALUE);

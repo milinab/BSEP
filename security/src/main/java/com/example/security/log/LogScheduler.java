@@ -26,7 +26,6 @@ public class LogScheduler {
     private static Session session;
     private final AppUserService appUserService;
     private final EmailSender emailSender;
-
     LocalDateTime startTime = LocalDateTime.now();
     private int linesProcessed = 0;
 
@@ -82,7 +81,6 @@ public class LogScheduler {
 
         emailSender.send(email, message);
 
-//        // Send push notification to the connected WebSocket client
 //        if (session != null && session.isOpen()) {
 //            try {
 //                session.getBasicRemote().sendText(logLine);
@@ -95,27 +93,23 @@ public class LogScheduler {
 
 //    @OnOpen
 //    public void onOpen(Session session) {
-//        // This method is called when a WebSocket client connects
 //        System.out.println("WebSocket client connected: " + session.getId());
 //        LogScheduler.session = session;
 //    }
 //
 //    @OnClose
 //    public void onClose(Session session) {
-//        // This method is called when a WebSocket client disconnects
 //        System.out.println("WebSocket client disconnected: " + session.getId());
 //        LogScheduler.session = null;
 //    }
 //
 //    public static void main(String[] args) {
-//        // Start the WebSocket server
 //        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 //        String uri = "ws://localhost:8080/push-notification"; // Specify the WebSocket server URI
 //        try {
 //            container.connectToServer(LogScheduler.class, URI.create(uri));
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//            // Handle the exception appropriately
 //        }
 //    }
 }

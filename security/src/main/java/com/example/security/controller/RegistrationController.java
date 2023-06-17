@@ -1,6 +1,7 @@
 package com.example.security.controller;
 
 import com.example.security.registration.RegistrationRequest;
+import com.example.security.service.KeyStoreService;
 import com.example.security.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -14,16 +15,17 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private RegistrationService registrationService;
+    private final KeyStoreService keyStoreService;
     private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @PostMapping("/register")
-    public String register(@RequestBody RegistrationRequest request){
+    public String register(@RequestBody RegistrationRequest request) throws Exception {
         logger.info("Registering user");
         return registrationService.register(request);
     }
 
     @PostMapping(path = "pending")
-    public String pendingRegister(@RequestBody RegistrationRequest request){
+    public String pendingRegister(@RequestBody RegistrationRequest request) throws Exception {
         logger.warn("Registering user as pending");
         return registrationService.pendingRegister(request);
     }

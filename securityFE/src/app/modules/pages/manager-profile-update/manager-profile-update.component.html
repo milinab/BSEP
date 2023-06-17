@@ -14,6 +14,12 @@
         <mat-label>E-mail: </mat-label>
         <input matInput [(ngModel)]="user.email" [disabled]="true">
       </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>New password: </mat-label>
+        <input matInput [(ngModel)]="newPassword">
+      </mat-form-field>
+      <button mat-stroked-button (click)="updatePassword()">Save password</button>
+
       <br>
     </p>
     <p>
@@ -23,10 +29,9 @@
       <button mat-stroked-button (click)="updateUser()">
         Submit
       </button>
-      <button mat-stroked-button (click)="changePassword()">
-        Change password
-      </button>
+
     </p>
+    
   </div>
   <div class="div-column">
   </div>

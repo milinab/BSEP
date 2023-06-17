@@ -11,10 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static com.example.security.enums.AppUserRole.ADMIN;
 
 @Service
 @AllArgsConstructor
@@ -24,14 +23,12 @@ public class RegistrationService {
     private EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
-    public String register(RegistrationRequest request) {
+    private final  KeyStoreService keyStoreService;
+    public String register(RegistrationRequest request) throws Exception {
         boolean isValidEmail =  emailValidator.test(request.getEmail());
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-//        if(request.getAppUserRole().equals(ADMIN)){
-//            throw new IllegalStateException("Admin can't be registered");
-//        }
 
         AppUser existingUser = (AppUser) appUserService.loadUserByUsername(request.getEmail());
 
@@ -49,11 +46,17 @@ public class RegistrationService {
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link)
         );
-
         return token;
     }
 
-
+    public String encryptData(String data, String alias, String keyPassword) throws Exception {
+        SecretKey secretKey = keyStoreService.getKey(alias, keyPassword);
+        if (secretKey == null) {
+            secretKey = keyStoreService.generateKey();
+            keyStoreService.addKey(alias, keyPassword, secretKey);
+        }
+        return keyStoreService.encrypt(data, secretKey);
+    }
 
     private String generateConfirmationToken(AppUser user) {
         String token = generateToken(); // Use a different method name for generating the token
@@ -66,29 +69,25 @@ public class RegistrationService {
         return UUID.randomUUID().toString();
     }
 
-    public String pendingRegister(RegistrationRequest request) {
+    public String pendingRegister(RegistrationRequest request) throws Exception {
         boolean isValidEmail =  emailValidator.test(request.getEmail());
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
         }
-//        if(request.getAppUserRole().equals(ADMIN)){
-//            throw new IllegalStateException("Admin can't be registered");
-        //}
+        String encryptedLastName = encryptData(request.getLastName(), request.getAppUserRole().toString(), request.getFirstName());
+        //String encryptedFirstName =encryptData(request.getFirstName(), request.getAppUserRole().toString(), request.getFirstName());
+        String encryptedEmail = encryptData(request.getEmail(), request.getAppUserRole().toString(), request.getFirstName());
+
         String token = appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
+                        encryptedLastName,
+                        encryptedEmail,
                         request.getPassword(),
                         request.getAppUserRole(),
                         RegistrationStatus.ACCEPTED
                 )
         );
-/*
-        String link = "http://localhost:8082/api/v1/registration/confirm?token=" + token;
-        emailSender.send(
-                request.getEmail(),
-                buildEmail(request.getFirstName(), link));*/
         return token;
     }
 
