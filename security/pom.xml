@@ -101,6 +101,16 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		<dependency>
+			<groupId>org.java-websocket</groupId>
+			<artifactId>Java-WebSocket</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>azure-servicebus</artifactId>
+			<version>3.6.7</version>
+		</dependency>
     </dependencies>
 
 	<build>

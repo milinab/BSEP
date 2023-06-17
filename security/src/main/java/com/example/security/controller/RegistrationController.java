@@ -14,30 +14,30 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private RegistrationService registrationService;
-    //private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @PostMapping("/register")
     public String register(@RequestBody RegistrationRequest request){
-        //logger.info("Registering user");
+        logger.info("Registering user");
         return registrationService.register(request);
     }
 
     @PostMapping(path = "pending")
     public String pendingRegister(@RequestBody RegistrationRequest request){
-        //logger.info("Registering user as pending");
+        logger.warn("Registering user as pending");
         return registrationService.pendingRegister(request);
     }
 
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {
-        //logger.info("Confirming user registration with token: {}", token);
+        logger.info("Confirming user registration with token: {}", token);
         return registrationService.confirmToken(token);
     }
 
     @PostMapping(path = "{userId}/deny")
     public void denyRegistration(@PathVariable("userId") Long userId, @RequestParam("reason") String denialReason) {
-        //logger.info("Denying user registration for user ID: {}", userId);
+        logger.info("Denying user registration for user ID: {}", userId);
         registrationService.denyRegistration(userId, denialReason);
-        //logger.info("User registration denied for user ID: {}", userId);
+        logger.info("User registration denied for user ID: {}", userId);
     }
 }
