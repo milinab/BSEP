@@ -12,6 +12,9 @@
           <mat-label >Password</mat-label>
           <input type="password" class="mat-input-element" placeholder="Password" name="passwordId" formControlName="password" matInput>
         </mat-form-field>
+        <div class="forgot-password">
+          <a href="#" (click)="recoverPassword()">Forgot your password?</a>
+        </div>
         <button mat-raised-button color="primary" type="submit">Sign In</button>
       </div>
     </form>

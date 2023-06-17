@@ -86,4 +86,10 @@ export class AppUserService{
     return this.https.put<void>(url, JSON.stringify(payload), { headers: this.headers });
   }
 
+  recoverAccount(email: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain');
+    const url = `${this.baseUrl}/recoverAccount`;
+    return this.https.post(url, email, { headers, responseType: 'text' });
+  }
+
 }

@@ -4,6 +4,8 @@ import { AuthService } from '../../security/service/auth.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../security/dto/loginRequest.model';
 import { TokenStorageService } from '../../security/service/token-storage.service';
+import { AppUserService } from '../../security/service/appUser.service';
+import { UserDto } from '../../security/dto/user';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,7 @@ import { TokenStorageService } from '../../security/service/token-storage.servic
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public user: UserDto = new UserDto();
 
 
   loginForm = new FormGroup({
@@ -20,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   private authenticated = localStorage.getItem('TOKEN_KEY') ? true : false;
 
-  constructor(private authService: AuthService, private tokenStorageService:TokenStorageService, private router:Router) { }
+  constructor(private authService: AuthService, private tokenStorageService:TokenStorageService, private router:Router, private appUserService: AppUserService) { }
 
   ngOnInit(): void {
   }
@@ -52,6 +55,25 @@ export class LoginComponent implements OnInit {
 
       }
     )
+  }
+
+  recoverPassword() {
+    const email = this.loginForm.value.email;
+    console.log("preuzeti email: " + email);
+    
+    if (email) { // Check if email is defined
+      this.appUserService.recoverAccount(email).subscribe(
+        () => {
+          alert('Account recovery email sent successfully!');
+        },
+        (error) => {
+          alert('Account recovery failed. Please try again later.');
+          console.error(error);
+        }
+      );
+    } else {
+      alert('Please enter a valid email address.');
+    }
   }
 
 }

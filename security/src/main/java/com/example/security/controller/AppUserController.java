@@ -94,5 +94,9 @@ public class AppUserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    @PostMapping("/recoverAccount")
+    public ResponseEntity recoverAccount(@RequestBody String email) {
+        appUserService.recoverAccount(email);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

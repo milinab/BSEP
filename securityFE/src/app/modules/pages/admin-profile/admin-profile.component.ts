@@ -58,7 +58,7 @@ export class AdminProfileComponent implements OnInit {
       console.log(this.user);
       this.appUserService.updatePassword({email:this.user.email,
         editedPassword: this.newPassword}).subscribe(data =>
-        console.log("NOVA: ",data));
+        console.log());
         alert("password has been changed");
     }
 

@@ -2,6 +2,7 @@ package com.example.security.service;
 
 import com.example.security.dto.AppUserDto;
 import com.example.security.dto.EditPasswordDto;
+import com.example.security.email.EmailSender;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
@@ -17,9 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static org.apache.commons.codec.digest.DigestUtils.sha256Hex;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +33,8 @@ public class AppUserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final KeyStoreService keyStoreService;
+    private final EmailSender emailSender;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -209,6 +215,25 @@ public class AppUserService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public static String generateRandomString(int length) {
+        byte[] randomBytes = new byte[length];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(randomBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes).substring(0, length);
+    }
+
+    public void recoverAccount(String email){
+        String newPassword = generateRandomString(8);
+        Optional<AppUser> user = appUserRepository.findByEmail(email);
+        AppUser oldUser = user.get();
+        String message = "Dear " + oldUser.getFirstName() + ",\n\n" +
+                "Your new password is " + newPassword + ", you can change it on your profile";
+        emailSender.send(email, message);
+        String newPass = passwordEncoder.encode(newPassword);
+        oldUser.setPassword(newPass);
+        appUserRepository.save(oldUser);
     }
 
 }
