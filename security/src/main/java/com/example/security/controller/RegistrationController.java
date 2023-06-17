@@ -1,6 +1,7 @@
 package com.example.security.controller;
 
 import com.example.security.registration.RegistrationRequest;
+import com.example.security.service.KeyStoreService;
 import com.example.security.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private RegistrationService registrationService;
+    private final KeyStoreService keyStoreService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegistrationRequest request){
+    public String register(@RequestBody RegistrationRequest request) throws Exception {
         return registrationService.register(request);
     }
 
     @PostMapping(path = "pending")
-    public String pendingRegister(@RequestBody RegistrationRequest request){
+    public String pendingRegister(@RequestBody RegistrationRequest request) throws Exception {
         return registrationService.pendingRegister(request);
     }
 

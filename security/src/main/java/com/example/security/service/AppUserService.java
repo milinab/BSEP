@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,6 +28,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final KeyStoreService keyStoreService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -74,8 +76,28 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.save(existingUser);
     }
 
-    public List<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) {
-        return appUserRepository.findByRegistrationStatus(registrationStatus);
+    public Optional<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) throws Exception {
+        Optional<AppUser> users = appUserRepository.findByRegistrationStatus(registrationStatus);
+
+        if (users.isPresent()) {
+            AppUser user = users.get();
+
+            String userRole = user.getAppUserRole().toString();
+            String firstName = user.getFirstName();
+
+            SecretKey secretKey = keyStoreService.getKey(userRole, firstName);
+
+            if (secretKey != null) {
+                String decryptedEmail = keyStoreService.decrypt(user.getEmail(), secretKey);
+                String decryptedLastName = keyStoreService.decrypt(user.getLastName(), secretKey);
+                user.setEmail(decryptedEmail);
+                user.setLastName(decryptedLastName);
+            } else {
+                throw new Exception("Failed to retrieve secret key for decryption.");
+            }
+        }
+
+        return users;
     }
 
 
