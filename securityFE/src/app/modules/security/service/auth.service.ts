@@ -12,6 +12,8 @@ export class AuthService {
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   private accessTokenSubject$ = new BehaviorSubject<string | null>(null);
   public accessToken$ = this.accessTokenSubject$.asObservable();
+  baseUrl: string = 'https://localhost:8082/api/v1/auth';
+
 
   set setAccessToken(token: string | null) {
     this.accessTokenSubject$.next(token);
@@ -64,4 +66,9 @@ export class AuthService {
     return this.http.post<any>(url, null, options);
   }
 
+  submitCode(code: string): Observable<any>{
+    const url = `${this.baseUrl}/submit-code/` + code;
+    return this.http.get<any>(url, { headers: this.headers, withCredentials: true});
+  }
+  
 }
