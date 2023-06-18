@@ -3,8 +3,10 @@ package com.example.security.service;
 import com.example.security.crypto.AsymmetricKeyDecryption;
 import com.example.security.model.AppUser;
 import com.example.security.model.Cv;
+import com.example.security.model.Work;
 import com.example.security.repository.AppUserRepository;
 import com.example.security.repository.CvRepository;
+import com.example.security.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,16 +16,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CvService {
     private CvRepository  cvRepository;
     private AppUserRepository appUserRepository;
+    private WorkRepository workRepository;
     private AsymmetricKeyDecryption asymmetricKeyDecryption;
-    public CvService(CvRepository cvRepository, AppUserRepository appUserRepository, AsymmetricKeyDecryption asymmetricKeyDecryption){
+    public CvService(CvRepository cvRepository, AppUserRepository appUserRepository, WorkRepository workRepository, AsymmetricKeyDecryption asymmetricKeyDecryption){
         this.appUserRepository = appUserRepository;
         this.cvRepository = cvRepository;
+        this.workRepository = workRepository;
         this.asymmetricKeyDecryption = asymmetricKeyDecryption;
     }
 
@@ -89,6 +94,19 @@ public class CvService {
     public byte[] getFileData(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         return Files.readAllBytes(path);
+    }
+
+    public List<Cv> getCvsByProjectManager(AppUser projectManager) {
+        List<Cv> cvs = new ArrayList<>();
+
+        List<Work> works = workRepository.findByProjectManager(projectManager);
+        for (Work work : works) {
+            AppUser worker = work.getWorker();
+            List<Cv> workerCvs = cvRepository.findAllByAppUser(worker);
+            cvs.addAll(workerCvs);
+        }
+
+        return cvs;
     }
 
 }

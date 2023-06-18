@@ -24,6 +24,10 @@ public class Work {
     private AppUser worker;
 
     @ManyToOne
+    @JoinColumn(name = "project_manager")
+    private AppUser projectManager;
+
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
 

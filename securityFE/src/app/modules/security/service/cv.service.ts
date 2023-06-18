@@ -29,4 +29,8 @@ export class CvService {
   getAllCvs(): Observable<Cv[]> {
     return this.http.get<Cv[]>(`${this.baseUrl}/cvs`);
   }
+
+  getCvsByProjectManager(projectManagerId: number): Observable<Cv[]> {
+    return this.http.get<Cv[]>(`${this.baseUrl}/cvs/projectManager/${projectManagerId}`);
+  }
 }

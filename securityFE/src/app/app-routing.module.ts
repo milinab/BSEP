@@ -28,6 +28,7 @@ import {EngineersCvComponent} from "./modules/pages/engineers-cv/engineers-cv.co
 import { SearchEngineersComponent } from "./modules/pages/search-engineers/search-engineers.component";
 import { HrProfileComponent } from "./modules/pages/hr-profile/hr-profile.component";
 import { HrGuard } from "./modules/guard/hrGuard";
+import {CvEngineersComponent} from "./modules/pages/cv-engineers/cv-engineers.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -50,7 +51,8 @@ const routes: Routes = [
   { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'engineers-cv', component: EngineersCvComponent, canActivate: [AuthGuard, HrGuard]},
   { path: 'search-engineers', component: SearchEngineersComponent, canActivate: [AdminGuard, AuthGuard]},
-  { path: 'hr-profile', component: HrProfileComponent, canActivate: [AuthGuard, HrGuard]}
+  { path: 'hr-profile', component: HrProfileComponent, canActivate: [AuthGuard, HrGuard]},
+  { path: 'cv-engineers', component: CvEngineersComponent, canActivate: [AuthGuard, ManagerGuard]}
 
 ];
 

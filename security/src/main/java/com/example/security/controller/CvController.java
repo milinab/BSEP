@@ -2,6 +2,7 @@ package com.example.security.controller;
 
 import com.example.security.crypto.AsymmetricKeyDecryption;
 import com.example.security.crypto.AsymmetricKeyEncryption;
+import com.example.security.model.AppUser;
 import com.example.security.model.Cv;
 import com.example.security.service.CvService;
 import org.slf4j.Logger;
@@ -82,6 +83,15 @@ public class CvController {
     public List<Cv> getAllCvs() {
         logger.info("Retrieving all CVs");
         return cvService.getAllCvs();
+    }
+
+    @GetMapping("/projectManager/{id}")
+    public ResponseEntity<List<Cv>> getCvsByProjectManager(@PathVariable("id") Long projectManagerId) {
+        AppUser projectManager = new AppUser();
+        projectManager.setId(projectManagerId);
+
+        List<Cv> cvs = cvService.getCvsByProjectManager(projectManager);
+        return ResponseEntity.ok(cvs);
     }
 
 }

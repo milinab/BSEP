@@ -29,6 +29,7 @@ import {RbacComponent} from "./rbac/rbac.component";
 import { EngineersCvComponent } from './engineers-cv/engineers-cv.component';
 import { SearchEngineersComponent } from './search-engineers/search-engineers.component';
 import { HrProfileComponent } from './hr-profile/hr-profile.component';
+import { CvEngineersComponent } from './cv-engineers/cv-engineers.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HrProfileComponent } from './hr-profile/hr-profile.component';
     RbacComponent,
     EngineersCvComponent,
     SearchEngineersComponent,
-    HrProfileComponent
+    HrProfileComponent,
+    CvEngineersComponent
   ],
   imports: [
     CommonModule,
