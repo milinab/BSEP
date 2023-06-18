@@ -85,7 +85,7 @@ public class RegistrationService {
         String encryptedAddress = encryptData(request.getAddress(), alias, request.getUsername());
         String encryptedPhone = encryptData(request.getPhone(), alias, request.getUsername());
 
-/*        String token = appUserService.signUpUser(
+        String token = appUserService.signUpUser(
                 new AppUser(
                         encryptedFirstName,
                         encryptedLastName,
@@ -99,8 +99,8 @@ public class RegistrationService {
                 )
         );
         return token;
-    }*/
 
+/*
         String token = appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
@@ -114,7 +114,7 @@ public class RegistrationService {
                         RegistrationStatus.PENDING
                 )
         );
-        return token;
+        return token;*/
     }
 
     @Transactional
