@@ -24,7 +24,14 @@ public class KeyStoreService {
     @Value("${keystore.password}")
     private String KEYSTORE_PASSWORD;
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
-    private static final IvParameterSpec IV = generateIv();
+    private static final byte[] IV_BYTES = {
+            (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
+            (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08,
+            (byte) 0x09, (byte) 0x0A, (byte) 0x0B, (byte) 0x0C,
+            (byte) 0x0D, (byte) 0x0E, (byte) 0x0F, (byte) 0x10
+    };
+
+    private static final IvParameterSpec IV = new IvParameterSpec(IV_BYTES);
 
 
     public void addKey(String alias, String keyPassword, SecretKey secretKey) {

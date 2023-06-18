@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'forbidden-page', component: ForbiddenPageComponent},
   { path: 'engineer-profile', component: EngineerProfileComponent, canActivate: [AuthGuard, EngineerGuard]},
   { path: 'rbac', component: RbacComponent, canActivate: [AuthGuard, AdminGuard]},
-  { path: 'engineers-cv', component: EngineersCvComponent},
+  { path: 'engineers-cv', component: EngineersCvComponent, canActivate: [AuthGuard, HrGuard]},
   { path: 'search-engineers', component: SearchEngineersComponent, canActivate: [AdminGuard, AuthGuard]},
   { path: 'hr-profile', component: HrProfileComponent, canActivate: [AuthGuard, HrGuard]}
 

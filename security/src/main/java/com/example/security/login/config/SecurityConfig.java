@@ -61,7 +61,9 @@ public class SecurityConfig {
                 "/api/v1/auth/token/refresh",
                 "/api/v1/registration/pending",
                 "/api/v1/appUser/pending",
-                "/api/v1/appUser/recoverAccount"
+                "/api/v1/appUser/recoverAccount",
+                "/api/v1/appUser/pending",
+                "/cvs", "/downloadCv/**", "/uploadCv"
         ).permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

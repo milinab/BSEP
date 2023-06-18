@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><cv>
+  <name>Nemanja</name>
+  <surname>Nemanjic</surname>
+  <address>Safarikova 2, Novi Sad, Srbija</address>
+  <seniority>medior</seniority>
+  <skills>
+    <skill>
+      <name>Java</name>
+      <value>4</value>
+    </skill>
+    <skill>
+      <name>C#</name>
+      <value>5</value>
+    </skill>
+  </skills>
+  <projects>
+    <project>
+      <title> Projekat </title>
+      <duration>12</duration>
+      <description>Developed and implemented a web app</description>
+    </project>
+  </projects>
+</cv>

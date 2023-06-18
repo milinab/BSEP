@@ -36,6 +36,12 @@ public class CvService {
 
             long attachmentId = generateAttachmentId(); // Generisanje ID-a za Attachment
 
+            String relativePath = "../data";
+            Path currentWorkingDirectory = Paths.get("").toAbsolutePath();
+            Path absolutePath = currentWorkingDirectory.resolve(relativePath);
+
+            System.out.println("Apsolutna putanja: " + absolutePath.toString());
+
             String filePath = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/enc_" + file.getOriginalFilename();
 
             Cv cv = new Cv(filePath);
@@ -67,7 +73,9 @@ public class CvService {
         }
 
         String encryptedFilePath = cv.getPath();
-        String decryptedFilePath = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/dec_" + new File(encryptedFilePath).getName();
+        Path path = Paths.get(encryptedFilePath);
+        Path parentPath = path.getParent();
+        String decryptedFilePath =parentPath +  "/dec_" + new File(encryptedFilePath).getName();
 
         // Dekriptovanje fajla
         asymmetricKeyDecryption.testIt(encryptedFilePath);
