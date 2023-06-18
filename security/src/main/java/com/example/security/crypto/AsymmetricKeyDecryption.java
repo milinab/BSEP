@@ -23,7 +23,7 @@ import java.security.Security;
 
 @Component
 public class AsymmetricKeyDecryption {
-    private static final String KEY_STORE_FILE = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/example.pfx";
+    private static final String KEY_STORE_FILE = "C:/Users/Helena Lakic/Desktop/bsep-new/BSEP/security/src/main/java/com/example/security/data/example.pfx";
 
     static {
         // staticka inicijalizacija
@@ -41,7 +41,7 @@ public class AsymmetricKeyDecryption {
         // dekriptuje se dokument
         System.out.println("Decrypting....");
         doc = decrypt(doc, pk);
-        String OUT_FILE = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/";
+        String OUT_FILE = "C:/Users/Helena Lakic/Desktop/bsep-new/BSEP/security/src/main/java/com/example/security/data/";
         String fileName = new File(filePath).getName();
         OUT_FILE+= "dec_";
         OUT_FILE += fileName;

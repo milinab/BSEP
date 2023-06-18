@@ -41,15 +41,16 @@ public class CvService {
 
             long attachmentId = generateAttachmentId(); // Generisanje ID-a za Attachment
 
-            String relativePath = "../data";
+            String relativePath = "/security/src/main/java/com/example/security/data";
             Path currentWorkingDirectory = Paths.get("").toAbsolutePath();
-            Path absolutePath = currentWorkingDirectory.resolve(relativePath);
+            Path parentDirectory = currentWorkingDirectory.getParent();
+            String dataPath = parentDirectory.toString() + relativePath;
 
-            System.out.println("Apsolutna putanja: " + absolutePath.toString());
+            String dataPath2 = dataPath.toString().replaceAll("\\\\", "/") + "/enc_" + file.getOriginalFilename();
 
-            String filePath = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/enc_" + file.getOriginalFilename();
+            System.out.println("Apsolutna putanja: " + dataPath.toString());
 
-            Cv cv = new Cv(filePath);
+            Cv cv = new Cv(dataPath2.toString());
 
             cv.setId(attachmentId); // Pridruživanje ID-a objektu Attachment
 

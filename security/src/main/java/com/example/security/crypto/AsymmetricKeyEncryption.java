@@ -29,7 +29,7 @@ import java.security.cert.Certificate;
 
 @Component
 public class AsymmetricKeyEncryption {
-    private static final String KEY_STORE_FILE = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/example.pfx";
+    private static final String KEY_STORE_FILE = "C:/Users/Helena Lakic/Desktop/bsep-new/BSEP/security/src/main/java/com/example/security/data/example.pfx";
 
     static {
         // staticka inicijalizacija
@@ -38,7 +38,7 @@ public class AsymmetricKeyEncryption {
     }
     public void testIt(String filePath) {
         // ucitava se dokument
-        String full_file_path = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/" + filePath;
+        String full_file_path = "C:/Users/Helena Lakic/Desktop/bsep-new/BSEP/security/src/main/java/com/example/security/data/" + filePath;
         Document doc = loadDocument(full_file_path);
 
         // generise tajni session kljuc
@@ -52,7 +52,7 @@ public class AsymmetricKeyEncryption {
         System.out.println("Encrypting....");
         doc = encrypt(doc, secretKey, cert);
 
-        String OUT_FILE = "C:/Users/Nemanja/Desktop/bsep/BSEP/security/src/main/java/com/example/security/data/";
+        String OUT_FILE = "C:/Users/Helena Lakic/Desktop/bsep-new/BSEP/security/src/main/java/com/example/security/data/";
         String fileName = new File(full_file_path).getName();
         OUT_FILE+= "enc_";
         OUT_FILE += fileName;
