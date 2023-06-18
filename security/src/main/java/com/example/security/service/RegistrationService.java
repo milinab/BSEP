@@ -36,7 +36,7 @@ public class RegistrationService {
             throw new IllegalStateException("User not found");
         }
 
-        existingUser.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+        existingUser.setRegistrationStatus(RegistrationStatus.PENDING);
         appUserService.saveUser(existingUser);
 
         String token = generateConfirmationToken(existingUser);
@@ -49,11 +49,15 @@ public class RegistrationService {
         return token;
     }
 
-    public String encryptData(String data, String alias, String keyPassword) throws Exception {
-        SecretKey secretKey = keyStoreService.getKey(alias, keyPassword);
+    public String encryptData(String data, String alias, String username) throws Exception {
+/*        SecretKey key = keyStoreService.generateKey();
+        String encryptedData = keyStoreService.encrypt(data, key);
+        keyStoreService.addKey(alias, username, key);
+        return encryptedData;*/
+        SecretKey secretKey = keyStoreService.getKey(alias, username);
         if (secretKey == null) {
             secretKey = keyStoreService.generateKey();
-            keyStoreService.addKey(alias, keyPassword, secretKey);
+            keyStoreService.addKey(alias, username, secretKey);
         }
         return keyStoreService.encrypt(data, secretKey);
     }
@@ -70,25 +74,47 @@ public class RegistrationService {
     }
 
     public String pendingRegister(RegistrationRequest request) throws Exception {
-        boolean isValidEmail =  emailValidator.test(request.getEmail());
-        if(!isValidEmail){
+        boolean isValidEmail = emailValidator.test(request.getEmail());
+        String alias = "a7gT9pK2eR5dL1jF";
+        if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
         }
-        String encryptedLastName = encryptData(request.getLastName(), request.getAppUserRole().toString(), request.getFirstName());
-        //String encryptedFirstName =encryptData(request.getFirstName(), request.getAppUserRole().toString(), request.getFirstName());
-        String encryptedEmail = encryptData(request.getEmail(), request.getAppUserRole().toString(), request.getFirstName());
+        String encryptedLastName = encryptData(request.getLastName(), alias, request.getUsername());
+        String encryptedFirstName = encryptData(request.getFirstName(), alias, request.getUsername());
+        String encryptedEmail = encryptData(request.getEmail(), alias, request.getUsername());
+        String encryptedAddress = encryptData(request.getAddress(), alias, request.getUsername());
+        String encryptedPhone = encryptData(request.getPhone(), alias, request.getUsername());
 
         String token = appUserService.signUpUser(
                 new AppUser(
-                        request.getFirstName(),
+                        encryptedFirstName,
                         encryptedLastName,
                         encryptedEmail,
                         request.getPassword(),
+                        encryptedPhone,
+                        encryptedAddress,
+                        request.getUsername(),
                         request.getAppUserRole(),
-                        RegistrationStatus.ACCEPTED
+                        RegistrationStatus.PENDING
                 )
         );
         return token;
+
+/*
+        String token = appUserService.signUpUser(
+                new AppUser(
+                        request.getFirstName(),
+                        request.getLastName(),
+                        request.getEmail(),
+                        request.getPassword(),
+                        request.getPhone(),
+                        request.getAddress(),
+                        request.getUsername(),
+                        request.getAppUserRole(),
+                        RegistrationStatus.PENDING
+                )
+        );
+        return token;*/
     }
 
     @Transactional
@@ -132,8 +158,8 @@ public class RegistrationService {
         }
 
         confirmationTokenService.setConfirmedAt(token);
-        appUserService.enableAppUser(
-                confirmationToken.getAppUser().getEmail());
+     /*   appUserService.enableAppUser(
+                confirmationToken.getAppUser().getEmail());*/
         return "confirmed";
     }
 

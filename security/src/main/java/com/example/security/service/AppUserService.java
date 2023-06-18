@@ -82,21 +82,25 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.save(existingUser);
     }
 
-    public Optional<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) throws Exception {
-        Optional<AppUser> users = appUserRepository.findByRegistrationStatus(registrationStatus);
+    public List<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) throws Exception {
+        List<AppUser> users = appUserRepository.findByRegistrationStatus(registrationStatus);
 
-        if (users.isPresent()) {
-            AppUser user = users.get();
+        for (AppUser user : users) {
+            String alias = "a7gT9pK2eR5dL1jF";
+            String username = user.getUsername();
 
-            String userRole = user.getAppUserRole().toString();
-            String firstName = user.getFirstName();
-
-            SecretKey secretKey = keyStoreService.getKey(userRole, firstName);
+            SecretKey secretKey = keyStoreService.getKey(alias, username);
 
             if (secretKey != null) {
                 String decryptedEmail = keyStoreService.decrypt(user.getEmail(), secretKey);
                 String decryptedLastName = keyStoreService.decrypt(user.getLastName(), secretKey);
+                String decryptedFirstName = keyStoreService.decrypt(user.getFirstName(), secretKey);
+                String decryptedAddress = keyStoreService.decrypt(user.getAddress(), secretKey);
+                String decryptedPhone = keyStoreService.decrypt(user.getPhone(), secretKey);
                 user.setEmail(decryptedEmail);
+                user.setFirstName(decryptedFirstName);
+                user.setAddress(decryptedAddress);
+                user.setPhone(decryptedPhone);
                 user.setLastName(decryptedLastName);
             } else {
                 throw new Exception("Failed to retrieve secret key for decryption.");

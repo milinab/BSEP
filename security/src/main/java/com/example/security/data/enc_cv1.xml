@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><cv><xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Type="http://www.w3.org/2001/04/xmlenc#Content"><xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:KeyName>Kriptovani tajni kljuc</ds:KeyName>
+<xenc:EncryptedKey><xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/><xenc:CipherData><xenc:CipherValue>jypEgBX7eiCjyj7sO50RABFWYxajn/YzfJLc56+CnSK0rj+QuySa/PWvGrR4X6a2q1boeoxoPQzN&#13;
+qEWlTtsACWslVtGVx2qn98hLxnOmyeLUiKwKPXejL/keCQ7cprWuE/B2ut39DDDYPpuQdxdGl5sQ&#13;
+v+ZEBVFP30FvPoLHGknzGg8V9s0DybGvM9iS/Ze5UL7XsqPDpt4T60cXF3wf/U9+8r1DgF2czs73&#13;
+dQT0h513zEDoZX0hEWcihF4N7O9LBamFgDvBIW42l0HLGSD2mIoOfu7vR1tv5sk9eyWTSQvy8Vtr&#13;
+xR3npXFbqwa8o3VgQ7fAzah2ZqG9fRKuunA1bQ==</xenc:CipherValue></xenc:CipherData></xenc:EncryptedKey></ds:KeyInfo><xenc:CipherData><xenc:CipherValue>9ylV3cM7Ko5t91LOKAF1bSNng961O0P/Dut9opMDg6kOU9V0IVLNVvprzS1jCL5jKocg4i7HdKxm&#13;
+JqVdwzElSoZc383wjXEO6nOo7ciTEqJ3w4DatWnB6UbAlIthYliTdXIj/2wy+ubRSBoNDfeQqF6Y&#13;
+/dZl5ZXtBanWspLQ3CC4wSW1vDLbpqtoF5pk+Ah+cre8xCzqaPFgIKdZ0xoq8RxUV2g3uF5qLike&#13;
+/F06zIeCN6FbcFnDsIb9mp3/ot1nMrYtWC4rMRLbwAvmSI+KQmAUaTbupPA6xzeMjopWWCT3CVNT&#13;
+SWOJTDETKkbqm6qLH1PN8wHHaHqNJYmo8Xo84dwCiKG3KVkcqLGfmLUafBDQegpL4t2eHorEDE3/&#13;
+8DYCgYUNc8su0Wn9vX24PETVpvMIlkNrYgNdPY3SUZ4V7ddbjvJ1bGUJJA1JoKpPpa/LR1PmfLL9&#13;
+yQNSG84qKPY218Mq6c5f3f1RHfoAK+WXPfvtm97nYy8flFJzKrquEmsGXrTcDX3iYEjncLqmAhjw&#13;
+/XM1dMr1kz6GtZPIc17uUr1KQSPV4CL9ZG9JXRM+oXFF4RZkIdbtxb8JCX6QOC8gom2OONzzsXO/&#13;
+7YWqO1dHzCKYnKIzA7RB/05vp/yTJng2bxVYekvpfuQrgDKIR4cPYwHZEcovbVCh64eKTL63EXM=</xenc:CipherValue></xenc:CipherData></xenc:EncryptedData></cv>

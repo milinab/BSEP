@@ -6,6 +6,9 @@ export class AppUser{
   password: string = '';
   firstName: string = '';
   lastName: string = '';
+  address: string = '';
+  phone: string = '';
+  username: string = '';
   appUserRole: string = '';
   startDate: string = '';
   endDate: string = '';
