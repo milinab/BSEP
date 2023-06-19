@@ -27,7 +27,7 @@ public class SkillController {
             //logger.info("Skill updated successfully");
             return ResponseEntity.ok("Skill updated successfully");
         } else {
-            //logger.error("Failed to update skill");
+            //logger.warn("Failed to update skill");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

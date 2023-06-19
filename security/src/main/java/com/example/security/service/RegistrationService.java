@@ -8,6 +8,8 @@ import com.example.security.registration.RegistrationRequest;
 import com.example.security.registration.token.ConfirmationToken;
 import com.example.security.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +26,12 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
     private final  KeyStoreService keyStoreService;
+
+    private final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
     public String register(RegistrationRequest request) throws Exception {
         boolean isValidEmail =  emailValidator.test(request.getEmail());
         if(!isValidEmail){
+            logger.warn("Failed to register, reason: email that user imported: {}, is not valid.", request.getEmail());
             throw new IllegalStateException("email not valid");
         }
 
@@ -72,6 +77,7 @@ public class RegistrationService {
     public String pendingRegister(RegistrationRequest request) throws Exception {
         boolean isValidEmail =  emailValidator.test(request.getEmail());
         if(!isValidEmail){
+            logger.warn("Failed to register, reason: email that user imported: {}, is not valid.", request.getEmail());
             throw new IllegalStateException("email not valid");
         }
         String encryptedLastName = encryptData(request.getLastName(), request.getAppUserRole().toString(), request.getFirstName());
@@ -95,6 +101,8 @@ public class RegistrationService {
     public void denyRegistration(Long userId, String denialReason) {
         AppUser user = appUserService.getUserById(userId);
         if (user == null) {
+            logger.warn("Registration of a user with ID: {} is unsuccesssful, reason: user with ID: {}, is not found.", userId, userId);
+
             throw new IllegalArgumentException("User not found with ID: " + userId);
         }
 
@@ -122,18 +130,21 @@ public class RegistrationService {
                         new IllegalStateException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
+            logger.warn("Failed to confirm user, reason: User is already confirmed.");
             throw new IllegalStateException("email already confirmed");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
+            logger.warn("Failed to confirm user, reason: Token expired.");
             throw new IllegalStateException("token expired");
         }
 
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
                 confirmationToken.getAppUser().getEmail());
+        logger.info("Token succesfully confirmed.");
         return "confirmed";
     }
 

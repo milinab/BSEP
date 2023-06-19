@@ -1,5 +1,7 @@
 package com.example.security.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ public class KeyStoreService {
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
     private static final IvParameterSpec IV = generateIv();
 
+    private final Logger logger = LoggerFactory.getLogger(KeyStoreService.class);
+
 
     public void addKey(String alias, String keyPassword, SecretKey secretKey) {
         try {
@@ -51,7 +55,8 @@ public class KeyStoreService {
             keyStore.store(fos, KEYSTORE_PASSWORD.toCharArray());
             fos.close();
 
-            System.out.println("Dodat tajni kljuc");
+            //System.out.println("Dodat tajni kljuc");
+            logger.info("Private key successfully added.");
         } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -70,7 +75,8 @@ public class KeyStoreService {
             keyStore.store(fos, KEYSTORE_PASSWORD.toCharArray());
             fos.close();
 
-            System.out.println("Kreiran keystore.");
+            //System.out.println("Kreiran keystore.");
+            logger.info("KeyStore successfully created.");
         } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -119,7 +125,8 @@ public class KeyStoreService {
                 keyStore.load(fis, KEYSTORE_PASSWORD.toCharArray());
                 fis.close();
             } else {
-                System.out.println("Keystore file does not exist.");
+                logger.warn("Failed to get key, reason: keystore file does not exist.");
+                //System.out.println("Keystore file does not exist.");
                 return null;
             }
 
@@ -127,11 +134,13 @@ public class KeyStoreService {
             KeyStore.Entry entry = keyStore.getEntry(alias, entryPassword);
 
             if (entry == null) {
-                System.out.println("Entry with alias '" + alias + "' does not exist in the keystore.");
+                logger.warn("Failed to get key, reason: entry with alias {} does not exist in the keystore", alias);
+                //System.out.println("Entry with alias '" + alias + "' does not exist in the keystore.");
                 return null;
             }
 
             if (!(entry instanceof KeyStore.SecretKeyEntry)) {
+                logger.warn("Failed to get key, reason: entry with alias {} is not a SecretKey entry", alias);
                 System.out.println("Entry with alias '" + alias + "' is not a SecretKey entry.");
                 return null;
             }

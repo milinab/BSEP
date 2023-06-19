@@ -2,7 +2,7 @@ package com.example.security.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 @Getter

@@ -24,16 +24,13 @@ public class RolePermissionService {
     }
 
     public RolePermission addRolePermission(RolePermission rolePermission) {
-        // Retrieve the Role and Permission objects by their names
         Role role = roleRepository.findByName(rolePermission.getRole().getName());
         Permission permission = permissionRepository.findByName(rolePermission.getPermission().getName());
 
         if (role != null && permission != null) {
-            // Set the Role and Permission objects in the RolePermission entity
             rolePermission.setRole(role);
             rolePermission.setPermission(permission);
             rolePermission.setId(generateRandomId());
-            // Save the RolePermission entity
             return rolePermissionRepository.save(rolePermission);
         } else {
             throw new IllegalArgumentException("Invalid Role or Permission Name");
@@ -42,7 +39,6 @@ public class RolePermissionService {
 
     private Long generateRandomId() {
         Random random = new Random();
-        // Generate a random long value within the range of a Long
         return random.nextLong();
     }
 

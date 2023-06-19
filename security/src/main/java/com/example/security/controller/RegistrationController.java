@@ -20,13 +20,12 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String register(@RequestBody RegistrationRequest request) throws Exception {
-        logger.info("Registering user");
         return registrationService.register(request);
     }
 
     @PostMapping(path = "pending")
     public String pendingRegister(@RequestBody RegistrationRequest request) throws Exception {
-        logger.warn("Registering user as pending");
+        logger.info("User with email {} is registered as status: PENDING and is waiting to be status: ACCEPTED.", request.getEmail());
         return registrationService.pendingRegister(request);
     }
 
@@ -38,7 +37,6 @@ public class RegistrationController {
 
     @PostMapping(path = "{userId}/deny")
     public void denyRegistration(@PathVariable("userId") Long userId, @RequestParam("reason") String denialReason) {
-        logger.info("Denying user registration for user ID: {}", userId);
         registrationService.denyRegistration(userId, denialReason);
         logger.info("User registration denied for user ID: {}", userId);
     }

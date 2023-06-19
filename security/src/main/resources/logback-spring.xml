@@ -7,12 +7,16 @@
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>src/main/resources/logs/application.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>src/main/resources/logs/application-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <maxFileSize>20KB</maxFileSize>
+      <maxHistory>10</maxHistory>
+      <totalSizeCap>20MB</totalSizeCap>
+    </rollingPolicy>
     <encoder>
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %logger{36} | %msg%n</pattern>
     </encoder>
   </appender>
-
-  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook" />
 
   <root level="ERROR">
     <appender-ref ref="STDOUT" />
@@ -20,4 +24,7 @@
   </root>
   
   <logger name="com.example.security.controller" level="INFO" />
+  <logger name="com.example.security.login.auth" level="INFO" />
+  <logger name="com.example.security.service" level="INFO" />
+  <logger name="com.example.security.email" level="INFO" />
 </configuration>

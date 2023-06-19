@@ -10,8 +10,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 
 @Service
@@ -33,7 +33,7 @@ public class EmailService implements EmailSender{
             helper.setFrom("nemanjajelic2106@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e ){
-            LOGGER.error("failed to send email", e);
+            LOGGER.warn("Failed to send email", e);
             throw new IllegalStateException("failed to send email");
         }
     }

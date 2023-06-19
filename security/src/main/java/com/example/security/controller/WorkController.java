@@ -6,6 +6,7 @@ import com.example.security.model.Work;
 import com.example.security.service.WorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,6 @@ public class WorkController {
 
     @GetMapping("/past/{workerId}")
     public ResponseEntity<List<Work>> getPastWorksByWorkerId(@PathVariable Long workerId) {
-        logger.info("Calling getPastWorksByWorkerId endpoint");
         List<Work> works = workService.getPastWorksByWorkerId(workerId);
         return ResponseEntity.ok(works);
     }

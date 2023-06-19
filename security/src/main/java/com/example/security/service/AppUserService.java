@@ -202,6 +202,7 @@ public class AppUserService implements UserDetailsService {
     }
 
     public boolean isBlocked(String email) {
+
         var user = appUserRepository.findByEmail(email);
         if (user.isEmpty())
             return true;

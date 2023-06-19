@@ -55,12 +55,13 @@ public class SecurityConfig {
         customAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth/authenticate");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers(
+        http.authorizeRequests().requestMatchers(
                 "/api/v1/auth/authenticate",
                 "/api/v1/auth/logout",
                 "/api/v1/auth/token/refresh",
                 "/api/v1/registration/pending",
-                "/api/v1/appUser/pending"
+                "/api/v1/appUser/pending",
+                "/socket"
         ).permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

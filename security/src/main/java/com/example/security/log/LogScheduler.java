@@ -4,13 +4,14 @@ import com.example.security.email.EmailSender;
 import com.example.security.enums.AppUserRole;
 import com.example.security.model.AppUser;
 import com.example.security.service.AppUserService;
+import com.example.security.service.WebSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.Session;
+import jakarta.websocket.Session;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,10 +30,13 @@ public class LogScheduler {
     LocalDateTime startTime = LocalDateTime.now();
     private int linesProcessed = 0;
 
+    private final WebSocketService webSocketService;
+
     @Autowired
-    public LogScheduler(AppUserService appUserService, EmailSender emailSender) {
+    public LogScheduler(AppUserService appUserService, EmailSender emailSender, WebSocketService webSocketService) {
         this.appUserService = appUserService;
         this.emailSender = emailSender;
+        this.webSocketService = webSocketService;
     }
 
     @Scheduled(fixedRate = 5000) // 5 seconds = 5,000 milliseconds
@@ -46,13 +50,16 @@ public class LogScheduler {
             List<String> newLines = lines.subList(linesProcessed, lines.size());
 
             for (String line : newLines) {
+                if(line.length() > 22) {
+                    if(logContainsDate(line)) {
+                        String logDateTimeString = line.split("\\|")[0].trim();
+                        LocalDateTime logTime = LocalDateTime.parse(logDateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 
-                String logDateTimeString = line.split("\\|")[0].trim();
-                LocalDateTime logTime = LocalDateTime.parse(logDateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
-
-                if (logTime.isAfter(startTime)) {
-                    if (line.contains("WARN")) {
-                        triggerAlert(line);
+                        if (logTime.isAfter(startTime)) {
+                            if (line.contains("WARN")) {
+                                triggerAlert(line);
+                            }
+                        }
                     }
                 }
             }
@@ -63,9 +70,14 @@ public class LogScheduler {
         }
     }
 
-    private void triggerAlert(String logLine) {
-        System.out.println("Critical event detected: " + logLine);
+    private Boolean logContainsDate(String logLine) {
+        String shortLogLine = logLine.substring(0, 23);
+        return shortLogLine.matches(".*\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3}.*");
+    }
 
+    private void triggerAlert(String logLine) {
+        //System.out.println("Critical event detected: " + logLine);
+        webSocketService.sendMessageToChannel("/socket-publisher", logLine);
 
         List<AppUser> appUser = appUserService.getUsersByUserRole(AppUserRole.ADMIN);
         AppUser admin = appUser.get(0);

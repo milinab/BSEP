@@ -60,6 +60,7 @@ public class CvController {
         try {
             String filePath = cvService.getFilePathByAppUserId(appUserId);
             if (filePath == null) {
+                logger.warn("Failed to download file for user with ID: {}, reason: file not found.", appUserId);
                 throw new Exception("File not found for AppUser with ID: " + appUserId);
             }
 
@@ -68,19 +69,18 @@ public class CvController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", "cv.docx");
-            logger.info("CV downloaded successfully.");
+            logger.info("CV for user with id: {} downloaded successfully.", appUserId);
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(fileData);
         } catch (IOException e) {
-            logger.error("Error downloading CV for appUserId: {}", appUserId);
+            logger.warn("Error downloading CV for appUserId: {}", appUserId);
             throw new Exception("Could not read file for AppUser with ID: " + appUserId);
         }
     }
 
     @GetMapping("/cvs")
     public List<Cv> getAllCvs() {
-        logger.info("Retrieving all CVs");
         return cvService.getAllCvs();
     }
 

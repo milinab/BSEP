@@ -8,9 +8,9 @@ import com.example.security.dto.AppUserDto;
 import com.example.security.service.AppUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;

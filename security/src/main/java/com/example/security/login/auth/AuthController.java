@@ -2,12 +2,14 @@ package com.example.security.login.auth;
 
 import com.example.security.service.AppUserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -20,6 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthController {
 
     private final AuthUtility authUtility;
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     public AuthController(AppUserService appUserService) {
@@ -33,14 +36,17 @@ public class AuthController {
             if (accessToken != null) {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 AuthUtility.setResponseMessage(response, "accessToken", accessToken);
+                logger.info("User successfully refreshed their authentication token, from IP: {}", request.getRemoteAddr());
             }
             else {
                 response.setStatus(UNAUTHORIZED.value());
                 AuthUtility.setResponseMessage(response, "errorMessage", "Refresh token is missing");
+                logger.warn("User failed to refresh their authentication token, from IP: {}, reason: Refresh token is missing.", request.getRemoteAddr());
             }
         } catch (Exception e) {
             response.setStatus(UNAUTHORIZED.value());
             AuthUtility.setResponseMessage(response, "errorMessage", e.getMessage());
+            logger.warn("User failed to refresh their authentication token, from IP: {}", request.getRemoteAddr());
         }
     }
 

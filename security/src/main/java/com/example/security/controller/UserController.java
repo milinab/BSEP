@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -26,25 +25,24 @@ public class UserController {
 
     @GetMapping
     public List<AppUser> getAll(){
-        logger.info("Returning all users");
         return userService.getAll();
     }
 
     @PostMapping
     public AppUser createUser(@RequestBody AppUser user){
-        logger.info("Creating user: {}", user.getUsername());
+        logger.info("Creating user with email: {}", user.getUsername());
         return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody AppUser user, @PathVariable("id") Long id){
-        logger.info("Updating user: {}", user.getUsername());
+        logger.info("Updating user with ID: {}", user.getId());
         AppUser editUser = userService.edit(user, id);
         if (editUser == null) {
-            logger.warn("User not found");
+            logger.warn("Failed to update user with ID: {}, reason: User not found", user.getId());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }else {
-            logger.info("User updated successfully");
+            logger.info("User with ID: {} updated successfully", user.getId());
             return new ResponseEntity<>(new UserDto(user), HttpStatus.OK);
         }
     }
@@ -52,7 +50,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public AppUser findById(@PathVariable("id") Long id) {
-        logger.info("Finding user by ID");
         return userService.findById(id);
     }
 }

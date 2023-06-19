@@ -41,7 +41,7 @@ public class AttachmentController {
         attachment = attachmentService.getAttachmentByPath(path);
 
         if (attachment == null) {
-            logger.error("File not found with path: {}", path);
+            logger.warn("File not found with path: {}", path);
             throw new Exception("File not found with path: " + path);
         }
 
@@ -54,17 +54,17 @@ public class AttachmentController {
 
     @PostMapping("/encrypt")
     public ResponseEntity<String> encryptDocument(@RequestBody String filePath) {
-        logger.info("Encrypting document: {}", filePath);
+        //logger.info("Encrypting document: {}", filePath);
         asymmetricKeyEncryption.testIt(filePath);
-        logger.info("Encryption completed");
+        //logger.info("Encryption completed");
         return ResponseEntity.status(HttpStatus.OK).body("Encryption completed.");
     }
 
     @PostMapping("/decrypt")
     public ResponseEntity<String> decryptDocument(@RequestBody String filePath) {
-        logger.info("Decrypting document: {}", filePath);
+        //logger.info("Decrypting document: {}", filePath);
         asymmetricKeyDecryption.testIt(filePath);
-        logger.info("Decryption completed");
+        //logger.info("Decryption completed");
         return ResponseEntity.status(HttpStatus.OK).body("decryption completed");
     }
 
@@ -109,7 +109,7 @@ public class AttachmentController {
 
     @GetMapping("/download/appUser/{appUserId}")
     public ResponseEntity<Resource> downloadFileByAppUserId(@PathVariable Long appUserId) throws Exception {
-        logger.info("Downloading file by appUserId");
+        logger.info("Downloading file by appUserId {}", appUserId);
         Attachment attachment = null;
         attachment = attachmentService.getAttachmentByAppUserId(appUserId);
 
@@ -123,7 +123,6 @@ public class AttachmentController {
 
     @GetMapping("/attachment/all")
     public List<Attachment> getAllAttachments() {
-        logger.info("Getting all attachments");
         return attachmentService.getAllAttachments();
     }
 
