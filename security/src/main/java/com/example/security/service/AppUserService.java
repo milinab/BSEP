@@ -2,6 +2,7 @@ package com.example.security.service;
 
 import com.example.security.dto.AppUserDto;
 import com.example.security.dto.EditPasswordDto;
+import com.example.security.email.EmailSender;
 import com.example.security.enums.AppUserRole;
 import com.example.security.enums.RegistrationStatus;
 import com.example.security.model.AppUser;
@@ -17,9 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static org.apache.commons.codec.digest.DigestUtils.sha256Hex;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +33,8 @@ public class AppUserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final KeyStoreService keyStoreService;
+    private final EmailSender emailSender;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -76,21 +82,25 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.save(existingUser);
     }
 
-    public Optional<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) throws Exception {
-        Optional<AppUser> users = appUserRepository.findByRegistrationStatus(registrationStatus);
+    public List<AppUser> getUsersByRegistrationStatus(RegistrationStatus registrationStatus) throws Exception {
+        List<AppUser> users = appUserRepository.findByRegistrationStatus(registrationStatus);
 
-        if (users.isPresent()) {
-            AppUser user = users.get();
+        for (AppUser user : users) {
+            String alias = "a7gT9pK2eR5dL1jF";
+            String username = user.getUsername();
 
-            String userRole = user.getAppUserRole().toString();
-            String firstName = user.getFirstName();
-
-            SecretKey secretKey = keyStoreService.getKey(userRole, firstName);
+            SecretKey secretKey = keyStoreService.getKey(alias, username);
 
             if (secretKey != null) {
                 String decryptedEmail = keyStoreService.decrypt(user.getEmail(), secretKey);
                 String decryptedLastName = keyStoreService.decrypt(user.getLastName(), secretKey);
+                String decryptedFirstName = keyStoreService.decrypt(user.getFirstName(), secretKey);
+                String decryptedAddress = keyStoreService.decrypt(user.getAddress(), secretKey);
+                String decryptedPhone = keyStoreService.decrypt(user.getPhone(), secretKey);
                 user.setEmail(decryptedEmail);
+                user.setFirstName(decryptedFirstName);
+                user.setAddress(decryptedAddress);
+                user.setPhone(decryptedPhone);
                 user.setLastName(decryptedLastName);
             } else {
                 throw new Exception("Failed to retrieve secret key for decryption.");
@@ -210,6 +220,25 @@ public class AppUserService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public static String generateRandomString(int length) {
+        byte[] randomBytes = new byte[length];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(randomBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes).substring(0, length);
+    }
+
+    public void recoverAccount(String email){
+        String newPassword = generateRandomString(8);
+        Optional<AppUser> user = appUserRepository.findByEmail(email);
+        AppUser oldUser = user.get();
+        String message = "Dear " + oldUser.getFirstName() + ",\n\n" +
+                "Your new password is " + newPassword + ", you can change it on your profile";
+        emailSender.send(email, message);
+        String newPass = passwordEncoder.encode(newPassword);
+        oldUser.setPassword(newPass);
+        appUserRepository.save(oldUser);
     }
 
 }

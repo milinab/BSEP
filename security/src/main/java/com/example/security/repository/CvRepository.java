@@ -13,5 +13,6 @@ public interface CvRepository extends JpaRepository<Cv, Long> {
     Cv findByAppUser(AppUser appUser);
     @Query("SELECT c FROM Cv c JOIN FETCH c.appUser")
     List<Cv> findAllWithAppUser();
+    List<Cv> findAllByAppUser(AppUser appUser);
 
 }

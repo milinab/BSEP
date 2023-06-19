@@ -18,15 +18,20 @@ export class ValidateRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.appUserService.getPendingUsers().subscribe(
-      (users: AppUser[]) => {
-        this.users = users;
+      (users: AppUser[] | AppUser) => {
+        if (Array.isArray(users)) {
+          this.users = users;
+        } else {
+          this.users = [users]; // Wrap the single user in an array
+        }
+        console.log(this.users);
+        console.log(Array.isArray(this.users));
       },
       (error: any) => {
         console.error('Error fetching pending users:', error);
       }
     );
   }
-
   registerUser(user: AppUser) {
     this.authService.registerr(user).subscribe(
       () => {

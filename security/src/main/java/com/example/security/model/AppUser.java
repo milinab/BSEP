@@ -43,6 +43,12 @@ public class AppUser implements UserDetails {
     @Column
     private String password;
     @Column
+    private String phone;
+    @Column
+    private String address;
+    @Column
+    private String username;
+    @Column
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     @Column
@@ -79,14 +85,20 @@ public class AppUser implements UserDetails {
         return List.of(authority);
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public AppUser(String firstName, String lastName, String email, String password, String phone, String address, String username, AppUserRole appUserRole, RegistrationStatus registrationStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.address = address;
+        this.username = username;
+        this.appUserRole = appUserRole;
+        this.registrationStatus = registrationStatus;
     }
 
-    @Override
-    public String getUsername() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -95,6 +107,50 @@ public class AppUser implements UserDetails {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public AppUserRole getAppUserRole() {
+        return appUserRole;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    public RegistrationStatus getRegistrationStatus() {
+        return registrationStatus;
     }
 
     @Override

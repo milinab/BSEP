@@ -4,6 +4,10 @@ import { AuthService } from '../../security/service/auth.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../security/dto/loginRequest.model';
 import { TokenStorageService } from '../../security/service/token-storage.service';
+import { AppUserService } from '../../security/service/appUser.service';
+import { UserDto } from '../../security/dto/user';
+import { timeInterval, timeout } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +15,9 @@ import { TokenStorageService } from '../../security/service/token-storage.servic
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  public user: UserDto = new UserDto();
+  public code: string = '';
+  public enterCode: boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl<string | undefined>(undefined),
@@ -20,7 +26,8 @@ export class LoginComponent implements OnInit {
 
   private authenticated = localStorage.getItem('TOKEN_KEY') ? true : false;
 
-  constructor(private authService: AuthService, private tokenStorageService:TokenStorageService, private router:Router) { }
+  constructor(private authService: AuthService, private tokenStorageService:TokenStorageService, private router:Router,
+     private appUserService: AppUserService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
   }
@@ -38,20 +45,49 @@ export class LoginComponent implements OnInit {
           this.tokenStorageService.saveUser(response.accessToken)
           const test = window.sessionStorage.getItem('TOKEN_KEY')
           alert("Success!");
+          this.enterCode = true;
+
           console.log(test);
-          this.router.navigate(['/home']).then(
-            ()=>{
-              window.location.reload();
-            }
-          );
+          // this.router.navigate(['/home']).then(
+          //   ()=>{
+          //     window.location.reload();
+          //   }
+          //);
         },
         error: message => {
           console.log(message.error.errorMessage)
           alert(message.error.errorMessage)
         }
-
       }
     )
+  }
+
+  recoverPassword() {
+    const email = this.loginForm.value.email;
+    console.log("preuzeti email: " + email);
+    
+    if (email) {
+      this.appUserService.recoverAccount(email).subscribe(
+        () => {
+          alert('Account recovery email sent successfully!');
+        },
+        (error) => {
+          alert('Account recovery failed. Please try again later.');
+          console.error(error);
+        }
+      );
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  }
+
+  submitCode(){
+    this.authService.submitCode(this.code).subscribe(res =>{
+      if(res)
+      this.router.navigate(['/home'])
+      else
+      alert("Invalid 2FA code!")
+    })
   }
 
 }
