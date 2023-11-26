@@ -1,0 +1,36 @@
+<h1>Role Permissions</h1>
+
+<div *ngIf="rolePermissions && rolePermissions.length > 0">
+  <table>
+    <thead>
+    <tr>
+      <th>Role</th>
+      <th>Permission</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let rolePermission of rolePermissions">
+      <td>{{ rolePermission.role.name }}</td>
+      <td>{{ rolePermission.permission.name }}</td>
+      <td>
+        <button (click)="deleteRolePermission(rolePermission.id)" class="delete-button">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<button (click)="openPopup()" class="create-button">Create Role Permission</button>
+
+<div class="popup" *ngIf="showPopup">
+  <h2>Create Role Permission</h2>
+  <form (submit)="createRolePermission(newRolePermission)">
+    <label for="role">Role:</label>
+    <input type="text" id="role" name="role" required>
+    <label for="permission">Permission:</label>
+    <input type="text" id="permission" name="permission" required>
+    <button type="submit">Create</button>
+    <button type="button" (click)="closePopup()">Cancel</button>
+  </form>
+</div>

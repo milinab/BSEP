@@ -21,12 +21,11 @@ import java.util.Date;
 
 @Component
 public class CertificateGenerator {
-    public CertificateGenerator() {
-        Security.addProvider(new BouncyCastleProvider());
-    }
 
     public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber) {
         try {
+            Security.addProvider(new BouncyCastleProvider());
+
             //Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
             //Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
             //Parametar koji se prosledjuje je algoritam koji se koristi za potpisivanje sertifiakta

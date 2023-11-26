@@ -1,1 +1,77 @@
-<p>home works!</p>
+<div class="form-container">
+  <form (ngSubmit)="createCertificate()"  class="container-search">
+    <label>Organization:</label>
+    <input type="text"  name = "organization" [(ngModel)]="certificate[0].organization" >
+
+    <label>Common name:</label>
+    <input type="text"  name = "commonName" [(ngModel)]="certificate[0].commonName">
+
+    <label>State</label>
+    <input type="text"  name = "country" [(ngModel)]="certificate[0].location.country">
+
+    <label>City:</label>
+    <input type="text"  name = "city" [(ngModel)]="certificate[0].location.city">
+
+    <label>Country</label>
+    <input type="text" name = "state" [(ngModel)]="certificate[0].location.state">
+
+    <input type="text"  name = "aa" [(ngModel)]="certificate[1].organization" [hidden]="true">
+
+
+    <input type="text"  name = "bb" [(ngModel)]="certificate[1].commonName" [hidden]="true">
+
+
+    <input type="text"  name = "cc" [(ngModel)]="certificate[1].location.country" [hidden]="true">
+
+    <input type="text"  name = "dd" [(ngModel)]="certificate[1].location.city" [hidden]="true">
+
+    <input type="text" name = "ee" [(ngModel)]="certificate[1].location.state" [hidden]="true">
+
+    <label>Type:</label>
+    <select [(ngModel)]="certificate[0].type" name="erer" [disabled]="!selectedItem">
+      <option value="ROOT" name="ww" [disabled]="!nesto">Root</option>
+      <option value="INTERMEDIARY" name="aasd">Intermediary</option>
+      <option value="END_ENTITY" name="etrt">End Entity</option>
+    </select>
+
+    <label>Issuer:</label>
+    <select name="issuer" [(ngModel)]="selectedItem" (ngModelChange)="selectedIssuer($event)">
+      <option *ngFor="let issuer of issuerList" [value]="issuer.alias">{{ issuer.alias }}</option>
+    </select>
+
+    <div>
+      <mat-form-field appearance="fill" class="input-schedule">
+        <mat-label>Departure date</mat-label>
+        <input matInput name="picker" [matDatepicker]="picker" [(ngModel)]="certificate[0].startDate" [formControl]="dateFormControl">
+        <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
+          Please enter a date
+        </mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('required')">
+        Date is <strong>required</strong>
+        </mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill" class="input-schedule">
+        <mat-label>Departure date</mat-label>
+        <input matInput name="picker2" [matDatepicker]="picker2" [(ngModel)]="certificate[0].endDate" [formControl]="dateFormControl">
+        <mat-error *ngIf="dateFormControl.hasError('date') && !dateFormControl.hasError('required')">
+          Please enter a date
+        </mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('required')">
+          Date is <strong>required</strong>
+        </mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <button type="submit">Submit</button>
+
+  </form>
+</div>

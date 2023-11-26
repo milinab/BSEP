@@ -1,0 +1,38 @@
+<div *ngIf="user" class="main-div">
+  <div class="div-column">
+    <h2>Edit profile</h2>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Name: </mat-label>
+        <input matInput [(ngModel)]="user.firstName">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Surname: </mat-label>
+        <input matInput [(ngModel)]="user.lastName">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail: </mat-label>
+        <input matInput [(ngModel)]="user.email" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>New password: </mat-label>
+        <input matInput [(ngModel)]="newPassword">
+      </mat-form-field>
+      <button mat-stroked-button (click)="updatePassword()">Save password</button>
+
+      <br>
+    </p>
+    <p>
+      <button mat-stroked-button (click)="cancel()">
+        Cancel
+      </button>
+      <button mat-stroked-button (click)="updateUser()">
+        Submit
+      </button>
+
+    </p>
+    
+  </div>
+  <div class="div-column">
+  </div>
+</div>

@@ -13,8 +13,13 @@ import java.security.PublicKey;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Issuer {
+public class Issuer extends User {
     private PrivateKey privateKey;
     private PublicKey publicKey;
     private X500Name x500Name;
+
+    public Issuer(PrivateKey issuerKey, X500Name build) {
+        this.privateKey = issuerKey;
+        this.x500Name = build;
+    }
 }

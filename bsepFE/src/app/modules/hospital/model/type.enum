@@ -1,0 +1,5 @@
+export enum Type {
+  ROOT = 0,
+  INTERMEDIARY = 1,
+  END_ENTITY = 2
+}

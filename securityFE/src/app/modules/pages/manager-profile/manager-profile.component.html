@@ -1,0 +1,43 @@
+<div>
+  <div class="inf">
+
+    <mat-card class="icon">
+      <mat-card-content>
+        <mat-icon class="photo">account_circle</mat-icon>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card">
+      <div class="edit-button">
+        <mat-card-title class="class-title">USER INFORMATION</mat-card-title>
+        <mat-icon class="edit-icon" (click)="editProfile()">edit</mat-icon>
+      </div>
+      <mat-card-content >
+        <p>Name: {{user.firstName}}</p>
+        <mat-divider></mat-divider>
+        <p>Surname: {{user.lastName}}</p>
+        <mat-divider></mat-divider>
+        <p>E-mail: {{user.email}}</p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="info-card">
+      <mat-card-title class="class-title">PROJECT INFORMATION</mat-card-title>
+      <mat-card-content>
+        <button mat-stroked-button (click)="pastProjects()">
+          Past projects
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-stroked-button (click)="currentProjects()">
+          Current projects
+        </button>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <button mat-stroked-button (click)="back()">
+    Back
+  </button>
+</div>
+
+

@@ -8,7 +8,7 @@ import { Room } from '../model/room.model';
 })
 export class RoomService {
 
-  apiHost: string = 'http://localhost:16177/';
+  apiHost: string = 'http://localhost:8082/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
@@ -32,4 +32,9 @@ export class RoomService {
   updateRoom(room: any): Observable<any> {
     return this.http.put<any>(this.apiHost + 'api/rooms/' + room.id, room, {headers: this.headers});
   }
+
+  createCertificate(certificate: any): Observable<any> {
+    return this.http.post<any>(this.apiHost + 'api/certificate/create', certificate, {headers: this.headers});
+  }
+
 }

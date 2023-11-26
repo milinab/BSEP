@@ -1,0 +1,41 @@
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>Root Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of rootCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>Intermediary Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of intermediaryCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="certificates">
+  <div class="certificates-header">
+    <h2>End-Entity Certificates</h2>
+  </div>
+  <div class="certificates-list">
+    <ul>
+      <li *ngFor="let cert of endEntityCertificates">
+        {{ cert }}
+        <a href="javascript:void(0);" (click)="downloadCertificate(cert)">Download</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div>
+  <h2>Pending Users</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Role</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.email }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.appUserRole }}</td>
+      <td>
+        <button (click)="registerUser(user)">Register</button>
+        <button (click)="denyRegistration(user.id, declineReason.value)">Decline</button>
+        <div>
+          <input type="text" #declineReason placeholder="Enter reason">
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

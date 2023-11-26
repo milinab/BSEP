@@ -1,0 +1,24 @@
+<div *ngIf="user">
+    <h2>User Profile</h2>
+    <div>
+      <label>First name:</label>
+      <input type="text" [(ngModel)]="user.firstName">
+    </div>
+    <div>
+      <label>Last name:</label>
+      <input type="text" [(ngModel)]="user.lastName">
+    </div>
+    <div>
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="user.email" readonly>
+    </div>
+   <button (click)="updateUser()">Update</button>
+   <div>
+    <label>New password:</label>
+    <input type="password" [(ngModel)]="newPassword">
+  </div>
+  <div>
+  <button (click)="updatePassword()">Save password</button>
+  </div>
+  </div>
+  

@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f8f8;
+}
+
+.error-message {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.error-message p:last-child {
+  margin-bottom: 20px;
+}
+
+.sign-in-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sign-in-button:hover {
+  background-color: #45a049;
+}

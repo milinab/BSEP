@@ -1,0 +1,54 @@
+.mat-stroked-button {
+  color: #382110;
+}
+
+div {
+  width: 40%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+}
+
+.div-column {
+  vertical-align: initial;
+  justify-content: center;
+  display: flex;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: auto;
+}
+
+.main-div {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  padding-bottom: 2%;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+  0 10px 10px rgba(0,0,0,0.22);
+  position: center;
+  overflow: hidden;
+  max-width: 100%;
+  min-height: 570px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  max-height: 98%;
+  width: 65%;
+}
+
+.username-label {
+  color: gray;
+}
+
+.password-label {
+}
+
+
+

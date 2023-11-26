@@ -1,0 +1,30 @@
+<div *ngIf="!enterCode">
+<div class="wrapper">
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+      <div class="form-wrapper">
+        <div class="title-container">
+          <h1 style="color: rebeccapurple">Sign in</h1>
+        </div>
+        <mat-form-field class="mat-form-field" color="primary" id="occupationInput" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input class="mat-input-element" placeholder="email" name="userId" formControlName="email" matInput>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field" color="primary" id="passwordInput" appearance="fill">
+          <mat-label >Password</mat-label>
+          <input type="password" class="mat-input-element" placeholder="Password" name="passwordId" formControlName="password" matInput>
+        </mat-form-field>
+        <div class="forgot-password">
+          <a href="#" (click)="recoverPassword()">Forgot your password?</a>
+        </div>
+        <button mat-raised-button color="primary" type="submit">Sign In</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="enterCode">
+  <mat-form-field class="example-full-width">
+    <input [(ngModel)]="code" matInput placeholder="Enter code"/>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" (click)="submitCode()">Submit</button>
+</div>
+  

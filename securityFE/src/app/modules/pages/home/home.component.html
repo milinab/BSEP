@@ -1,0 +1,18 @@
+<div>
+  <h1>BSEP</h1>
+  <hr>
+  <button mat-stroked-button (click)="profile()">
+    Profile
+  </button>
+  <button mat-stroked-button (click)="signOut()">
+    Sign out
+  </button>
+  <div id="notificationContainer">
+    <div *ngFor="let notification of notifications" class="notification">
+      <div class="notification-body">
+        {{ notification.text }}
+      </div>
+    </div>
+  </div>
+</div>
+
